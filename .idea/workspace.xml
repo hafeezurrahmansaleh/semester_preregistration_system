@@ -36,11 +36,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -64,7 +65,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="semester_preregistration_portal.settings" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\Munna\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="SDK_HOME" value="C:\py_django\semester_preregistration_system\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -104,6 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1575145959987</updated>
       <workItem from="1575930035687" duration="13987000" />
+      <workItem from="1576136574692" duration="2031000" />
     </task>
     <servers />
   </component>
@@ -111,30 +113,47 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1620" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575930177447">
-      <screen x="1366" y="0" width="1600" height="860" />
+    <state x="244" y="81" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576137461602">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="1620" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575930177447" />
-    <state width="1323" height="99" key="GridCell.Tab.0.bottom" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="244" y="81" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1576137461602" />
+    <state x="503" y="54" key="#semester_preregistration_portal" timestamp="1576136904234">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="503" y="54" key="#semester_preregistration_portal/0.0.1536.834@0.0.1536.834" timestamp="1576136904234" />
+    <state width="1342" height="198" key="GridCell.Tab.0.bottom" timestamp="1576138656790">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1557" height="170" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770127" />
     <state width="1323" height="99" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
-    <state width="1323" height="99" key="GridCell.Tab.0.center" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1342" height="198" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1576138656790" />
+    <state width="1342" height="198" key="GridCell.Tab.0.center" timestamp="1576138656790">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1557" height="170" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770126" />
     <state width="1323" height="99" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
-    <state width="1323" height="99" key="GridCell.Tab.0.left" timestamp="1576042179016">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1342" height="198" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1576138656790" />
+    <state width="1342" height="198" key="GridCell.Tab.0.left" timestamp="1576138656790">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1557" height="170" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770126" />
     <state width="1323" height="99" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1576042179016" />
-    <state width="1323" height="99" key="GridCell.Tab.0.right" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1342" height="198" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1576138656790" />
+    <state width="1342" height="198" key="GridCell.Tab.0.right" timestamp="1576138656790">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1557" height="170" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770127" />
     <state width="1323" height="99" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
+    <state width="1342" height="198" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1576138656790" />
+    <state x="279" y="62" key="SettingsEditor" timestamp="1576138649687">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="279" y="62" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1576138649687" />
+    <state x="471" y="244" key="com.intellij.ide.util.TipDialog" timestamp="1576136576977">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="471" y="244" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1576136576977" />
     <state x="1829" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1575953836589">
       <screen x="1366" y="0" width="1600" height="860" />
     </state>
