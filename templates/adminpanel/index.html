@@ -50,7 +50,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">ADMINBSB - MATERIAL DESIGN</a>
+                <a class="navbar-brand" href="index.html">Admin Panel</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -305,7 +305,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle" onclick="s();" data-toggle="modal" data-target="#largeModal">
+                                <a href="javascript:void(0);" class="menu-toggle" onclick="s();" data-toggle="modal" data-target="#largeModalTeacher">
                                     <span>View Teacher List</span>
                                 </a>
 {#                                <ul class="ml-menu">#}
@@ -321,7 +321,7 @@
 {#                                </ul>#}
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#defaultModal">
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#fileUploadTeacher">
                                     <span>Add Teacher</span>
                                 </a>
 
@@ -335,12 +335,12 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0);" class="menu-toggle" onclick="s();" data-toggle="modal" data-target="#largeModalStudent">
                                     <span>View Student List</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#fileUploadStudent">
                                     <span>Add Student</span>
                                 </a>
 
@@ -348,18 +348,18 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
+                        <a href="javascript:void(0);" class="menu-toggle" >
                             <i class="material-icons">widgets</i>
                             <span>Courses</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#largeModalCourse">
                                     <span>All Courses</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#fileUploadCourse">
                                     <span>Update Course List</span>
                                 </a>
                             </li>
@@ -615,196 +615,7 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;">SL</th>
-                                            <th style="width: 18%">Course Code</th>
-                                            <th style="width: 35%">Course Title</th>
-                                            <th style="width: 10%">Credit</th>
-                                            <th style="width: 15%">Total Students</th>
-                                            <th style="width: 10%">Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th >SL</th>
-                                            <th>Course Code</th>
-                                            <th>Course Title</th>
-                                            <th>Credit</th>
-                                            <th>Total Students</th>
-                                            <th>Start date</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    {% for course in courses %}
-                                         <tr style="text-align: center">
-                                           <th scope="row">{{ forloop.counter }}</th>
-
-                                           <td>{{ course.courseCode }}</td>
-                                             <td style="text-align: left">{{ course.courseTitle }}</td>
-                                           <td>{{ course.courseCredit }}</td>
-                                             <td>{{ forloop.counter }}</td>
-                                           <td><button type="button" class="btn btn-success">View</button></td>
-
-                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# Exportable Table -->
-        </div>
-    </section>
-    <!-- Modal Dialogs ====================================================================================================================== -->
-            <!-- Default Size -->
-            <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="card">
-                                        <div class="body">
-                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                                                <div class="dz-message">
-                                                    <div class="drag-icon-cph">
-                                                        <i class="material-icons">touch_app</i>
-                                                    </div>
-                                                    <h3>Drop files here or click to upload.</h3>
-                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
-                                                </div>
-                                                <div class="fallback">
-                                                    <input name="file" type="file" multiple />
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button onclick="f()" data-dismiss="modal" data-toggle="modal" data-target="#inputModal">Click</button>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" onclick="document.getElementById('input').style.display = 'none';">CLOSE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Dialogs ====================================================================================================================== -->
-            <!-- Default Size -->
-            <div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center">Modal title</h2>
-                        </div>
-                        <div class="modal-body">
-                            <div style="display: none;" id="input">
-                                <div class="col-sm-12">
-                                    <div class="form-group form-float">
-                                        <div class="form-line">
-                                            <input type="text" class="form-control">
-                                            <label class="form-label">Username</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group form-float">
-                                        <div class="form-line">
-                                            <input type="text" class="form-control">
-                                            <label class="form-label">Username</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group form-float">
-                                        <div class="form-line">
-                                            <input type="text" class="form-control">
-                                            <label class="form-label">Username</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-float">
-                                            <div class="form-line">
-                                                <input type="text" class="form-control" />
-                                                <label class="form-label">Username</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-float">
-                                            <div class="form-line">
-                                                <input type="text" class="form-control" />
-                                                <label class="form-label">Username</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button onclick="f()">Click</button>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" onclick="document.getElementById('input').style.display = 'none';">CLOSE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Large Size -->
-            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="largeModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                                    <!-- Exportable Table -->
-                                    <div class="row clearfix">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="card">
-                                                <div class="header">
-                                                    <span>
-                                                    <h2>
-                                                        Pre-Registered Courses
-                                                        <select >
-                                                      <option>Spring 2020</option>
-                                                      <option>Fall 2019</option>
-                                                      <option>Summer 2019</option>
-                                                      <option>Spring 2019</option>
-                                                    </select></span>
-                                                    </h2>
-
-                                                    <ul class="header-dropdown m-r--5">
-                                                        <li class="dropdown">
-                                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">more_vert</i>
-                                                            </a>
-                                                            <ul class="dropdown-menu pull-right">
-                                                                <li><a href="javascript:void(0);">Action</a></li>
-                                                                <li><a href="javascript:void(0);">Another action</a></li>
-                                                                <li><a href="javascript:void(0);">Something else here</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="body">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                                             <thead>
                                                                 <tr>
                                                                     <th style="width: 10%;">SL</th>
@@ -840,6 +651,444 @@
                                                             {% endfor %}
                                                             </tbody>
                                                         </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Exportable Table -->
+        </div>
+    </section>
+    <!-- Modal Dialogs ====================================================================================================================== -->
+    <div id="inputAreaTeacher">
+            <!-- Default Size -->
+            <div class="modal fade" id="fileUploadTeacher" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Teacher Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="body">
+                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                <div class="dz-message">
+                                                    <div class="drag-icon-cph">
+                                                        <i class="material-icons">touch_app</i>
+                                                    </div>
+                                                    <h3>Drop files here or click to upload.</h3>
+                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="file" type="file" multiple />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputModalTeacher">Add Manually </button>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" name="teacher_save" id="teacherSave">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose">CLOSE</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Dialogs ====================================================================================================================== -->
+            <!-- Default Size -->
+            <div class="modal fade" id="inputModalTeacher" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="insert">
+                            {% csrf_token %}
+                            <input type="hidden" name="editorTitle" value="teacher">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center">Teacher Information</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div >
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="tid">
+                                            <label class="form-label">Teacher ID</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="tname">
+                                            <label class="form-label">Teacher Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="tinitial">
+                                            <label class="form-label">Teacher Initial</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6" >
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="tdesingnation" />
+                                                <label class="form-label">Teacher Designation</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="tphone"/>
+                                                <label class="form-label">Teacher Phone Number</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="temail">
+                                            <label class="form-label">Teacher Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect" name="tsave" id="t_save">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"  name="tclose" id="t_close">CLOSE</button>
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="inputAreaStudent">
+            <!-- Default Size -->
+            <div class="modal fade" id="fileUploadStudent" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Student Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="body">
+                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                <div class="dz-message">
+                                                    <div class="drag-icon-cph">
+                                                        <i class="material-icons">touch_app</i>
+                                                    </div>
+                                                    <h3>Drop files here or click to upload.</h3>
+                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="file" type="file" multiple />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent">Add Manually</button>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" >CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Dialogs ====================================================================================================================== -->
+            <!-- Default Size -->
+            <div class="modal fade" id="inputModalStudent" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="insert">
+                            {% csrf_token %}
+                            <input type="hidden" name="editorTitle" value="student">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center">Student Information</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div id="input">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="stid">
+                                            <label class="form-label">Student ID</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="stname">
+                                            <label class="form-label">Student Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="stemail">
+                                            <label class="form-label">Student Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div>
+                                                <div class="dropdown">
+                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="gender">
+                                                        Gender
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#" name="stgender" >Male</a>
+                                                        <a class="dropdown-item" href="#" name="stgender">Female</a>
+                                                      </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="stphone" />
+                                                <label class="form-label">Student Phone Number</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="stadvisor">
+                                            <label class="form-label">Student Advisor</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect" name="stSave" id="st_save">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="stClose" id="st_close">CLOSE</button>
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="inputAreaCourse">
+            <!-- Default Size -->
+            <div class="modal fade" id="fileUploadCourse" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Course Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="body">
+                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                <div class="dz-message">
+                                                    <div class="drag-icon-cph">
+                                                        <i class="material-icons">touch_app</i>
+                                                    </div>
+                                                    <h3>Drop files here or click to upload.</h3>
+                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="file" type="file" multiple />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+                            <button data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse">Add Manually</button>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" >CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Dialogs ====================================================================================================================== -->
+            <!-- Default Size -->
+            <div class="modal fade" id="inputModalCourse" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="insert">
+                            {% csrf_token %}
+                            <input type="hidden" name="editorTitle" value="course">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center" >Course Information</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div  id="input">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="ccode">
+                                            <label class="form-label">Course Code</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="ctitle"/>
+                                                <label class="form-label">Course Title</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control"  name="ccredit"/>
+                                                <label class="form-label">Credit</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="clevel"/>
+                                                <label class="form-label">Level</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="cterm"/>
+                                                <label class="form-label">Term</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect" name="saveChanges" id="save" >SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="add_manually" id="addManually" >ADD Manually</button>
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+            <!-- Large Size -->
+            <div class="modal fade" id="largeModalTeacher" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Teacher Information</h4>
+                        </div>
+                        <div class="modal-body">
+                                    <!-- Exportable Table -->
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <span>
+                                                    <h2>
+                                                        Pre-Registered Courses
+                                                        <select >
+                                                      <option>Spring 2020</option>
+                                                      <option>Fall 2019</option>
+                                                      <option>Summer 2019</option>
+                                                      <option>Spring 2019</option>
+                                                    </select></span>
+                                                    </h2>
+
+                                                    <ul class="header-dropdown m-r--5">
+                                                        <li class="dropdown">
+                                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </a>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li><a href="javascript:void(0);">Action</a></li>
+                                                                <li><a href="javascript:void(0);">Another action</a></li>
+                                                                <li><a href="javascript:void(0);">Something else here</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Teacher ID</th>
+                                                                    <th style="width: 35%">Teacher Name</th>
+                                                                    <th style="width: 10%">Teacher Initial</th>
+                                                                    <th style="width: 15%">Teacher Designation</th>
+                                                                    <th style="width: 10%">Teacher Phone</th>
+                                                                    <th style="width: 10%">Teacher Email</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th >SL</th>
+                                                                    <th>Teacher ID</th>
+                                                                    <th>Teacher Name</th>
+                                                                    <th>Teacher Initial</th>
+                                                                    <th>Teacher Designation</th>
+                                                                    <th>Teacher Phone</th>
+                                                                    <th>Teacher Email</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            {% for teacher in teachers %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ teacher.tid }}</td>
+                                                                     <td style="text-align: left">{{ teacher.tName }}</td>
+                                                                     <td>{{ teacher.tInitial }}</td>
+                                                                     <td>{{ teacher.tDesignation }}</td>
+                                                                     <td>{{ teacher.tPhone }}</td>
+                                                                     <td>{{ teacher.tEmail }}</td>
+                                                                     <td>{{ forloop.counter }}</td>
+                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -854,6 +1103,191 @@
                     </div>
                 </div>
             </div>
+
+    <!--Modal For Student-->
+             <div class="modal fade" id="largeModalStudent" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Student Information</h4>
+                        </div>
+                        <div class="modal-body">
+                                    <!-- Exportable Table -->
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <span>
+                                                    <h2>
+                                                        Pre-Registered Courses
+                                                        <select >
+                                                      <option>Spring 2020</option>
+                                                      <option>Fall 2019</option>
+                                                      <option>Summer 2019</option>
+                                                      <option>Spring 2019</option>
+                                                    </select></span>
+                                                    </h2>
+
+                                                    <ul class="header-dropdown m-r--5">
+                                                        <li class="dropdown">
+                                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </a>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li><a href="javascript:void(0);">Action</a></li>
+                                                                <li><a href="javascript:void(0);">Another action</a></li>
+                                                                <li><a href="javascript:void(0);">Something else here</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 15%">Gender</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 10%">Student Advisor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th >SL</th>
+                                                                    <th>Student ID</th>
+                                                                    <th>Student Name</th>
+                                                                    <th>Student Email</th>
+                                                                    <th>Gende</th>
+                                                                    <th>Student Phone</th>
+                                                                    <th>Student Advisor</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            {% for student in students %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ student.stid }}</td>
+                                                                     <td style="text-align: left">{{ student.stName }}</td>
+                                                                     <td>{{ student.stEmail }}</td>
+                                                                     <td>{{ student.stGender }}</td>
+                                                                     <td>{{ student.stPhone }}</td>
+                                                                     <td>{{ student.stAdivisor }}</td>
+                                                                     <td>{{ forloop.counter }}</td>
+                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #END# Exportable Table -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!--Model Course-->
+            <div class="modal fade" id="largeModalCourse" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">All Courses</h4>
+                        </div>
+                        <div class="modal-body">
+                                    <!-- Exportable Table -->
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <span>
+                                                    <h2>
+                                                        Pre-Registered Courses
+                                                        <select >
+                                                      <option>Spring 2020</option>
+                                                      <option>Fall 2019</option>
+                                                      <option>Summer 2019</option>
+                                                      <option>Spring 2019</option>
+                                                    </select></span>
+                                                    </h2>
+
+                                                    <ul class="header-dropdown m-r--5">
+                                                        <li class="dropdown">
+                                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </a>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li><a href="javascript:void(0);">Action</a></li>
+                                                                <li><a href="javascript:void(0);">Another action</a></li>
+                                                                <li><a href="javascript:void(0);">Something else here</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">CL</th>
+                                                                    <th style="width: 18%">Course Code</th>
+                                                                    <th style="width: 35%">Course Title</th>
+                                                                    <th style="width: 10%">Credit</th>
+                                                                    <th style="width: 15%">Level</th>
+                                                                    <th style="width: 10%">Term</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th >CL</th>
+                                                                    <th>Course Code</th>
+                                                                    <th>Course Title</th>
+                                                                    <th>Credit</th>
+                                                                    <th>Level</th>
+                                                                    <th>Term</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            {% for course in courses %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ course.courseCode }}</td>
+                                                                     <td style="text-align: left">{{ course.courseTitle }}</td>
+                                                                     <td>{{ course.courseCredit }}</td>
+                                                                     <td>{{ course.level }}</td>
+                                                                     <td>{{ course.term }}</td>
+                                                                     <td>{{ forloop.counter }}</td>
+                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #END# Exportable Table -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 </body>
 
 </html>
