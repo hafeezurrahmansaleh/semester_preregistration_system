@@ -1,25 +1,74 @@
 import jsonify as jsonify
 from django.core import serializers
-from django.core.serializers import json
+# from django.core.serializers import json
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse,redirect
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 from .models import *
-from adminpanel.models import Courses
-
+from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration
+sid = 1;
+student = StudentInfo.objects.get(pk=sid)
 def studentPanelHome(request):
     courses = Courses.objects.all()
+    student = StudentInfo.objects.get(pk = sid)
     context = {
         'courses': courses,
+        'student':student,
     }
     return render(request, 'studentpanel/stphome.html',context)
 @csrf_exempt
 def findCourse(request):
-    term = request.POST['term']
-    semester = request.POST['semester']
-    level = request.POST['level']
-    courses = Courses.objects.filter(level=level, term=term)
+    cid = request.POST['cid']
+    courses = Courses.objects.filter(pk=cid)
     # print(level+semester)
     data = serializers.serialize('json', courses)
+    return HttpResponse(data)
+@csrf_exempt
+def registerCourse(request):
+    courseCode = request.POST['ccode']
+    section = request.POST['section']
+    semester = request.POST['semester']
+    try:
+        student = StudentInfo.objects.get(pk=sid)
+        course = Courses.objects.get(courseCode=courseCode)
+        registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
+        registration.save()
+        msg="successfully saved"
+    except Exception as e:
+        msg=e.__cause__
+    return HttpResponse(msg)
+
+# @csrf_exempt
+# def updateregistercourse(request):
+#     courseCode = request.POST['ccode']
+#     section = request.POST['section']
+#     semester = request.POST['semester']
+#     try:
+#         student = StudentInfo.objects.get(pk=sid)
+#         course = Courses.objects.get(courseCode=courseCode)
+#         registration = CoursePreRegistration.objects.get(student=student,course=course,semester=semester
+#             student = student, course = course, semester=semester,section=section,paymentStatus='0')
+#         registration.save()
+#         msg="successfully saved"
+#     except Exception as e:
+#         msg=e.__cause__
+#     return HttpResponse(msg)
+@csrf_exempt
+def dropCourses(request):
+    courseCode = request.POST['ccode']
+    semester = request.POST['semester']
+    student = StudentInfo.objects.get(pk=sid)
+    course = Courses.objects.get(courseCode=courseCode)
+    registeredCourse=CoursePreRegistration.objects.get(student=student,course=course,semester=semester)
+    registeredCourse.delete()
+    return HttpResponse('success')
+@csrf_exempt
+def findRegisteredCourses(request):
+    semester = request.POST['semester']
+    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester')
+    # print(level+semester)
+    data = json.dumps(list(courses))
+    # data = serializers.serialize('json', courses)
     return HttpResponse(data)

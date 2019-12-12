@@ -1,192 +1,493 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>student</title>
+    <style>
+        .coursetable tbody {
+          display: block;
+          max-height: 262px;
+          overflow-y: scroll;
+        }
 
-     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        .coursetable thead,
+        .coursetable tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+    </style>
 </head>
-<body>
-  <div style="margin-left:10px; width: 90%;margin: auto">
-    <div>
-      <h4>Name:MD Mostafa Munna</h4>
-      <h4>ID:163-35-1740</h4>
-    </div>
-    <div style="clear:both; height: 300px">
-      <div style="width:45%; float: left; ">
-        <h5 style=" text-align:center;" >
-          All Courses
-        </h5>
-      <button></button>
-        <div style="height: 250px; overflow-y: scroll">
-        <table  class="table table-striped" id="t_draggable1">
-             <thead>
-               <tr>
-                 <th scope="col" style="width: 10%">SL</th>
-                 <th scope="col" style="width: 40%">Course title</th>
-                 <th scope="col" style="width: 25%">Course code</th>
-                 <th scope="col" style="width: 10%">Credit</th>
-                 <th scope="col" style="width: 15%">Enroll </th>
-               </tr>
-             </thead>
-               <tbody class="t_sortable">
-               {% for course in courses %}
-                 <tr>
-                   <th scope="row">{{ forloop.counter }}</th>
-                   <td>{{ course.courseTitle }}</td>
-                   <td>{{ course.courseCode }}</td>
-                   <td>{{ course.courseCredit }}</td>
-                   <td><button type="button" class="btn btn-success">ADD</button></td>
-                 </tr>
-                {% endfor %}
-               </tbody>
-            </table>
+<body class="theme-red">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" style="text-align: center" href="#">Semester Pre-registration Portal</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Call Search -->
+                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <!-- #END# Call Search -->
+                    <!-- Notifications -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">notifications</i>
+                            <span class="label-count">7</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">NOTIFICATIONS</li>
+                            <li class="body">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">person_add</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>12 new members joined</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-cyan">
+                                                <i class="material-icons">add_shopping_cart</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>4 sales made</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-red">
+                                                <i class="material-icons">delete_forever</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy Doe</b> deleted account</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-orange">
+                                                <i class="material-icons">mode_edit</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy</b> changed name</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> commented your post</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">cached</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> updated status</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-purple">
+                                                <i class="material-icons">settings</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>Settings updated</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Notifications</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Notifications -->
+                    <!-- Tasks -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">flag</i>
+                            <span class="label-count">9</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">TASKS</li>
+                            <li class="body">
+                                <ul class="menu tasks">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Footer display issue
+                                                <small>32%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Make new buttons
+                                                <small>45%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Create new dashboard
+                                                <small>54%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Solve transition issue
+                                                <small>65%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Answer GitHub questions
+                                                <small>92%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Tasks -->
+                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                </ul>
+            </div>
         </div>
-        </div>
-    <div>
- <script type="text/javascript">
-     $(document).ready(function() {
-  var $tabs = $('#t_draggable2')
-  $("tbody.t_sortable").sortable({
-    connectWith: ".t_sortable",
-    items: "> tr:not(:first)",
-    appendTo: $tabs,
-    helper:"clone",
-    zIndex: 999990
-  }).disableSelection();
-
-  var $tab_items = $(".nav-tabs > li", $tabs).droppable({
-    accept: ".t_sortable tr",
-    hoverClass: "ui-state-hover",
-    drop: function( event, ui ) { return false; }
-  });
-});
- </script>
-      <div style="margin-left:  60px;width:45%; height: 50px; float: left;">
-          <select id = "semester" style="margin-right:10px">
-            <option value="semester">Select Semester</option>
-            <option value="fall">Fall 2019</option>
-            <option value="summer">Summer2020</option>
-            <option value="Spring">Spring 2020</option>
-          </select>
-          <select id="level" style="margin-right:10px">
-            <option value="0">Select Level</option>
-            <option value="1">Level 1</option>
-            <option value="2">Level 2</option>
-            <option value="3">Level 3</option>
-            <option value="4">Level 4</option>
-          </select>
-          <select id="term">
-            <option value="0">Select Term</option>
-            <option value="1">Term 1</option>
-            <option value="2">Term 2</option>
-            <option value="3">Term 3</option>
-          </select>
-          <button class="findCourse" id = "btnFindCourse" >Find Courses</button>
-
-          <div style="height: 250px;overflow-y: scroll">
-          <table  class="table table-striped" >
-              <thead>
-                 <tr>
-                     <th scope="col" style="width: 10%">SL</th>
-                     <th scope="col" style="width: 40%">Course title</th>
-                     <th scope="col" style="width: 20%">Course code</th>
-                     <th scope="col" style="width: 10%">Credit</th>
-                     <th scope="col" style="width: 15%">Enroll </th>
-               </tr>
-              </thead>
-              <tbody id="courses">
-
-              </tbody>
-          </table>
-          </div>
-      </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section class="content" style="margin-left: 20px;">
+        <div class="container-fluid" style="width: 60%;float: left">
+    <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card" >
+                        <div class="header">
+                            <h2 style="text-align: center">
+                                COURSE LIST
+                            </h2>
+                        </div>
+                        <div class="body" >
+                            <div class="table-responsive" style="overflow-x: inherit;">
+                            <div class="coursetable">
+                                <table id="example" class="table table-bordered table-striped table-hover js-basic-example dataTable" >
+                                    <thead >
+                                       <tr >
+                                         <th scope="col" style="width: 12%">SL</th>
+                                         <th scope="col" style="width: 35%">Course title</th>
+                                         <th scope="col" style="width: 20%">Course code</th>
+                                         <th scope="col" style="width: 10%">Credit</th>
+                                         <th scope="col" style="width: 15%">Enroll </th>
+                                       </tr>
+                                     </thead >
+                                       <tbody class="t_sortable">
+                                       {% for course in courses %}
+                                         <tr>
+                                           <th scope="row" style="width: 12%">{{ forloop.counter }}</th>
+                                           <td style="width: 35%">{{ course.courseTitle }}</td>
+                                           <td style="width: 20%">{{ course.courseCode }}</td>
+                                           <td style="width: 10%">{{ course.courseCredit }}</td>
+                                             <td class="bt" style="width: 15%"><input type="button" name="findCoursebtn" class="btn btn-success findCourse" id="{{ course.id }}" value="ADD"/></td>
+                                         </tr>
+                                        {% endfor %}
+                                       </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Examples -->
     </div>
-    </div><br>
-    <div style="width:60%;margin:auto; border: solid darkgreen 2px; background: aliceblue" >
-        <h5 style="text-align: center" >
-          Selected Courses for Pre-Registration(Fall 2019)
-        </h5>
-        <table class="table" id="selectedcourses">
-             <thead class="thead-dark">
-               <tr>
-                 <th scope="col">#SL</th>
-                 <th scope="col">Course title</th>
-                 <th scope="col">Course code</th>
-                 <th scope="col">Credit</th>
-                 <th scope="col">Section</th>
+        <div class="container-fluid" style="width: 40%; float: right">
+    <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card" style="height: 550px;">
+                        <div class="header" style="margin-bottom: -20px">
+                            <div class="card">
+                                <div class="body bg-cyan" style="text-align: center; margin-bottom: -30px">
+                                    <h4>{{ student.stName }}</h4>
+                                    <h4 id="stID">{{ student.stID }}</h4>
+                                    <h5>{{ student.stEmail }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body table-responsive" style="overflow-x: inherit;">
 
-               </tr>
-             </thead>
-               <tbody class="t_sortable">
+                        <div class="a">
+                           <select id="selectSemester" class="" required>
+                               <option name="semister" value="">Select Semester</option>
+                               <option name="semister" value="Fall 2019">Fall 2019</option>
+                               <option name="semister" value="Spring 2020">Spring 2020</option>
+                           </select>
+                        </div>
+                            <table  id="selectedcourse" class="table table-bordered table-striped table-hover ">
+                                <thead >
+                                    <tr style="" >
+                                     <th scope="col" class="nr" style="width: 18%">Code</th>
+                                     <th scope="col" style="width: 50%; text-align: center"> Title</th>
+                                     <th scope="col" style="width: 10%">Credit</th>
+                                     <th scope="col" style="width: 22%">Section</th>
+                                   </tr>
+                                </thead>
+                                <tfoot>
+                                <td colspan="4"><button id="submitbtn"  class="btn btn-primary btn-lg btn-block cregister">Register</button></td>
+                                </tfoot>
+                                <tbody id="courses" style="font-size: 13px">
 
-                 {% for course in courses %}
-                 <tr>
-                   <th scope="row">{{ forloop.counter }}</th>
-                   <td>{{ course.courseTitle }}</td>
-                   <td>{{ course.courseCode }}</td>
-                   <td>{{ course.courseCredit }}</td>
-                    <td>
-                         <select>
-                            <option value="term">Select Section</option>
-                            <option value="term1">A</option>
-                            <option value="term2">B</option>
-                            <option value="term3">C</option>
-                          </select>
-                     </td>
-                 </tr>
-                 {% endfor %}
-                 <tr>
-                   <th scope="row"></th>
-                   <th scope="row"><button type="button" class="btn btn-success btn-lg btn-block">Submit</button></th>
-                   <th scope="row"></th>
-                 </tr>
-               </tbody>
-        </table>
-    </div><br><br>
-  </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Examples -->
+    </div>
+</section>
+
 </body>
 
 </html>
+
 <script type="text/javascript">
             $(document).ready(function() {
                 $('.findCourse').on('click', function() {
                     var semester = $('#semester').val();
                     var level = $('#level').val();
                     var term = $('#term').val();
+                    var cid = this.id;
                     req = $.ajax({
                         url : '/student/findcourse',
                         type : 'POST',
-                        data : { semester : semester, level : level, term : term }
+                        data : { cid : cid, level : level, term : term }
                     });
 
                     req.done(function(data) {
 
                         var courses = JSON.parse(data);
-                        console.log(courses[0].fields);
                         var txt = '';
-                        var x,sl=0;
+                        var x,sl=0,i;
                         for (x in courses) {
                             var course = courses[x];
                             sl=sl+1;
-                            console.log(courses[x].fields);
                             txt += "<tr>";
-                            txt += "<td>" + sl+ "</td>";
                             txt += "<td>" + course.fields.courseCode + "</td>";
                             txt += "<td>" + course.fields.courseTitle + "</td>";
                             txt += "<td>" + course.fields.courseCredit + "</td>";
-                            txt += "<td><button class='btn btn-success'>View</button></td>";
+                            txt += "<td><select id=\"csection\" class='form-control show-tick'>View</button>";
+                            txt += "<option name=\"section\" value=\"null\">---</option>";
+                            txt += "<option name=\"section\" value=\"A\">A</option>";
+                            txt += "<option namme=\"section\" value=\"B\">B</option>";
+                            txt += "<option namme=\"section\"  value=\"C\">C</option>";
+                            txt += "</select></td>";
                             txt += "</tr>";
                         }
-                        console.log(txt);
-                        document.getElementById("courses").innerHTML = txt;
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                        for(i=0;i<rowCount;i++){
+                            if (course.fields.courseCode==document.getElementById('selectedcourse').rows[i].cells[0].innerHTML) {
+                                return;
+                            }
+                        }
+
+                        if (rowCount>5){
+                            alert("You can take maximum 4 courses!")
+                        }
+                        else {
+                            $("#courses").append(txt);
+                        }
+
+                        console.log(rowCount);
                         {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
                         {#$('#memberNumber'+member_id).text(data.member_num);#}
                     });
                 });
             });
         </script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $('.cregister').on('click', function() {
+                    {#try {#}
+                        var semester = document.getElementById('selectSemester').value;
+                        var cid;
+
+                        console.log(document.getElementById('csection')[0].value);
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                        for (i = 1; i < rowCount; i++) {
+                            req = $.ajax({
+                                url: '/student/registercourse',
+                                type: 'POST',
+                                data: {
+                                    ccode: document.getElementById('selectedcourse').rows[i].cells[0].innerHTML,
+                                    section: document.getElementById('csection').value,
+                                    semester: semester
+                                }
+                            });
+                         }
+                        alert('success');
+                    {# } #}
+                    {#catch (e) {#}
+                    {#    alert('failed '+e);#}
+                {#    }#}
+                });
+            });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#selectSemester").change(function() {
+                var semester = document.getElementById('selectSemester').value;
+                req = $.ajax({
+                    url : '/student/findregisteredcourses',
+                    type : 'POST',
+                    data : { semester : semester }
+                });
+
+                req.done(function(data) {
+                    var Table = document.getElementById("courses");
+                    Table.innerHTML = "";
+
+                    var courses = JSON.parse(data);
+                    var txt = '';
+                    var x,sl=0,i;
+                    for (x in courses) {
+                         var txt = '';
+                        var course = courses[x];
+                        sl=sl+1;
+                        console.log(course.course__courseCode);
+                        txt += "<tr>";
+                        txt += "<td>" + course.course__courseCode + "</td>";
+                        txt += "<td>" + course.course__courseTitle + "</td>";
+                        txt += "<td>" + course.course__courseCredit + "</td>";
+                        txt += "<td><select name=\"csection\" class='form-control show-tick' id = 'csection_"+sl+"'>View</button>";
+                        txt += "<option name=\"section\" value=\"null\">---</option>";
+                        txt += "<option name=\"section\" value=\"A\">A</option>";
+                        txt += "<option namme=\"section\" value=\"B\">B</option>";
+                        txt += "<option namme=\"section\"  value=\"C\">C</option>";
+                        txt += "</select></td>";
+                        txt += "</tr>";
+                        $("#courses").append(txt);
+                        s=course.section;
+                        var id = document.getElementsByName("csection")[x].id;
+                        console.log(id);
+                        $("#"+id).val(course.section).change();
+                    }
+                    if(document.getElementById('selectedcourse').rows.length>2){
+                        document.getElementById('submitbtn').innerText="Update";
+                        $(".bt :input").prop("disabled", true);
+                        var c = $("#selectedcourse tr:first td").length;
+                        $("#selectedcourse tr:gt(1)").append("<td><input type=\"button\" class=\"removeRow\" value=\"❌\" /></td>");
+                        {#$("#selectedcourse tr:gt(0)").append("<td>Col</td>");#}
+
+                    }
+                    else {
+                        document.getElementById('submitbtn').innerText="Register";
+                        $(".bt :input").prop("disabled", false);
+                    }
+                    {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
+                    {#$('#memberNumber'+member_id).text(data.member_num);#}
+                });
+            });
+        });
+         $("#selectedcourse").on('click', '.removeRow', function () {
+             var semester = document.getElementById('selectSemester').value;
+             var row = $(this).closest('tr').children()[0];    // Find the row
+             var te = $(row).html();
+             console.log(te);
+            if(document.getElementById('submitbtn').innerText=='Update'){
+                try {
+                    req = $.ajax({
+                            url: '/student/dropcourses',
+                            type: 'POST',
+                            data: {
+                                ccode: te,
+                                semester: semester
+                            }
+                        });
+                    alert('success');
+                }
+                catch (e) {
+                    alert(e)
+                }
+
+            }
+         $(this).closest('tr').remove();
+        });
+
+
+{#$( "#selectSemester" ).addClass( "form-control show-tick selectSemester" );#}
+    </script>
+    <script src="{% static 'js/dnd-table.js' %}"></script>
+{% endblock %}
