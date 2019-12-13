@@ -95,3 +95,6 @@ def courseDelete(request,courseCode):
     course = Courses.objects.get(pk=courseCode)
     course.delete()
     return redirect('index')
+
+def studentList(request):
+    return render(request, 'adminpanel/studentlist.html')
