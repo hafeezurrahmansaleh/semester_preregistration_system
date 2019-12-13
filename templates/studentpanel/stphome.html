@@ -287,12 +287,12 @@
                             </div>
                         </div>
                         <div class="body table-responsive" style="overflow-x: inherit;">
-
+                            <form>
                         <div class="a">
                            <select id="selectSemester" class="" required>
-                               <option name="semister" value="">Select Semester</option>
-                               <option name="semister" value="Fall 2019">Fall 2019</option>
-                               <option name="semister" value="Spring 2020">Spring 2020</option>
+                               {% for sem in semesters %}
+                                   <option name="semister" value="{{ sem.semesterCode }}">{{ sem.semesterTitle }}</option>
+                               {% endfor %}
                            </select>
                         </div>
                             <table  id="selectedcourse" class="table table-bordered table-striped table-hover ">
@@ -302,15 +302,17 @@
                                      <th scope="col" style="width: 50%; text-align: center"> Title</th>
                                      <th scope="col" style="width: 10%">Credit</th>
                                      <th scope="col" style="width: 22%">Section</th>
+                                     <th scope="col" style="width: 5%"></th>
                                    </tr>
                                 </thead>
                                 <tfoot>
-                                <td colspan="4"><button id="submitbtn"  class="btn btn-primary btn-lg btn-block cregister">Register</button></td>
+                                <td colspan="5" style="width: 80%"><button type="submit" id="submitbtn"  class="btn btn-primary btn-lg btn-block cregister">Register</button></td>
                                 </tfoot>
                                 <tbody id="courses" style="font-size: 13px">
 
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -348,12 +350,13 @@
                             txt += "<td>" + course.fields.courseCode + "</td>";
                             txt += "<td>" + course.fields.courseTitle + "</td>";
                             txt += "<td>" + course.fields.courseCredit + "</td>";
-                            txt += "<td><select id=\"csection\" class='form-control show-tick'>View</button>";
-                            txt += "<option name=\"section\" value=\"null\">---</option>";
+                            txt += "<td><select id=\"csection\" class='form-control show-tick' required>View</button>";
+                            txt += "<option name=\"section\" value=\"\">---</option>";
                             txt += "<option name=\"section\" value=\"A\">A</option>";
                             txt += "<option namme=\"section\" value=\"B\">B</option>";
                             txt += "<option namme=\"section\"  value=\"C\">C</option>";
                             txt += "</select></td>";
+                            txt += "<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>"
                             txt += "</tr>";
                         }
                         var rowCount = document.getElementById('selectedcourse').rows.length;
@@ -382,6 +385,10 @@
                 $('.cregister').on('click', function() {
                     {#try {#}
                         var semester = document.getElementById('selectSemester').value;
+                        if (semester == ""){
+                            alert("Please select your semester first");
+                            return;
+                        }
                         var cid;
 
                         console.log(document.getElementById('csection')[0].value);
@@ -398,6 +405,7 @@
                             });
                          }
                         alert('success');
+                        location.reload();
                     {# } #}
                     {#catch (e) {#}
                     {#    alert('failed '+e);#}
@@ -432,11 +440,12 @@
                         txt += "<td>" + course.course__courseTitle + "</td>";
                         txt += "<td>" + course.course__courseCredit + "</td>";
                         txt += "<td><select name=\"csection\" class='form-control show-tick' id = 'csection_"+sl+"'>View</button>";
-                        txt += "<option name=\"section\" value=\"null\">---</option>";
+                        txt += "<option name=\"section\" value=\"\" required>---</option>";
                         txt += "<option name=\"section\" value=\"A\">A</option>";
                         txt += "<option namme=\"section\" value=\"B\">B</option>";
                         txt += "<option namme=\"section\"  value=\"C\">C</option>";
                         txt += "</select></td>";
+                        txt += "<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>"
                         txt += "</tr>";
                         $("#courses").append(txt);
                         s=course.section;
@@ -448,7 +457,7 @@
                         document.getElementById('submitbtn').innerText="Update";
                         $(".bt :input").prop("disabled", true);
                         var c = $("#selectedcourse tr:first td").length;
-                        $("#selectedcourse tr:gt(1)").append("<td><input type=\"button\" class=\"removeRow\" value=\"❌\" /></td>");
+                        {#$("#selectedcourse tr:gt(1)").append("<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>");#}
                         {#$("#selectedcourse tr:gt(0)").append("<td>Col</td>");#}
 
                     }

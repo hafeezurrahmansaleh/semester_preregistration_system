@@ -13,9 +13,11 @@ student = StudentInfo.objects.get(pk=sid)
 def studentPanelHome(request):
     courses = Courses.objects.all()
     student = StudentInfo.objects.get(pk = sid)
+    semester = SemesterInfo.objects.all()
     context = {
         'courses': courses,
         'student':student,
+        'semesters' : semester
     }
     return render(request, 'studentpanel/stphome.html',context)
 @csrf_exempt
@@ -29,10 +31,11 @@ def findCourse(request):
 def registerCourse(request):
     courseCode = request.POST['ccode']
     section = request.POST['section']
-    semester = request.POST['semester']
+    semestertitle = request.POST['semester']
     try:
         student = StudentInfo.objects.get(pk=sid)
         course = Courses.objects.get(courseCode=courseCode)
+        semester = SemesterInfo.objects.get(semesterTitle=semestertitle)
         registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
         registration.save()
         msg="successfully saved"
