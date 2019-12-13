@@ -578,18 +578,12 @@
     </section>
 
     <section class="content">
-    <script>
-        function f() {
-            document.getElementById("input").style.display = "block";
-        }
-    </script>
         <div class="container-fluid">
             <!-- Exportable Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <span>
                             <h2>
                                 Pre-Registered Courses
                                 <select >
@@ -597,7 +591,7 @@
                               <option>Fall 2019</option>
                               <option>Summer 2019</option>
                               <option>Spring 2019</option>
-                            </select></span>
+                            </select>
                             </h2>
 
                             <ul class="header-dropdown m-r--5">
@@ -897,47 +891,47 @@
     </div>
     <div id="inputAreaCourse">
             <!-- Default Size -->
-            <div class="modal fade" id="fileUploadCourse" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Course Information</h4>
-                        </div>
-                        <div class="modal-body">
-                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="card">
-                                        <div class="body">
-                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                                                <div class="dz-message">
-                                                    <div class="drag-icon-cph">
-                                                        <i class="material-icons">touch_app</i>
-                                                    </div>
-                                                    <h3>Drop a Course information files here or click to upload.</h3>
+        <div class="modal fade" id="fileUploadCourse" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="defaultModalLabel">Course Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class="body">
+                                        <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                            <div class="dz-message">
+                                                <div class="drag-icon-cph">
+                                                    <i class="material-icons">touch_app</i>
                                                 </div>
-                                                <div class="fallback">
-                                                    <input name="file" type="file" multiple />
-                                                </div>
-                                            </form>
-                                        </div>
+                                                <h3>Drop a Course information files here or click to upload.</h3>
+                                            </div>
+                                            <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse">Add Manually</button>
+                        </div>
+                        <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+                        <button data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse">Add Manually</button>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" >CLOSE</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" >CLOSE</button>
                     </div>
                 </div>
             </div>
-            <!-- Modal Dialogs ====================================================================================================================== -->
-            <!-- Default Size -->
-            <div class="modal fade" id="inputModalCourse" tabindex="-1" role="dialog">
+        </div>
+        <!-- Modal Dialogs ====================================================================================================================== -->
+        <!-- Default Size -->
+        <div class="modal fade" id="inputModalCourse" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <form method="post" action="insert">

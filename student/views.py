@@ -31,11 +31,11 @@ def findCourse(request):
 def registerCourse(request):
     courseCode = request.POST['ccode']
     section = request.POST['section']
-    semestertitle = request.POST['semester']
+    semestercode = request.POST['semester']
     try:
         student = StudentInfo.objects.get(pk=sid)
         course = Courses.objects.get(courseCode=courseCode)
-        semester = SemesterInfo.objects.get(semesterTitle=semestertitle)
+        semester = SemesterInfo.objects.get(semesterCode=semestercode)
         registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
         registration.save()
         msg="successfully saved"
@@ -69,8 +69,9 @@ def dropCourses(request):
     return HttpResponse('success')
 @csrf_exempt
 def findRegisteredCourses(request):
-    semester = request.POST['semester']
-    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester')
+    semesterCode = request.POST['semester']
+    semester = SemesterInfo.objects.get(semesterCode = semesterCode)
+    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester__semesterTitle')
     # print(level+semester)
     data = json.dumps(list(courses))
     # data = serializers.serialize('json', courses)
