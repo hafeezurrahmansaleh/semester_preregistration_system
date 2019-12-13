@@ -272,14 +272,40 @@
                                             </div>
                                             <div id="collapseOne_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_1">
                                                 <div class="panel-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                                                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                                    helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                                                    raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th >SL</th>
+                                                                    <th>Student ID</th>
+                                                                    <th>Student Name</th>
+                                                                    <th>Student Email</th>
+                                                                    <th>Student Phone</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            {% for studentlist in studentlists %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                     <td>{{ forloop.counter }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -366,10 +366,22 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href=javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>
-                            <span>Update Semester Info</span>
+                            <span>Semester Info</span>
                         </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#largeModalSemester">
+                                    <span>Semester Info</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#inputModalSemester">
+                                    <span>Update Semester Info</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -610,41 +622,41 @@
                         <div class="body">
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="width: 10%;">SL</th>
-                                                                    <th style="width: 18%">Course Code</th>
-                                                                    <th style="width: 35%">Course Title</th>
-                                                                    <th style="width: 10%">Credit</th>
-                                                                    <th style="width: 15%">Total Students</th>
-                                                                    <th style="width: 10%">Details</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th >SL</th>
-                                                                    <th>Course Code</th>
-                                                                    <th>Course Title</th>
-                                                                    <th>Credit</th>
-                                                                    <th>Total Students</th>
-                                                                    <th>Start date</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                            <tbody>
-                                                            {% for course in courses %}
-                                                                 <tr style="text-align: center">
-                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">SL</th>
+                                        <th style="width: 18%">Course Code</th>
+                                        <th style="width: 35%">Course Title</th>
+                                        <th style="width: 10%">Credit</th>
+                                        <th style="width: 15%">Total Students</th>
+                                        <th style="width: 10%">Details</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th >SL</th>
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Credit</th>
+                                        <th>Total Students</th>
+                                        <th>Start date</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                {% for course in courses %}
+                                     <tr style="text-align: center">
+                                       <th scope="row">{{ forloop.counter }}</th>
 
-                                                                   <td>{{ course.courseCode }}</td>
-                                                                     <td style="text-align: left">{{ course.courseTitle }}</td>
-                                                                   <td>{{ course.courseCredit }}</td>
-                                                                     <td>{{ forloop.counter }}</td>
-                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                       <td>{{ course.courseCode }}</td>
+                                         <td style="text-align: left">{{ course.courseTitle }}</td>
+                                       <td>{{ course.courseCredit }}</td>
+                                         <td>{{ forloop.counter }}</td>
+                                       <td><button type="button" class="btn btn-success">View</button></td>
 
-                                                                 </tr>
-                                                            {% endfor %}
-                                                            </tbody>
-                                                        </table>
+                                     </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
 
                             </div>
                         </div>
@@ -997,6 +1009,68 @@
                 </div>
             </div>
     </div>
+
+    <!--input area for semester-->
+        <!-- Modal Dialogs ====================================================================================================================== -->
+        <!-- Default Size -->
+        <div class="modal fade" id="inputModalSemester" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="insert">
+                            {% csrf_token %}
+                            <input type="hidden" name="editorTitle" value="semester">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center" >Semester Information</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div  id="input">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="scode" id="scode"/>
+                                            <label class="form-label">Semester Code</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="stitle" id="stitle"/>
+                                                <label class="form-label">Semester Title</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="date" class="form-control"  name="regOpenDate" id="regOpenDate"/>
+                                                <label class="form-label">Registration Open Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="date" class="form-control" name="regClosedDate" id="regClosedDate"/>
+                                                <label class="form-label">Registration Closed Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect" name="saveChanges" id="save" >SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="add_manually" id="addManually" >CLOSE</button>
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    </div>
             <!-- Large Size -->
             <div class="modal fade" id="largeModalTeacher" tabindex="-1" role="dialog" >
                 <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
@@ -1143,7 +1217,7 @@
                                                 <div class="body">
                                                     <div class="table-responsive">
                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                                            <thead>
+                                                 f           <thead>
                                                                 <tr>
                                                                     <th style="width: 10%;">SL</th>
                                                                     <th style="width: 18%">Student ID</th>
@@ -1288,6 +1362,86 @@
                                                                  document.getElementById('ccredit').value=courseCredit;
                                                                  document.getElementById('clevel').value=level;
                                                                  document.getElementById('cterm').value=term;
+                                                             }
+                                                            </script>
+                                                         </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# Exportable Table -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+  <!--Model Semester-->
+  <div class="modal fade" id="largeModalSemester" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Semester</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Exportable Table -->
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="header">
+                                            <span>
+                                            <h2>
+                                                Pre-Registered Courses
+                                            </span>
+                                            </h2>
+                                            <ul class="header-dropdown m-r--5">
+                                                <li class="dropdown">
+                                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">more_vert</i>
+                                                    </a>
+                                                    <ul class="dropdown-menu pull-right">
+                                                        <li><a href="javascript:void(0);">Action</a></li>
+                                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="body">
+                                            <div class="table-responsive">
+                                               <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 10%;">SL</th>
+                                                            <th style="width: 18%">Semester Code</th>
+                                                            <th style="width: 35%">Semseter Title</th>
+                                                            <th style="width: 10%">Registration Open Date</th>
+                                                            <th style="width: 15%">Registration Closed Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for semester in semesters %}
+                                                         <tr style="text-align: center">
+                                                             <td>{{ semester.semesterCode }}</td>
+                                                             <td style="text-align: left">{{ semester.semesterTitle }}</td>
+                                                             <td>{{ semester.regOpenDate }}</td>
+                                                             <td>{{ semester.regClosedDate }}</td>
+                                                           <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalSemester" onclick="semesterEditor('{{ semester.semesterCode }}','{{ semester.semesterTitle }}','{{ semester.regOpenDate }}','{{ semester.regClosedDate }}');">Edit</a></td>
+                                                           <td><a class="btn btn-danger" href="/adminpanel/semesterDelete/{{ semester.id }}">Delete</a></td>
+                                                             <script type="text/javascript">
+                                                             function semesterEditor(semesterCode,semesterTitle,regOpenDate,regClosedDate){
+                                                                 document.getElementById('scode').value=semesterCode;
+                                                                 document.getElementById('scode').readOnly = true;
+                                                                 document.getElementById('stitle').value=semesterTitle;
+                                                                 document.getElementById('regOpenDate').value=regOpenDate;
+                                                                 document.getElementById('regClosedDate').value=regClosedDate;
                                                              }
                                                             </script>
                                                          </tr>
