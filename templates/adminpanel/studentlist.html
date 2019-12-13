@@ -5,6 +5,9 @@
 <html>
 {% load static %}
 <head>
+     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -272,14 +275,15 @@
                                             </div>
                                             <div id="collapseOne_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_1">
                                                 <div class="panel-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                                                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                                    helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                                                    raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
+                                                    <p></p>
+                                                    <hr>
+
+                                                    {% for row in excel_data %}
+                                                        {% for cell in row %}
+                                                            {{ cell }}&nbsp;&nbsp;
+                                                        {% endfor %}
+                                                        <br>
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </div>
@@ -336,6 +340,10 @@
             </div>
         </div>
     </div>
+    <form action="" method="post" enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
+  <input type="file" name="file" />
+</form>
+
 </section>
 </body>
 </html>

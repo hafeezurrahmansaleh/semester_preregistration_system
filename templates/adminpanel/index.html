@@ -593,7 +593,6 @@
                               <option>Spring 2019</option>
                             </select>
                             </h2>
-
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -609,43 +608,42 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="width: 10%;">SL</th>
-                                                                    <th style="width: 18%">Course Code</th>
-                                                                    <th style="width: 35%">Course Title</th>
-                                                                    <th style="width: 10%">Credit</th>
-                                                                    <th style="width: 15%">Total Students</th>
-                                                                    <th style="width: 10%">Details</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th >SL</th>
-                                                                    <th>Course Code</th>
-                                                                    <th>Course Title</th>
-                                                                    <th>Credit</th>
-                                                                    <th>Total Students</th>
-                                                                    <th>Start date</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                            <tbody>
-                                                            {% for course in courses %}
-                                                                 <tr style="text-align: center">
-                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">SL</th>
+                                            <th style="width: 18%">Course Code</th>
+                                            <th style="width: 35%">Course Title</th>
+                                            <th style="width: 10%">Credit</th>
+                                            <th style="width: 15%">Total Students</th>
+                                            <th style="width: 10%">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th >SL</th>
+                                            <th>Course Code</th>
+                                            <th>Course Title</th>
+                                            <th>Credit</th>
+                                            <th>Total Students</th>
+                                            <th>Start date</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for course in courses %}
+                                         <tr style="text-align: center">
+                                           <th scope="row">{{ forloop.counter }}</th>
 
-                                                                   <td>{{ course.courseCode }}</td>
-                                                                     <td style="text-align: left">{{ course.courseTitle }}</td>
-                                                                   <td>{{ course.courseCredit }}</td>
-                                                                     <td>{{ forloop.counter }}</td>
-                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                           <td>{{ course.courseCode }}</td>
+                                             <td style="text-align: left">{{ course.courseTitle }}</td>
+                                           <td>{{ course.courseCredit }}</td>
+                                             <td>{{ forloop.counter }}</td>
+                                           <td><button type="button" class="btn btn-success">View</button></td>
 
-                                                                 </tr>
-                                                            {% endfor %}
-                                                            </tbody>
-                                                        </table>
-
+                                         </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -670,7 +668,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="card">
                                         <div class="body">
-                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                            <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
                                                 <div class="dz-message">
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
@@ -678,19 +677,19 @@
                                                     <h3>Drop a Teacher files here or click to upload.</h3>
                                                 </div>
                                                 <div class="fallback">
-                                                    <input name="file" type="file" multiple />
-                                                </div>
+                                                    <input name="excel_file" type="file"  enctype="multipart/form-data" />
+                                                     </div>
+                                                <input type="submit" value="Upload"/>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher">Add Manually </button>
-
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" class="btn btn-primary btn-lg btn-block cregister">Add Manually </button>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" name="teacher_save" id="teacherSave">SAVE CHANGES</button>
+                            <button value="Upload" type="submit" class="btn btn-link waves-effect"  name="teacher_save" id="teacherSave">SAVE CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose">CLOSE</button>
                         </div>
 
