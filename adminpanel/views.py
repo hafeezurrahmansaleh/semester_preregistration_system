@@ -24,8 +24,17 @@ def insert(request):
         courseCredit = request.POST['ccredit']
         courseLevel = request.POST['clevel']
         courseTerm = request.POST['cterm']
-        newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm)
-        newCourse.save()
+        if Courses.objects.filter(courseCode=courseCode):
+            course = Courses.objects.get(courseCode=courseCode)
+            course.courseTitle = courseTitle
+            course.courseCredit = courseCredit
+            course.level = courseLevel
+            course.term = courseTerm
+            course.save()
+        else:
+            newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm)
+            newCourse.save()
+
         return redirect('index')
 
     elif table == 'student':
@@ -35,17 +44,54 @@ def insert(request):
         studentGender = request.POST['stgender']
         studentPhone = request.POST['stphone']
         studentAdvisor = request.POST['stadvisor']
-        newStudent = StudentInfo(stID=studentID,stName=studentName,stEmail=studentEmail,stGender=studentGender,stPhone=studentPhone,stAdivsor=studentAdvisor)
-        newStudent.save()
+        advisor = TeacherInfo.objects.get(tName=studentAdvisor)
+        if StudentInfo.objects.filter(stID=studentID).exists():
+            student = StudentInfo.objects.get(stID=studentID)
+            student.stName = studentName
+            student.stEmail = studentEmail
+            student.stGender = studentGender
+            student.stPhone = studentPhone
+            student.stAdvisor = advisor
+            student.save()
+        else:
+            newStudent = StudentInfo(stID=studentID,stName=studentName,stEmail=studentEmail,stGender=studentGender,stPhone=studentPhone,stAdvisor=advisor)
+            newStudent.save()
+
         return redirect('index')
 
     elif table =='teacher':
+        print(table)
         teacherID = request.POST['tid']
         teacherName = request.POST['tname']
         teacherInitial = request.POST['tinitial']
         teacherDesignation = request.POST['tdesingnation']
         teacherPhone = request.POST['tphone']
         teacherEmail = request.POST['temail']
-        newTeacher = TeacherInfo(tID=teacherID,tName=teacherName,tInitial=teacherInitial,tDesignation=teacherDesignation,tPhone=teacherPhone,tEmail=teacherEmail)
-        newTeacher.save()
+        if TeacherInfo.objects.filter(tID= teacherID).exists():
+            teacher = TeacherInfo.objects.get(tID=teacherID)
+            teacher.tName = teacherName
+            teacher.tInitial = teacherInitial
+            teacher.tDesignation = teacherDesignation
+            teacher.tPhone = teacherPhone
+            teacher.tEmail = teacherEmail
+            teacher.save()
+        else:
+            newTeacher = TeacherInfo(tID=teacherID,tName=teacherName,tInitial=teacherInitial,tDesignation=teacherDesignation,tPhone=teacherPhone,tEmail=teacherEmail)
+            newTeacher.save()
+
         return redirect('index')
+
+def teacherDelete(request,tid):
+    teacher = TeacherInfo.objects.get(pk=tid)
+    teacher.delete()
+    return redirect('index')
+
+def studentDelete(request,stid):
+    student = StudentInfo.objects.get(pk=stid)
+    student.delete()
+    return redirect('index')
+
+def courseDelete(request,courseCode):
+    course = Courses.objects.get(pk=courseCode)
+    course.delete()
+    return redirect('index')

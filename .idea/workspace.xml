@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1e273d8-35f9-41c6-b1c6-e246ccdf0985" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/semester_preregistration_portal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/semester_preregistration_portal.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/adminpanel/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/adminpanel/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/adminpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/adminpanel/views.py" afterDir="false" />
@@ -37,10 +38,10 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Django-CRUD-App" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -103,7 +104,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575145959987</updated>
-      <workItem from="1575930035687" duration="13987000" />
+      <workItem from="1575930035687" duration="54830000" />
     </task>
     <servers />
   </component>
@@ -115,26 +116,34 @@
       <screen x="1366" y="0" width="1600" height="860" />
     </state>
     <state x="1620" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575930177447" />
-    <state width="1323" height="99" key="GridCell.Tab.0.bottom" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="1946" y="184" key="FileChooserDialogImpl" timestamp="1576183449882">
+      <screen x="1366" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="170" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770127" />
+    <state x="1946" y="184" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576183449882" />
+    <state width="1557" height="72" key="GridCell.Tab.0.bottom" timestamp="1576217738999">
+      <screen x="1366" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="72" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576217738999" />
     <state width="1323" height="99" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
-    <state width="1323" height="99" key="GridCell.Tab.0.center" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1557" height="72" key="GridCell.Tab.0.center" timestamp="1576217738999">
+      <screen x="1366" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="170" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770126" />
+    <state width="1557" height="72" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576217738999" />
     <state width="1323" height="99" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
-    <state width="1323" height="99" key="GridCell.Tab.0.left" timestamp="1576042179016">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1557" height="72" key="GridCell.Tab.0.left" timestamp="1576217738998">
+      <screen x="1366" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="170" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770126" />
+    <state width="1557" height="72" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576217738998" />
     <state width="1323" height="99" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1576042179016" />
-    <state width="1323" height="99" key="GridCell.Tab.0.right" timestamp="1576042179017">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1557" height="72" key="GridCell.Tab.0.right" timestamp="1576217738999">
+      <screen x="1366" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="170" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1575954770127" />
+    <state width="1557" height="72" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576217738999" />
     <state width="1323" height="99" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1576042179017" />
+    <state x="1667" y="72" key="SettingsEditor" timestamp="1576184896400">
+      <screen x="1366" y="0" width="1600" height="860" />
+    </state>
+    <state x="1667" y="72" key="SettingsEditor/0.0.1366.728/1366.0.1600.860@1366.0.1600.860" timestamp="1576184896400" />
     <state x="1829" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1575953836589">
       <screen x="1366" y="0" width="1600" height="860" />
     </state>

@@ -305,7 +305,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle" onclick="s();" data-toggle="modal" data-target="#largeModalTeacher">
+                                <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#largeModalTeacher">
                                     <span>View Teacher List</span>
                                 </a>
 {#                                <ul class="ml-menu">#}
@@ -335,7 +335,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle" onclick="s();" data-toggle="modal" data-target="#largeModalStudent">
+                                <a href="javascript:void(0);" class="menu-toggle"  data-toggle="modal" data-target="#largeModalStudent">
                                     <span>View Student List</span>
                                 </a>
                             </li>
@@ -360,7 +360,7 @@
                             </li>
                             <li>
                                 <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#fileUploadCourse">
-                                    <span>Update Course List</span>
+                                    <span>Add Course List</span>
                                 </a>
                             </li>
                         </ul>
@@ -681,8 +681,7 @@
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
                                                     </div>
-                                                    <h3>Drop files here or click to upload.</h3>
-                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                    <h3>Drop a Teacher files here or click to upload.</h3>
                                                 </div>
                                                 <div class="fallback">
                                                     <input name="file" type="file" multiple />
@@ -693,7 +692,7 @@
                                 </div>
                             </div>
                             <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputModalTeacher">Add Manually </button>
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher">Add Manually </button>
 
                         </div>
                         <div class="modal-footer">
@@ -706,7 +705,7 @@
             </div>
             <!-- Modal Dialogs ====================================================================================================================== -->
             <!-- Default Size -->
-            <div class="modal fade" id="inputModalTeacher" tabindex="-1" role="dialog">
+            <div class="modal fade" id="inputTeacher" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <form method="post" action="insert">
@@ -720,7 +719,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="tid">
+                                            <input type="text" class="form-control" id="tid" name="tid" id="tid">
                                             <label class="form-label">Teacher ID</label>
                                         </div>
                                     </div>
@@ -728,7 +727,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="tname">
+                                            <input type="text" class="form-control" name="tname" id="tname">
                                             <label class="form-label">Teacher Name</label>
                                         </div>
                                     </div>
@@ -736,7 +735,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="tinitial">
+                                            <input type="text" class="form-control" name="tinitial" id="tinitial">
                                             <label class="form-label">Teacher Initial</label>
                                         </div>
                                     </div>
@@ -745,7 +744,7 @@
                                     <div class="col-sm-6" >
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="tdesingnation" />
+                                                <input  type="text" class="form-control" name="tdesingnation" id="tdesignation" />
                                                 <label class="form-label">Teacher Designation</label>
                                             </div>
                                         </div>
@@ -753,7 +752,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="tphone"/>
+                                                <input type="text" class="form-control" name="tphone" id="tphone"/>
                                                 <label class="form-label">Teacher Phone Number</label>
                                             </div>
                                         </div>
@@ -762,7 +761,7 @@
                                  <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="temail">
+                                            <input type="text" class="form-control" name="temail" id="temail">
                                             <label class="form-label">Teacher Email</label>
                                         </div>
                                     </div>
@@ -770,7 +769,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect" name="tsave" id="t_save">SAVE CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect"  name="tsave" id="t_save">SAVE CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"  name="tclose" id="t_close">CLOSE</button>
                         </div>
                             </form>
@@ -797,8 +796,7 @@
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
                                                     </div>
-                                                    <h3>Drop files here or click to upload.</h3>
-                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                    <h3>Drop Student files here or click to upload.</h3>
                                                 </div>
                                                 <div class="fallback">
                                                     <input name="file" type="file" multiple />
@@ -835,7 +833,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="stid">
+                                            <input type="text" class="form-control" name="stid" id="stid">
                                             <label class="form-label">Student ID</label>
                                         </div>
                                     </div>
@@ -843,7 +841,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="stname">
+                                            <input type="text" class="form-control" name="stname" id="stname">
                                             <label class="form-label">Student Name</label>
                                         </div>
                                     </div>
@@ -851,7 +849,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="stemail">
+                                            <input type="text" class="form-control" name="stemail" id="stemail">
                                             <label class="form-label">Student Email</label>
                                         </div>
                                     </div>
@@ -860,22 +858,17 @@
                                     <div class="col-sm-6">
                                         <div class="form-group form-float">
                                             <div>
-                                                <div class="dropdown">
-                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="gender">
-                                                        Gender
-                                                      </button>
-                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#" name="stgender" >Male</a>
-                                                        <a class="dropdown-item" href="#" name="stgender">Female</a>
-                                                      </div>
-                                                    </div>
+                                                <select name="stgender" id="stgender">
+                                                          <option value="male">Male</option>
+                                                          <option value="female">Female</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="stphone" />
+                                                <input type="text" class="form-control" name="stphone" id="stphone" />
                                                 <label class="form-label">Student Phone Number</label>
                                             </div>
                                         </div>
@@ -884,7 +877,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="stadvisor">
+                                            <input type="text" class="form-control" name="stadvisor" id="stadvisor">
                                             <label class="form-label">Student Advisor</label>
                                         </div>
                                     </div>
@@ -921,8 +914,7 @@
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
                                                     </div>
-                                                    <h3>Drop files here or click to upload.</h3>
-                                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                                    <h3>Drop a Course information files here or click to upload.</h3>
                                                 </div>
                                                 <div class="fallback">
                                                     <input name="file" type="file" multiple />
@@ -1004,7 +996,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect" name="saveChanges" id="save" >SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="add_manually" id="addManually" >ADD Manually</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="add_manually" id="addManually" >CLOSE</button>
                         </div>
                             </form>
                     </div>
@@ -1012,8 +1004,8 @@
             </div>
     </div>
             <!-- Large Size -->
-            <div class="modal fade" id="largeModalTeacher" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
+            <div class="modal fade" id="largeModalTeacher" tabindex="-1" role="dialog" >
+                <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="largeModalLabel">Teacher Information</h4>
@@ -1077,14 +1069,27 @@
                                                             {% for teacher in teachers %}
                                                                  <tr style="text-align: center">
                                                                    <th scope="row">{{ forloop.counter }}</th>
-                                                                     <td>{{ teacher.tid }}</td>
+                                                                     <td>{{ teacher.tID }}</td>
                                                                      <td style="text-align: left">{{ teacher.tName }}</td>
                                                                      <td>{{ teacher.tInitial }}</td>
                                                                      <td>{{ teacher.tDesignation }}</td>
                                                                      <td>{{ teacher.tPhone }}</td>
                                                                      <td>{{ teacher.tEmail }}</td>
                                                                      <td>{{ forloop.counter }}</td>
-                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                   <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" onclick="teacherEditor('{{ teacher.tID }}','{{ teacher.tName }}','{{ teacher.tInitial }}','{{ teacher.tDesignation }}','{{ teacher.tPhone }}','{{ teacher.tEmail }}' );">Edit</a></td>
+                                                                     <td><a class="btn btn-danger" href="/adminpanel/teacherDelete/{{ teacher.id }}">Delete</a></td>
+                                                                 <script type="text/javascript">
+                                                                     function teacherEditor(tID,tName,tInitial,tDesignation,tPhone,tEmail){
+                                                                         document.getElementById('tid').value=tID;
+                                                                         document.getElementById('tid').readOnly = true;
+                                                                         document.getElementById('tname').value=tName;
+                                                                         document.getElementById('tinitial').value=tInitial;
+                                                                         document.getElementById('tdesignation').value=tDesignation;
+                                                                         document.getElementById('tphone').value=tPhone;
+                                                                         document.getElementById('temail').value=tEmail;
+
+                                                                     }
+                                                                 </script>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -1097,7 +1102,7 @@
                                     <!-- #END# Exportable Table -->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" >SAVE CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                         </div>
                     </div>
@@ -1161,7 +1166,7 @@
                                                                     <th>Student ID</th>
                                                                     <th>Student Name</th>
                                                                     <th>Student Email</th>
-                                                                    <th>Gende</th>
+                                                                    <th>Gender</th>
                                                                     <th>Student Phone</th>
                                                                     <th>Student Advisor</th>
                                                                 </tr>
@@ -1170,14 +1175,26 @@
                                                             {% for student in students %}
                                                                  <tr style="text-align: center">
                                                                    <th scope="row">{{ forloop.counter }}</th>
-                                                                     <td>{{ student.stid }}</td>
+                                                                     <td>{{ student.stID }}</td>
                                                                      <td style="text-align: left">{{ student.stName }}</td>
                                                                      <td>{{ student.stEmail }}</td>
                                                                      <td>{{ student.stGender }}</td>
                                                                      <td>{{ student.stPhone }}</td>
-                                                                     <td>{{ student.stAdivisor }}</td>
+                                                                     <td>{{ student.stAdvisor__tName }}</td>
                                                                      <td>{{ forloop.counter }}</td>
-                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                 <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent" onclick="studentEditor('{{ student.stID }}','{{ student.stName }}','{{ student.stEmail }}','{{ student.stGender }}','{{ student.stPhone }}','{{ student.stAdvisor.tName }}' );">Edit</a></td>
+                                                                   <td><a class="btn btn-danger" href="/adminpanel/studentDelete/{{ student.id }}">Delete</a></td>
+                                                                 <script type="text/javascript">
+                                                                     function studentEditor(stID,stName,stEmail,stGender,stPhone,stAdvisor){
+                                                                         document.getElementById('stid').value=stID;
+                                                                         document.getElementById('stid').readOnly = true;
+                                                                         document.getElementById('stname').value=stName;
+                                                                         document.getElementById('stemail').value=stEmail;
+                                                                         document.getElementById('stgender').value=stGender;
+                                                                         document.getElementById('stphone').value=stPhone;
+                                                                         document.getElementById('stadvisor').value=stAdvisor;
+                                                                     }
+                                                                 </script>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -1267,7 +1284,18 @@
                                                                      <td>{{ course.level }}</td>
                                                                      <td>{{ course.term }}</td>
                                                                      <td>{{ forloop.counter }}</td>
-                                                                   <td><button type="button" class="btn btn-success">View</button></td>
+                                                                   <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse" onclick="courseEditor('{{ course.courseCode }}','{{ course.courseTitle }}','{{ course.courseCredit }}','{{ course.level }}','{{ course.term }}' );">Edit</a></td>
+                                                                   <td><a class="btn btn-danger" href="/adminpanel/courseDelete/{{ course.id }}">Delete</a></td>
+                                                                     <script type="text/javascript">
+                                                                     function courseEditor(courseCode,courseTitle,courseCredit,level,term){
+                                                                         document.getElementById('ccode').value=courseCode;
+                                                                         document.getElementById('ccode').readOnly = true;
+                                                                         document.getElementById('ctitle').value=courseTitle;
+                                                                         document.getElementById('ccredit').value=courseCredit;
+                                                                         document.getElementById('clevel').value=level;
+                                                                         document.getElementById('cterm').value=term;
+                                                                     }
+                                                                    </script>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -1285,6 +1313,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
