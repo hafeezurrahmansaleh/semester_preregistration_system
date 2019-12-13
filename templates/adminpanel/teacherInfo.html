@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+    <!-- Large Size -->
+    <div class="modal fade" id="largeModalTeacher" tabindex="-1" role="dialog" >
+                <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Teacher Information</h4>
+                        </div>
+                        <div class="modal-body">
+                                    <!-- Exportable Table -->
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <span>
+                                                    <h2>
+                                                        Pre-Registered Courses
+                                                        <select >
+                                                      <option>Spring 2020</option>
+                                                      <option>Fall 2019</option>
+                                                      <option>Summer 2019</option>
+                                                      <option>Spring 2019</option>
+                                                    </select></span>
+                                                    </h2>
+
+                                                    <ul class="header-dropdown m-r--5">
+                                                        <li class="dropdown">
+                                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </a>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li><a href="javascript:void(0);">Action</a></li>
+                                                                <li><a href="javascript:void(0);">Another action</a></li>
+                                                                <li><a href="javascript:void(0);">Something else here</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Teacher ID</th>
+                                                                    <th style="width: 35%">Teacher Name</th>
+                                                                    <th style="width: 10%">Teacher Initial</th>
+                                                                    <th style="width: 15%">Teacher Designation</th>
+                                                                    <th style="width: 10%">Teacher Phone</th>
+                                                                    <th style="width: 10%">Teacher Email</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th >SL</th>
+                                                                    <th>Teacher ID</th>
+                                                                    <th>Teacher Name</th>
+                                                                    <th>Teacher Initial</th>
+                                                                    <th>Teacher Designation</th>
+                                                                    <th>Teacher Phone</th>
+                                                                    <th>Teacher Email</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            {% for teacher in teachers %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ teacher.tID }}</td>
+                                                                     <td style="text-align: left">{{ teacher.tName }}</td>
+                                                                     <td>{{ teacher.tInitial }}</td>
+                                                                     <td>{{ teacher.tDesignation }}</td>
+                                                                     <td>{{ teacher.tPhone }}</td>
+                                                                     <td>{{ teacher.tEmail }}</td>
+                                                                     <td>{{ forloop.counter }}</td>
+                                                                   <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" onclick="teacherEditor('{{ teacher.tID }}','{{ teacher.tName }}','{{ teacher.tInitial }}','{{ teacher.tDesignation }}','{{ teacher.tPhone }}','{{ teacher.tEmail }}' );">Edit</a></td>
+                                                                     <td><a class="btn btn-danger" href="/adminpanel/teacherDelete/{{ teacher.id }}">Delete</a></td>
+                                                                 <script type="text/javascript">
+                                                                     function teacherEditor(tID,tName,tInitial,tDesignation,tPhone,tEmail){
+                                                                         document.getElementById('tid').value=tID;
+                                                                         document.getElementById('tid').readOnly = true;
+                                                                         document.getElementById('tname').value=tName;
+                                                                         document.getElementById('tinitial').value=tInitial;
+                                                                         document.getElementById('tdesignation').value=tDesignation;
+                                                                         document.getElementById('tphone').value=tPhone;
+                                                                         document.getElementById('temail').value=tEmail;
+
+                                                                     }
+                                                                 </script>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #END# Exportable Table -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" >SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div id="inputAreaTeacher">
+            <!-- Default Size -->
+            <div class="modal fade" id="fileUploadTeacher" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Teacher Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="body">
+                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                <div class="dz-message">
+                                                    <div class="drag-icon-cph">
+                                                        <i class="material-icons">touch_app</i>
+                                                    </div>
+                                                    <h3>Drop a Teacher files here or click to upload.</h3>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="file" type="file" multiple />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher">Add Manually </button>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" name="teacher_save" id="teacherSave">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose">CLOSE</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Dialogs ====================================================================================================================== -->
+            <!-- Default Size -->
+            <div class="modal fade" id="inputTeacher" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="insert">
+                            {% csrf_token %}
+                            <input type="hidden" name="editorTitle" value="teacher">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="defaultModalLabel" style="text-align: center">Teacher Information</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div >
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" id="tid" name="tid" id="tid">
+                                            <label class="form-label">Teacher ID</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="tname" id="tname">
+                                            <label class="form-label">Teacher Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="tinitial" id="tinitial">
+                                            <label class="form-label">Teacher Initial</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6" >
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input  type="text" class="form-control" name="tdesingnation" id="tdesignation" />
+                                                <label class="form-label">Teacher Designation</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="tphone" id="tphone"/>
+                                                <label class="form-label">Teacher Phone Number</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="temail" id="temail">
+                                            <label class="form-label">Teacher Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect"  name="tsave" id="t_save">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"  name="tclose" id="t_close">CLOSE</button>
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+{% endblock %}

@@ -11,10 +11,12 @@ def index(request):
     course = Courses.objects.all()
     teacher = TeacherInfo.objects.all()
     student = StudentInfo.objects.all()
+    semester = SemesterInfo.objects.all()
     context = {
         'courses':course,
         'teachers':teacher,
-        'students':student
+        'students':student,
+        'semesters':semester
     }
     return render(request, 'adminpanel/index.html',context)
 def insert(request):
@@ -81,6 +83,26 @@ def insert(request):
             newTeacher.save()
 
         return redirect('index')
+    elif table =='semester':
+        semesterCode = request.POST['scode']
+        semesterTitle = request.POST['stitle']
+        regOpenDate = request.POST['regOpenDate']
+        regClosedDate = request.POST['regClosedDate']
+        if SemesterInfo.objects.filter(semesterCode=semesterCode).exists():
+            semester = SemesterInfo.objects.get(semesterCode=semesterCode)
+            semester.semesterCode = semesterCode
+            semester.semesterTitle = semesterTitle
+            semester.regOpenDate = regOpenDate
+            semester.regClosedDate = regClosedDate
+            semester.save()
+        else:
+            newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
+            newSemester.save()
+
+        return redirect('index')
+
+
+
 
 def teacherDelete(request,tid):
     teacher = TeacherInfo.objects.get(pk=tid)
@@ -98,7 +120,12 @@ def courseDelete(request,courseCode):
     return redirect('index')
 
 def studentList(request):
-    return render(request, 'adminpanel/studentlist.html')
+    studentlist = CoursePreRegistration.objects.all()
+    context = {
+        'studentlists': studentlist,
+    }
+    return render(request, 'adminpanel/studentlist.html',context)
+
 
 
 def fileUpload(request):
@@ -138,3 +165,4 @@ def fileUpload(request):
             excel_data.append(row_data)
         return render(request, 'adminpanel/studentlist.html', {"excel_data":excel_data})
 
+    
