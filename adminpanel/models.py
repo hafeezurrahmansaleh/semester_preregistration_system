@@ -16,7 +16,7 @@ class Courses(models.Model):
     term = models.IntegerField()
 
 class SemesterInfo(models.Model):
-    semesterCode = models.IntegerField(unique=True)
+    semesterCode = models.IntegerField(unique=False)
     semester = models.CharField(max_length=10)
     course = models.ForeignKey(Courses,on_delete=models.CASCADE)
     totalSection = models.IntegerField()
@@ -24,6 +24,6 @@ class SemesterInfo(models.Model):
 class CoursePreRegistration(models.Model):
     student = models.ForeignKey(StudentInfo, on_delete= models.CASCADE)
     course = models.ForeignKey(Courses, on_delete= models.CASCADE)
-    semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
+    semester = models.CharField(max_length=20)
     section = models.CharField(max_length=5)
     paymentStatus = models.CharField(max_length=20)
