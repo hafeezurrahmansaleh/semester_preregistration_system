@@ -8,8 +8,11 @@ import json
 
 from .models import *
 from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration
-sid = 1;
-student = StudentInfo.objects.get(pk=sid)
+try:
+    sid = 2;
+    student = StudentInfo.objects.get(pk=sid)
+except:
+    print('s')
 def studentPanelHome(request):
     courses = Courses.objects.all()
     student = StudentInfo.objects.get(pk = sid)
