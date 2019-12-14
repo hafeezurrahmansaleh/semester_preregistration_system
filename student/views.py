@@ -8,8 +8,11 @@ import json
 
 from .models import *
 from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration
-sid = 1;
-student = StudentInfo.objects.get(pk=sid)
+try:
+    sid = 2;
+    student = StudentInfo.objects.get(pk=sid)
+except:
+    print('s')
 def studentPanelHome(request):
     courses = Courses.objects.all()
     student = StudentInfo.objects.get(pk = sid)
@@ -31,11 +34,11 @@ def findCourse(request):
 def registerCourse(request):
     courseCode = request.POST['ccode']
     section = request.POST['section']
-    semestertitle = request.POST['semester']
+    semestercode = request.POST['semester']
     try:
         student = StudentInfo.objects.get(pk=sid)
         course = Courses.objects.get(courseCode=courseCode)
-        semester = SemesterInfo.objects.get(semesterTitle=semestertitle)
+        semester = SemesterInfo.objects.get(semesterCode=semestercode)
         registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
         registration.save()
         msg="successfully saved"

@@ -1,6 +1,12 @@
 from django.db import models
 from student.models import StudentInfo
 from teacher.models import TeacherInfo
+from users.models import User
+
+
+class AdminInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 
 class Courses(models.Model):
     courseCode = models.CharField(max_length=10, unique=True)
