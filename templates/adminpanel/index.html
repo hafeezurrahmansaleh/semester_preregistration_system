@@ -679,19 +679,22 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="card">
                                         <div class="body">
-                                            <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                                                {% csrf_token %}
                                                 <div class="dz-message">
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
                                                     </div>
                                                     <h3>Drop a Teacher files here or click to upload.</h3>
                                                 </div>
+
                                                 <div class="fallback">
+
+                                                </div>
+                                            <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
                                                     <input name="excel_file" type="file"  enctype="multipart/form-data" />
-                                                     </div>
-                                                <input type="submit" value="Upload"/>
+                                            <input type="submit" value="Upload"/>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>

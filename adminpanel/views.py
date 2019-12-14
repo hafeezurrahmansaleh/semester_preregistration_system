@@ -159,8 +159,13 @@ def fileUpload(request):
         # getting value from each cell in row
         for row in worksheet.iter_rows():
             row_data = list()
+            print("baaaaaaaaaaaaaaaaaaal")
+
             for cell in row:
                 row_data.append(str(cell.value))
+                if (cell.value == 'id'):
+                   continue
+
                 print(cell.value)
             excel_data.append(row_data)
         return render(request, 'adminpanel/studentlist.html', {"excel_data":excel_data})
