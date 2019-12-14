@@ -18,34 +18,24 @@
             <h5 style="text-align: center; color: white">Department of Software Engineering</h5>
         </div>
         <div class="card">
-           <div class="header">
+            <div class="header">
                 <h2 style="text-align: center">Activate Your Account</h2>
-            </div>
+           </div>
             <div class="body">
                 <form method="POST">
-                                {% csrf_token %}
-                                    {{ form|crispy }}
+                                    {% csrf_token %}
+                                        {{ form|crispy }}
 
-                    <div class="form-group">
-                        <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
-                        <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
-                    </div>
-
-                        <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
-                        <div class="m-t-25 m-b--5 align-center">
-                            <a href="{% url 'account_login' %}">You already have a active account?</a>
+                        <div class="form-group">
+                            <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
+                            <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
                         </div>
-                    </form>
-{#                    <div class="content-wrap">#}
-{#                        {% if messages %}#}
-{#                            {% for message in messages %}#}
-{#                                <div class="alert alert-{{ message.tags }}">#}
-{#                                    {{ message }}#}
-{#                                </div>#}
-{#                            {% endfor %}#}
-{#                        {% endif %}#}
-{#                        {% block content %}{% endblock %}#}
-{#                    </div>#}
+
+                            <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
+                            <div class="m-t-25 m-b--5 align-center">
+                                <a href="{% url 'account_login' %}">You already have a active account?</a>
+                            </div>
+                        </form>
             </div>
         </div>
     </div>
