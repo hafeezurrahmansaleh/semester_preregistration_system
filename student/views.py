@@ -72,8 +72,9 @@ def dropCourses(request):
     return HttpResponse('success')
 @csrf_exempt
 def findRegisteredCourses(request):
-    semester = request.POST['semester']
-    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester')
+    semesterCode = request.POST['semester']
+    semester = SemesterInfo.objects.get(semesterCode = semesterCode)
+    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester__semesterTitle')
     # print(level+semester)
     data = json.dumps(list(courses))
     # data = serializers.serialize('json', courses)

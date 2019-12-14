@@ -390,8 +390,6 @@
                             return;
                         }
                         var cid;
-
-                        console.log(document.getElementById('csection')[0].value);
                         var rowCount = document.getElementById('selectedcourse').rows.length;
                         for (i = 1; i < rowCount; i++) {
                             req = $.ajax({
@@ -414,15 +412,21 @@
             });
     </script>
     <script type="text/javascript">
+        $( document ).ready(function() {
+               $("#selectSemester option").filter(function() {
+                  return this.value == "192";
+           }).prop('selected', true);
+        });
         $(document).ready(function() {
             $("#selectSemester").change(function() {
                 var semester = document.getElementById('selectSemester').value;
+
                 req = $.ajax({
                     url : '/student/findregisteredcourses',
                     type : 'POST',
                     data : { semester : semester }
                 });
-
+                console.log(semester);
                 req.done(function(data) {
                     var Table = document.getElementById("courses");
                     Table.innerHTML = "";
