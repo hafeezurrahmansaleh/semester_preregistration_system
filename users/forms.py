@@ -17,6 +17,7 @@ class StudentSignUpForm(forms.ModelForm):
         cleaned_data = super(StudentSignUpForm, self).clean()
         raw_email = cleaned_data.get('email')
         stu = StudentInfo.objects.filter(stEmail=raw_email).first()
+        print(raw_email)
         if stu is not None:
             print(raw_email)
             user = super().save(commit=False)

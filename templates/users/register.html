@@ -1,75 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
 {% load static %}
 {% load crispy_forms_tags %}
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Registration</title>
-
-    <!-- ================= Favicon ================== -->
-    <!-- Standard -->
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
-
-    <!-- Styles -->
-    <link href="{% static 'parents/assets/css/lib/font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'parents/assets/css/lib/themify-icons.css' %}" rel="stylesheet">
-    <link href="{% static 'parents/assets/css/lib/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'parents/assets/css/lib/helper.css' %}" rel="stylesheet">
-    <link href="{% static 'parents/assets/css/style.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Sign In</title>
+    <!-- Favicon-->
 </head>
-
-<body class="bg-primary">
-
-    <div class="unix-login">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="login-content">
-                        <div class="login-logo">
-                            <a href="index.html"><span>SWE</span></a>
-                        </div>
-                        <div class="login-form">
-                            <h4>Registration</h4>
-                            <form method="POST">
+<body class="signup-page">
+    <div class="signup-box">
+        <div class="logo">
+            <h3 style="text-align: center; color: white">Daffodil International University</h3>
+            <h5 style="text-align: center; color: white">Department of Software Engineering</h5>
+        </div>
+        <div class="card">
+           <div class="header">
+                <h2 style="text-align: center">Activate Your Account</h2>
+            </div>
+            <div class="body">
+                <form method="POST">
                                 {% csrf_token %}
-                                <fieldset class="form-group">
                                     {{ form|crispy }}
-                                </fieldset>
-                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
-                                
-                                <div class="register-link m-t-15 text-center">
-                                    <p>Already have account ? <a href="{% url 'login' %}"> Sign in</a></p>
-                                </div>
-                            </form>
-                            <div class="content-wrap">
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-{{ message.tags }}">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                {% block content %}{% endblock %}
-                            </div>
-                        </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
+                        <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
                     </div>
-                </div>
+
+                        <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
+                        <div class="m-t-25 m-b--5 align-center">
+                            <a href="{% url 'account_login' %}">You already have a active account?</a>
+                        </div>
+                    </form>
+{#                    <div class="content-wrap">#}
+{#                        {% if messages %}#}
+{#                            {% for message in messages %}#}
+{#                                <div class="alert alert-{{ message.tags }}">#}
+{#                                    {{ message }}#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                        {% block content %}{% endblock %}#}
+{#                    </div>#}
             </div>
         </div>
     </div>
-
 </body>
-
-</html>
+{% endblock %}

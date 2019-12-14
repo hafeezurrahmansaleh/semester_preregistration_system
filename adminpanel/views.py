@@ -87,13 +87,17 @@ def insert(request):
         semesterCode = request.POST['scode']
         semesterTitle = request.POST['stitle']
         regOpenDate = request.POST['regOpenDate']
+        # formatedregOpenDate = regOpenDate.strftime("%YYYY-%MM-%DD")
         regClosedDate = request.POST['regClosedDate']
+        # formatedregClosedDate = regClosedDate.strftime("%YYYY-%MM-%DD")
+        print(regOpenDate)
+
         if SemesterInfo.objects.filter(semesterCode=semesterCode).exists():
             semester = SemesterInfo.objects.get(semesterCode=semesterCode)
             semester.semesterCode = semesterCode
             semester.semesterTitle = semesterTitle
-            semester.regOpenDate = regOpenDate
-            semester.regClosedDate = regClosedDate
+            semester.regOpenDate = formatedregOpenDate
+            semester.regClosedDate = formatedregClosedDate
             semester.save()
         else:
             newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)

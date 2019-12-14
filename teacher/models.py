@@ -5,8 +5,8 @@ from users.models import User
 
 class TeacherInfo(models.Model):
     tID = models.CharField(max_length=30,unique=True)
-    tName = models.CharField(max_length=30)
+    tName = models.CharField(max_length=50)
     tInitial = models.CharField(max_length=10)
     tDesignation = models.CharField(max_length=20)
     tPhone = models.CharField(max_length=20)
-    tEmail = models.CharField(max_length=20)
+    tEmail = models.CharField(max_length=50)
