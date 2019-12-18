@@ -9,6 +9,5 @@ class StudentInfo(models.Model):
     stEmail = models.CharField(max_length=30)
     stGender = models.CharField(max_length=6)
     stPhone = models.CharField(max_length=20)
-    stAdvisor = models.ForeignKey( TeacherInfo, on_delete=models.CASCADE)
-    stPassword = models.CharField(max_length=30, null=True)
+    stAdvisor = models.ForeignKey( TeacherInfo, on_delete=models.CASCADE,null=True)
 

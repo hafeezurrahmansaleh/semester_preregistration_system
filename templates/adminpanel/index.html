@@ -693,9 +693,10 @@
 
                                                 </div>
                                             <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                    <input name="excel_file" type="file"  enctype="multipart/form-data" />
-                                            <input type="submit" value="Upload"/>
+                                                     {% csrf_token %}
+                                                    <input type="hidden" name="fileuploader" value="teacher">
+                                                <input name="excel_file" type="file"  enctype="multipart/form-data" />
+                                            <input type="submit" value="Upload" class="btn btn-primary btn-lg btn-block"/>
                                             </form>
 
                                         </div>
@@ -703,7 +704,7 @@
                                 </div>
                             </div>
                             <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" class="btn btn-primary btn-lg btn-block cregister">Add Manually </button>
+                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" class="btn btn-secondary  btn-lg btn-block cregister">Add Manually </button>
                         </div>
                         <div class="modal-footer">
                             <button value="Upload" type="submit" class="btn btn-link waves-effect"  name="teacher_save" id="teacherSave">SAVE CHANGES</button>
@@ -801,23 +802,29 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="card">
                                         <div class="body">
-                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+
                                                 <div class="dz-message">
                                                     <div class="drag-icon-cph">
                                                         <i class="material-icons">touch_app</i>
                                                     </div>
                                                     <h3>Drop Student files here or click to upload.</h3>
                                                 </div>
+
                                                 <div class="fallback">
-                                                    <input name="file" type="file" multiple />
-                                                </div>
+                                                     <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                 {% csrf_token %}
+                                            <input type="hidden" name="fileuploader" value="student">
+                                                    <input name="excel_file" type="file" multiple />
+
+                                                <input type="submit" value="Upload" class="btn btn-primary btn-lg btn-block"/>
                                             </form>
+                                                </div>/
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                            <button  data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent">Add Manually</button>
+                            <button class="btn btn-secondary btn-lg btn-block"  data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent">Add Manually</button>
 
                         </div>
                         <div class="modal-footer">
@@ -919,7 +926,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="card">
                                     <div class="body">
-                                        <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+
                                             <div class="dz-message">
                                                 <div class="drag-icon-cph">
                                                     <i class="material-icons">touch_app</i>
@@ -927,15 +934,20 @@
                                                 <h3>Drop a Course information files here or click to upload.</h3>
                                             </div>
                                             <div class="fallback">
-                                                <input name="file" type="file" multiple />
-                                            </div>
+                                                <form action="{% url "fileupload" %}" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="fileuploader" value="course">
+                                                 <input name="excel_file" type="file" multiple />
+
+                                                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Upload"/>
                                         </form>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
-                        <button data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse">Add Manually</button>
+                        <button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse">Add Manually</button>
 
                     </div>
                     <div class="modal-footer">
@@ -1048,7 +1060,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="date" class="form-control"  name="regOpenDate" id="regOpenDate"/>
+                                                <input type="date"  class="form-control"  name="regOpenDate" id="regOpenDate"/>
                                                 <label class="form-label">Registration Open Date</label>
                                             </div>
                                         </div>
