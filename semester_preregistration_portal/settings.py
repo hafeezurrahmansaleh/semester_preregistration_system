@@ -160,7 +160,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 LOGIN_URL = 'account_login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'profile'
-# ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+LOGOUT_REDIRECT_URL = 'account_login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4' #crispy
 

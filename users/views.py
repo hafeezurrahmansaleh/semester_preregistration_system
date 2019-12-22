@@ -23,7 +23,7 @@ def home(request):
             return redirect('tphome')
 #         else:
 #             return redirect('account_login')
-    # return redirect('account_login')
+    return redirect('account_login')
 
 
 class StudentSignUpView(CreateView):
@@ -56,6 +56,7 @@ class TeacherSignUpView(CreateView):
         return redirect('account_login')
 
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)

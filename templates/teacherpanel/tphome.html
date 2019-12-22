@@ -8,17 +8,10 @@
 </head>
 <body>
   <div style="margin-left:100px; padding-top:60px;">
-       <div style="width: 90%;margin: auto;">
-        <div>
-            <span>Advisor Name : </span>{{ teacher.tName }}<br>
-            <span>Advisor ID: </span>{{ teacher.tID }}<br>
-            <span>Number of Student</span>
-
-        </div>
    <div style="align: center">
     <div>
       <div  style="margin-right:60px; float:left; padding-top: 10px;">
-        <select style="margin-right:5px; width:50%; height:100px">
+        <select style="margin-right:5px; width:50%; height:100">
             <option value="semester">Select Semester</option>
             <option value="fall">Fall 2019</option>
             <option value="summer">Summer2020</option>
@@ -60,15 +53,27 @@
     </tr>
   </thead>
   <tbody>
-    {% for course in course %}
     <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ course.courseCode }}</td>
-      <td>{{ course.courseTitle }} </td>
-      <td>0</td>
+      <th scope="row">1</th>
+      <td>424</td>
+      <td>SOftware Testing </td>
+      <td>45</td>
       <td><button type="button" class="btn btn-success">View</button></td>
     </tr>
-    {% endfor %}
+    <tr>
+      <th scope="row">2</th>
+      <td>425</td>
+      <td>Documentation</td>
+      <td>35</td>
+      <td><button type="button" class="btn btn-success">View</button></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>321</td>
+      <td> Computing</td>
+      <td>20</td>
+      <td><button type="button" class="btn btn-success">View</button></td>
+    </tr>
   </tbody>
 </table>
     </div>

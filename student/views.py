@@ -6,10 +6,14 @@ from django.shortcuts import render, HttpResponse,redirect
 from django.views.decorators.csrf import csrf_exempt
 from users.models import User
 import json
-
+from django.contrib.auth.decorators import login_required
+from users.decorators import student_required
 from .models import *
 from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration
 
+
+@login_required
+@student_required
 def studentPanelHome(request):
     courses = Courses.objects.all()
     student = StudentInfo.objects.get(stEmail = request.user.email)
@@ -20,6 +24,10 @@ def studentPanelHome(request):
         'semesters' : semester
     }
     return render(request, 'studentpanel/stphome.html',context)
+
+
+@login_required
+@student_required
 @csrf_exempt
 def findCourse(request):
     cid = request.POST['cid']
@@ -27,6 +35,10 @@ def findCourse(request):
     # print(level+semester)
     data = serializers.serialize('json', courses)
     return HttpResponse(data)
+
+
+@login_required
+@student_required
 @csrf_exempt
 def registerCourse(request):
     courseCode = request.POST['ccode']
@@ -59,6 +71,10 @@ def registerCourse(request):
 #     except Exception as e:
 #         msg=e.__cause__
 #     return HttpResponse(msg)
+
+
+@login_required
+@student_required
 @csrf_exempt
 def dropCourses(request):
     courseCode = request.POST['ccode']
@@ -68,6 +84,10 @@ def dropCourses(request):
     registeredCourse=CoursePreRegistration.objects.get(student=student,course=course,semester=semester)
     registeredCourse.delete()
     return HttpResponse('success')
+
+
+@login_required
+@student_required
 @csrf_exempt
 def findRegisteredCourses(request):
     student = StudentInfo.objects.get(stEmail=request.user.email)
