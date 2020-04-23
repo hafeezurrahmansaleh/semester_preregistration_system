@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from users import views as user_views
+from adminpanel import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,10 @@ urlpatterns = [
     path('adminpanel/',include('adminpanel.urls')),
     path('advisor/',include('advisor.urls')),
     path('accounts/', include('users.urls')),
+    path('', include('users.urls')),
+    path('error404/<msg>',views.error404, name='error404' ),
+    path('prevpage',views.prevPage, name='prevPage' )
+
     # path('accounts/', include('allauth.urls')),
     # path('profile/', user_views.home, name='profile'),
 ]

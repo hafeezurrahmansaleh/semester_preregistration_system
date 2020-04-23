@@ -5,9 +5,13 @@
 <html>
 {% load static %}
 <head>
+    <style>
+        a{
+            text-align: center;
+        }
+    </style>
      <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -23,7 +27,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../../index.html">ADMINBSB - MATERIAL DESIGN</a>
+                <a class="navbar-brand" href="../../index.html">Department of Software Engineering</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -257,23 +261,22 @@
             <div class="row clearfix" >
                 <!-- Basic Examples -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                    <div class="card" style="height: 500px">
+                    <div class="card" style="height: 550px; overflow-y: scroll">
                         <div class="header">
-                        </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
-                                    <b>Panel Primary</b>
+                                    <b>Student List</b>
                                     <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-primary">
                                             <div class="panel-heading" role="tab" id="headingOne_1">
                                                 <h4 class="panel-title">
-                                                    <a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="true" aria-controls="collapseOne_1">
-                                                        Collapsible Group Item #1
+                                                    <a  role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="false" aria-controls="collapseOne_1">
+                                                        {{ course.courseTitle }} - Section A ({{ studentlistsA|length }} Students )
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <div id="collapseOne_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_1">
+                                            <div id="collapseOne_1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne_1">
                                                 <div class="panel-body">
                                                     <div class="table-responsive">
                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -286,24 +289,15 @@
                                                                     <th style="width: 10%">Student Phone</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th >SL</th>
-                                                                    <th>Student ID</th>
-                                                                    <th>Student Name</th>
-                                                                    <th>Student Email</th>
-                                                                    <th>Student Phone</th>
-                                                                </tr>
-                                                            </tfoot>
+
                                                             <tbody>
-                                                            {% for studentlist in studentlists %}
+                                                            {% for studentlist in studentlistsA %}
                                                                  <tr style="text-align: center">
                                                                    <th scope="row">{{ forloop.counter }}</th>
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
                                                                      <td>{{ studentlist.student.stPhone }}</td>
-                                                                     <td>{{ forloop.counter }}</td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -317,20 +311,37 @@
                                                 <h4 class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseTwo_1" aria-expanded="false"
                                                        aria-controls="collapseTwo_1">
-                                                        Collapsible Group Item #2
+                                                        {{ course.courseTitle }} - Section B ({{ studentlistsB|length }} Students )
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="collapseTwo_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_1">
                                                 <div class="panel-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                                                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                                    helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                                                    raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for studentlist in studentlistsB %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -339,20 +350,154 @@
                                                 <h4 class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseThree_1" aria-expanded="false"
                                                        aria-controls="collapseThree_1">
-                                                        Collapsible Group Item #3
+                                                        {{ course.courseTitle }} - Section C ({{ studentlistsC|length }} Students )
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="collapseThree_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_1">
                                                 <div class="panel-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                                                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                                    helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                                                    raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for studentlist in studentlistsC %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" role="tab" id="headingFour_1">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseFour_1" aria-expanded="false"
+                                                       aria-controls="collapseFour_1">
+                                                        {{ course.courseTitle }} - Section D ({{ studentlistsD|length }} Students )
+                                                    </a>
+                                          </h4>
+                                            </div>
+                                            <div id="collapseFour_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour_1">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for studentlist in studentlistsD %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" role="tab" id="headingFive_1">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseFive_1" aria-expanded="false"
+                                                       aria-controls="collapseFive_1">
+                                                        {{ course.courseTitle }} - Section E ({{ studentlistsE|length }} Students )
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseFive_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive_1">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for studentlist in studentlistsE %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" role="tab" id="headingSix_1">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseSix_1" aria-expanded="false"
+                                                       aria-controls="collapseSix_1">
+                                                        {{ course.courseTitle }} - Section F ({{ studentlistsF|length }} Students )
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseSix_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix_1">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                       <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%;">SL</th>
+                                                                    <th style="width: 18%">Student ID</th>
+                                                                    <th style="width: 35%">Student Name</th>
+                                                                    <th style="width: 10%">Student Email</th>
+                                                                    <th style="width: 10%">Student Phone</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for studentlist in studentlistsF %}
+                                                                 <tr style="text-align: center">
+                                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                                     <td>{{ studentlist.student.stID }}</td>
+                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
+                                                                     <td>{{ studentlist.student.stEmail }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

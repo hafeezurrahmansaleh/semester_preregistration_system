@@ -32,11 +32,13 @@ def registerCourse(request):
     courseCode = request.POST['ccode']
     section = request.POST['section']
     semestercode = request.POST['semester']
-    print(courseCode)
+
     # try:
+    print(section)
     student = StudentInfo.objects.get(stEmail = request.user.email)
     course = Courses.objects.get(courseCode=courseCode)
     semester = SemesterInfo.objects.get(semesterCode=semestercode)
+
     registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
     registration.save()
     msg="successfully saved"
@@ -61,12 +63,13 @@ def registerCourse(request):
 #     return HttpResponse(msg)
 @csrf_exempt
 def dropCourses(request):
-    courseCode = request.POST['ccode']
-    semester = request.POST['semester']
+
+    # courseCode = request.POST['ccode']
+    semesterCode = request.POST['semester']
     student = StudentInfo.objects.get(stEmail = request.user.email)
-    course = Courses.objects.get(courseCode=courseCode)
-    registeredCourse=CoursePreRegistration.objects.get(student=student,course=course,semester=semester)
-    registeredCourse.delete()
+    # course = Courses.objects.get(courseCode=courseCode)
+    semester = SemesterInfo.objects.get(semesterCode=semesterCode)
+    CoursePreRegistration.objects.filter(student=student,semester=semester).delete()
     return HttpResponse('success')
 @csrf_exempt
 def findRegisteredCourses(request):

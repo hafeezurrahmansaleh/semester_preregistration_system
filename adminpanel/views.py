@@ -1,4 +1,5 @@
 import openpyxl
+from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 
@@ -18,94 +19,99 @@ def index(request):
         'courses':course,
         'teachers':teacher,
         'students':student,
-        'semesters':semester
+        'semesters':semester,
     }
     return render(request, 'adminpanel/index.html',context)
 def insert(request):
-    table = request.POST['editorTitle']
-    if table == 'course':
-        courseCode = request.POST['ccode']
-        courseTitle = request.POST['ctitle']
-        courseCredit = request.POST['ccredit']
-        courseLevel = request.POST['clevel']
-        courseTerm = request.POST['cterm']
-        if Courses.objects.filter(courseCode=courseCode):
-            course = Courses.objects.get(courseCode=courseCode)
-            course.courseTitle = courseTitle
-            course.courseCredit = courseCredit
-            course.level = courseLevel
-            course.term = courseTerm
-            course.save()
-        else:
-            newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm)
-            newCourse.save()
+    try:
+        table = request.POST['editorTitle']
+        if table == 'course':
+            courseCode = request.POST['ccode']
+            courseTitle = request.POST['ctitle']
+            courseCredit = request.POST['ccredit']
+            courseLevel = request.POST['clevel']
+            courseTerm = request.POST['cterm']
+            if Courses.objects.filter(courseCode=courseCode):
+                course = Courses.objects.get(courseCode=courseCode)
+                course.courseTitle = courseTitle
+                course.courseCredit = courseCredit
+                course.level = courseLevel
+                course.term = courseTerm
+                course.save()
+            else:
+                newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm)
+                newCourse.save()
 
-        return redirect('index')
+            return redirect('index')
 
-    elif table == 'student':
-        studentID = request.POST['stid']
-        studentName = request.POST['stname']
-        studentEmail = request.POST['stemail']
-        studentGender = request.POST['stgender']
-        studentPhone = request.POST['stphone']
-        studentAdvisor = request.POST['stadvisor']
-        advisor = TeacherInfo.objects.get(tName=studentAdvisor)
-        if StudentInfo.objects.filter(stID=studentID).exists():
-            student = StudentInfo.objects.get(stID=studentID)
-            student.stName = studentName
-            student.stEmail = studentEmail
-            student.stGender = studentGender
-            student.stPhone = studentPhone
-            student.stAdvisor = advisor
-            student.save()
-        else:
-            newStudent = StudentInfo(stID=studentID,stName=studentName,stEmail=studentEmail,stGender=studentGender,stPhone=studentPhone,stAdvisor=advisor)
-            newStudent.save()
+        elif table == 'student':
+            studentID = request.POST['stid']
+            studentName = request.POST['stname']
+            studentEmail = request.POST['stemail']
+            studentGender = request.POST['stgender']
+            studentPhone = request.POST['stphone']
+            studentAdvisor = request.POST['stadvisor']
+            print(studentAdvisor)
+            advisor = TeacherInfo.objects.get(tInitial=studentAdvisor)
 
-        return redirect('index')
+            if StudentInfo.objects.filter(stID=studentID).exists():
+                student = StudentInfo.objects.get(stID=studentID)
+                student.stName = studentName
+                student.stEmail = studentEmail
+                student.stGender = studentGender
+                student.stPhone = studentPhone
+                student.stAdvisor = advisor
+                student.save()
+            else:
+                newStudent = StudentInfo(stID=studentID,stName=studentName,stEmail=studentEmail,stGender=studentGender,stPhone=studentPhone,stAdvisor=advisor)
+                newStudent.save()
 
-    elif table =='teacher':
-        print(table)
-        teacherID = request.POST['tid']
-        teacherName = request.POST['tname']
-        teacherInitial = request.POST['tinitial']
-        teacherDesignation = request.POST['tdesingnation']
-        teacherPhone = request.POST['tphone']
-        teacherEmail = request.POST['temail']
-        if TeacherInfo.objects.filter(tID= teacherID).exists():
-            teacher = TeacherInfo.objects.get(tID=teacherID)
-            teacher.tName = teacherName
-            teacher.tInitial = teacherInitial
-            teacher.tDesignation = teacherDesignation
-            teacher.tPhone = teacherPhone
-            teacher.tEmail = teacherEmail
-            teacher.save()
-        else:
-            newTeacher = TeacherInfo(tID=teacherID,tName=teacherName,tInitial=teacherInitial,tDesignation=teacherDesignation,tPhone=teacherPhone,tEmail=teacherEmail)
-            newTeacher.save()
+            return redirect('index')
 
-        return redirect('index')
-    elif table =='semester':
-        semesterCode = request.POST['scode']
-        semesterTitle = request.POST['stitle']
-        regOpenDate = request.POST['regOpenDate']
-        # formatedregOpenDate = regOpenDate.strftime("%YYYY-%MM-%DD")
-        regClosedDate = request.POST['regClosedDate']
-        # formatedregClosedDate = regClosedDate.strftime("%YYYY-%MM-%DD")
-        print(regOpenDate)
+        elif table =='teacher':
+            print(table)
+            teacherID = request.POST['tid']
+            teacherName = request.POST['tname']
+            teacherInitial = request.POST['tinitial']
+            teacherDesignation = request.POST['tdesingnation']
+            teacherPhone = request.POST['tphone']
+            teacherEmail = request.POST['temail']
+            if TeacherInfo.objects.filter(tID= teacherID).exists():
+                teacher = TeacherInfo.objects.get(tID=teacherID)
+                teacher.tName = teacherName
+                teacher.tInitial = teacherInitial
+                teacher.tDesignation = teacherDesignation
+                teacher.tPhone = teacherPhone
+                teacher.tEmail = teacherEmail
+                teacher.save()
+            else:
+                newTeacher = TeacherInfo(tID=teacherID,tName=teacherName,tInitial=teacherInitial,tDesignation=teacherDesignation,tPhone=teacherPhone,tEmail=teacherEmail)
+                newTeacher.save()
 
-        if SemesterInfo.objects.filter(semesterCode=semesterCode).exists():
-            semester = SemesterInfo.objects.get(semesterCode=semesterCode)
-            semester.semesterCode = semesterCode
-            semester.semesterTitle = semesterTitle
-            semester.regOpenDate = regOpenDate
-            semester.regClosedDate = regClosedDate
-            semester.save()
-        else:
-            newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
-            newSemester.save()
+            return redirect('index')
+        elif table =='semester':
+            semesterCode = request.POST['scode']
+            semesterTitle = request.POST['stitle']
+            regOpenDate = request.POST['regOpenDate']
+            # formatedregOpenDate = regOpenDate.strftime("%YYYY-%MM-%DD")
+            regClosedDate = request.POST['regClosedDate']
+            # formatedregClosedDate = regClosedDate.strftime("%YYYY-%MM-%DD")
+            print(regOpenDate)
 
-        return redirect('index')
+            if SemesterInfo.objects.filter(semesterCode=semesterCode).exists():
+                semester = SemesterInfo.objects.get(semesterCode=semesterCode)
+                semester.semesterCode = semesterCode
+                semester.semesterTitle = semesterTitle
+                semester.regOpenDate = regOpenDate
+                semester.regClosedDate = regClosedDate
+                semester.save()
+            else:
+                newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
+                newSemester.save()
+
+            return redirect('index')
+    except :
+        return redirect('error404','Something wromh!!!')
 
 
 
@@ -125,10 +131,27 @@ def courseDelete(request,courseCode):
     course.delete()
     return redirect('index')
 
-def studentList(request):
-    studentlist = CoursePreRegistration.objects.all()
+def studentList(request, courseCode, semesterID):
+
+    # student = StudentInfo.objects.get(stEmail=request.user.email)
+    # semesterCode = request.POST['semester']
+    # courseCode = request.POST['ccode']
+    semester = SemesterInfo.objects.get(semesterCode=semesterID)
+    course = Courses.objects.get(id=courseCode)
+    studentlistA = CoursePreRegistration.objects.filter(course=course,semester=semester,section='A')
+    studentlistB = CoursePreRegistration.objects.filter(course=course,semester=semester,section='B')
+    studentlistC = CoursePreRegistration.objects.filter(course=course,semester=semester,section='C')
+    studentlistD = CoursePreRegistration.objects.filter(course=course,semester=semester,section='D')
+    studentlistE = CoursePreRegistration.objects.filter(course=course,semester=semester,section='E')
+    studentlistF = CoursePreRegistration.objects.filter(course=course,semester=semester,section='F')
     context = {
-        'studentlists': studentlist,
+        'course':course,
+        'studentlistsA': studentlistA,
+        'studentlistsB': studentlistB,
+        'studentlistsC': studentlistC,
+        'studentlistsD': studentlistD,
+        'studentlistsE': studentlistE,
+        'studentlistsF': studentlistF,
     }
     return render(request, 'adminpanel/studentlist.html',context)
 
@@ -189,17 +212,17 @@ def fileUpload(request):
                    continue
                 t = TeacherInfo.objects.filter(tID=(row[3].value))
                 if (t.count() == 0):
-                    # try:
-                    TeacherInfo.objects.create(
-                        tName=row[0].value,
-                        tInitial=row[1].value,
-                        tDesignation=row[2].value,
-                        tID=row[3].value,
-                        tPhone=row[4].value,
-                        tEmail=row[5].value
-                    )
-                    # except:
-                    advisor = ""
+                    try:
+                        TeacherInfo.objects.create(
+                            tName=row[0].value,
+                            tInitial=row[1].value,
+                            tDesignation=row[2].value,
+                            tID=row[3].value,
+                            tPhone=row[4].value,
+                            tEmail=row[5].value
+                        )
+                    except:
+                        advisor = ""
             excel_data.append(row_data)
             print(row_data)
             counter+=1
@@ -246,14 +269,20 @@ def fileUpload(request):
                                 courseCode=row[0].value,
                                 courseTitle=row[1].value,
                                 courseCredit=row[2].value,
-                                level=row[3].value
-,                            )
+                                level=row[3].value,
+                                term=row[4].value
+                            )
                         except:
                             advisor = ""
 
                 excel_data.append(row_data)
                 print(row_data)
                 counter += 1
-        return render(request, 'adminpanel/studentlist.html', {"excel_data":excel_data})
+        return redirect(index)
 
     
+def error404(request, msg):
+    return render(request,'404.html', {'message':msg})
+
+def prevPage(request):
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -21,9 +21,11 @@ def home(request):
             return redirect('stphome')
         elif request.user.is_teacher:
             return redirect('tphome')
+        elif request.user.is_admin:
+            return redirect('index')
 #         else:
 #             return redirect('account_login')
-    # return redirect('account_login')
+    return redirect('account_login')
 
 
 class StudentSignUpView(CreateView):

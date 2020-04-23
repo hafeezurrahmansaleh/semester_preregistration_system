@@ -5,6 +5,14 @@
                     <a href="{% url 'account_login' %}">Log in Again</a>
                 </small>
             </div>
+
+    <script>
+    window.onload = function() {
+    // similar behavior as clicking on a link
+    window.location.href = "{% url 'account_login' %}";
+}
+
+    </script>
 {% endblock content %}
 
 

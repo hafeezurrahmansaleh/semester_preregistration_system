@@ -11,6 +11,7 @@ urlpatterns = [
     path('teacher/signup/', user_views.TeacherSignUpView.as_view(), name='teacher_signup'),
     path('', include('allauth.urls')),
     path('profile/', user_views.home, name='profile'),
+    path('', user_views.home, name='profile'),
     path('user_logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name='logout'),
     path('change-password/', views.change_password,  name='change_password')
 ]

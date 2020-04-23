@@ -26,7 +26,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
-
+                        {% csrf_token %}
                     <div class="row">
 
                         <div class="col-xs-12">

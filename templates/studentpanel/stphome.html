@@ -20,9 +20,23 @@
           width: 100%;
           table-layout: fixed;
         }
+        .scroll tbody {
+          display: block;
+          max-height: 235px;
+          overflow-y: scroll;
+        }
+
+        .scroll thead,
+        .scroll tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+
+
     </style>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -226,6 +240,9 @@
                     <li >
                         <a href="{% url 'logout' %}">Log out</a>
                     </li>
+                    <li >
+                        <a href="{% url 'change_password' %}">Change Password</a>
+                    </li>
                     <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
@@ -238,14 +255,15 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card" >
-                        <div class="header">
-                            <h2 style="text-align: center">
+                        <div class="header body bg-cyan">
+                            <h2 style="text-align: center; ">
                                 COURSE LIST
                             </h2>
                         </div>
                         <div class="body" >
                             <div class="table-responsive" style="overflow-x: inherit;">
                             <div class="coursetable">
+
                                 <table id="example" class="table table-bordered table-striped table-hover js-basic-example dataTable" >
                                     <thead >
                                        <tr >
@@ -294,26 +312,27 @@
                             <form>
                         <div class="a">
                            <select id="selectSemester" class="" required>
+                            <option name="semister" value="" selected>Select Semester</option>
                                {% for sem in semesters %}
                                    <option name="semister" value="{{ sem.semesterCode }}">{{ sem.semesterTitle }}</option>
                                {% endfor %}
                            </select>
+                            <label style="float: right" id="totalCredit"></label>
                         </div>
-                            <table  id="selectedcourse" class="table table-bordered table-striped table-hover ">
+                            <table  id="selectedcourse" class="table table-bordered table-striped table-hover scroll">
                                 <thead >
-                                    <tr style="" >
-                                     <th scope="col" class="nr" style="width: 18%">Code</th>
-                                     <th scope="col" style="width: 50%; text-align: center"> Title</th>
-                                     <th scope="col" style="width: 10%">Credit</th>
-                                     <th scope="col" style="width: 22%">Section</th>
-                                     <th scope="col" style="width: 5%"></th>
+                                    <tr >
+                                     <th scope="col" class="nr" style="width: 15%">Code</th>
+                                     <th scope="col" style="width: 38%; text-align: center"> Title</th>
+                                     <th scope="col" style="width: 11%">Credit</th>
+                                     <th scope="col" style="width: 18%">Section</th>
+                                     <th scope="col" style="width: 15%"></th>
                                    </tr>
                                 </thead>
                                 <tfoot>
                                 <td colspan="5" style="width: 80%"><button type="submit" id="submitbtn"  class="btn btn-primary btn-lg btn-block cregister">Register</button></td>
                                 </tfoot>
-                                <tbody id="courses" style="font-size: 13px">
-
+                                <tbody id="courses" style="font-size: 13px; min-height: 220px ">
                                 </tbody>
                             </table>
                             </form>
@@ -341,26 +360,24 @@
                         type : 'POST',
                         data : { cid : cid, level : level, term : term }
                     });
-
                     req.done(function(data) {
-
+                        var credit =0;
                         var courses = JSON.parse(data);
                         var txt = '';
-                        var x,sl=0,i;
+                        var x,i;
                         for (x in courses) {
                             var course = courses[x];
-                            sl=sl+1;
-                            txt += "<tr>";
-                            txt += "<td>" + course.fields.courseCode + "</td>";
-                            txt += "<td>" + course.fields.courseTitle + "</td>";
-                            txt += "<td>" + course.fields.courseCredit + "</td>";
-                            txt += "<td><select id=\"csection\" class='form-control show-tick' required>View</button>";
-                            txt += "<option name=\"section\" value=\"\">---</option>";
+                            txt += "<tr >";
+                            txt += "<td style=\"width:16%; font-weight:bold\">" + course.fields.courseCode + "</td>";
+                            txt += "<td style=\"width:39%\">" + course.fields.courseTitle + "</td>";
+                            txt += "<td style=\"width:10%\">" + course.fields.courseCredit + "</td>";
+                            txt += "<td style=\"width:18%\"><select required  name=\"section\" class='form-control show-tick' id = 'section_"+course.fields.courseCode+"'>";
+                            txt += "<option selected disabled name=\"section\" value=\"\">---</option>";
                             txt += "<option name=\"section\" value=\"A\">A</option>";
                             txt += "<option namme=\"section\" value=\"B\">B</option>";
                             txt += "<option namme=\"section\"  value=\"C\">C</option>";
                             txt += "</select></td>";
-                            txt += "<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>"
+                            txt += "<td style=\"width:15%\"><input type = \"button\"  class=\"removeRow btn bg-transparent\" value=\"⛔\" /></td>"
                             txt += "</tr>";
                         }
                         var rowCount = document.getElementById('selectedcourse').rows.length;
@@ -369,15 +386,24 @@
                                 return;
                             }
                         }
-
-                        if (rowCount>5){
-                            alert("You can take maximum 4 courses!")
+                        for(i=0;i<rowCount-1;i++){
+                            if(i==0){
+                                credit=0
+                            }
+                            else {
+                                credit=credit+parseInt(document.getElementById('selectedcourse').rows[i].cells[2].innerHTML)
+                            }
+                        }
+                        credit=credit+parseInt(course.fields.courseCredit);
+                        if(credit>16){
+                            alert("You can take maximum 16 Credits!")
                         }
                         else {
+                            document.getElementById('totalCredit').innerHTML="Credit Taken: "+credit;
                             $("#courses").append(txt);
+                            var id = document.getElementsByName("section")[0].id;
+                            console.log(id);
                         }
-
-                        console.log(rowCount);
                         {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
                         {#$('#memberNumber'+member_id).text(data.member_num);#}
                     });
@@ -386,41 +412,82 @@
         </script>
     <script type="text/javascript">
             $(document).ready(function() {
-                $('.cregister').on('click', function() {
+                $('.cregister').on('click', function(e) {
                     {#try {#}
+                    var semester = document.getElementById('selectSemester').value;
+                    if (document.getElementById('submitbtn').innerText=="Update"){
+                        document.getElementById('submitbtn').innerText="Submit Changes";
+                        {#$('input.removeRow').attr('disabled','enabled');#}
+                        $('.removeRow').prop('disabled', false); //TO ENABLE
+                        $("#submitbtn").toggleClass("btn-primary btn-danger");
+                        $(".bt :input").prop("disabled", false);
+                        e.preventDefault();
+                        return
+                    }
+                    else if (document.getElementById('submitbtn').innerText=="Submit Changes"){
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                            req = $.ajax({
+                                url: '/student/dropcourses',
+                                type: 'POST',
+                                data: {
+                                    semester: semester
+                                },
+                            });
+                        for (i = 1; i < rowCount - 1; i++) {
+                            courseCode=document.getElementById('selectedcourse').rows[i].cells[0].innerText;
+                            courseSection=document.getElementById("section_"+courseCode+"").value;
+                            req = $.ajax({
+                                url: '/student/registercourse',
+                                type: 'POST',
+                                data: {
+                                    ccode:courseCode,
+                                    section: courseSection,
+                                    semester: semester
+                                },
+
+                            });
+                        }
+                        alert('Succefully Updated');
+                        location.reload();
+                    }
+                    else {
                         var semester = document.getElementById('selectSemester').value;
-                        if (semester == ""){
+                        if (semester == "") {
                             alert("Please select your semester first");
                             return;
                         }
                         var cid;
                         var rowCount = document.getElementById('selectedcourse').rows.length;
-                        for (i = 1; i < rowCount-1; i++) {
+                        for (i = 1; i < rowCount - 1; i++) {
+                            courseCode=document.getElementById('selectedcourse').rows[i].cells[0].innerText;
+                            courseSection=document.getElementById("section_"+courseCode+"").value;
                             req = $.ajax({
                                 url: '/student/registercourse',
                                 type: 'POST',
                                 data: {
-                                    ccode: document.getElementById('selectedcourse').rows[i].cells[0].innerText,
-                                    section: document.getElementById('csection').value,
+                                    ccode: courseCode,
+                                    section: courseSection,
                                     semester: semester
                                 }
                             });
-                         }
-                        alert('success');
+                        }
+                        alert('Succefully Registered');
                         location.reload();
+                    }
                     {# } #}
                     {#catch (e) {#}
                     {#    alert('failed '+e);#}
                 {#    }#}
                 });
             });
+
     </script>
     <script type="text/javascript">
-        $( document ).ready(function() {
-               $("#selectSemester option").filter(function() {
-                  return this.value == "192";
-           }).prop('selected', true);
-        });
+        {#$( document ).ready(function() {#}
+        {#       $("#selectSemester option").filter(function() {#}
+        {#          return this.value == "192";#}
+        {#   }).prop('selected', true);#}
+        {# });#}
         $(document).ready(function() {
             $("#selectSemester").change(function() {
                 var semester = document.getElementById('selectSemester').value;
@@ -444,26 +511,38 @@
                         sl=sl+1;
                         console.log(course.course__courseCode);
                         txt += "<tr>";
-                        txt += "<td>" + course.course__courseCode + "</td>";
-                        txt += "<td>" + course.course__courseTitle + "</td>";
-                        txt += "<td>" + course.course__courseCredit + "</td>";
-                        txt += "<td><select name=\"csection\" class='form-control show-tick' id = 'csection_"+sl+"'>View</button>";
-                        txt += "<option name=\"section\" value=\"\" required>---</option>";
+                        txt += "<td style=\"width:16%; font-weight:bold\">" + course.course__courseCode + "</td>";
+                        txt += "<td style=\"width:39%\">" + course.course__courseTitle + "</td>";
+                        txt += "<td style=\"width:10%\">" + course.course__courseCredit + "</td>";
+                        txt += "<td style=\"width:18%\"><select required name=\"section\" class='form-control show-tick' id = 'section_"+courses[x] .course__courseCode+"' >";
+                        txt += "<option selected disabled name=\"section\" value=\"\" >---</option>";
                         txt += "<option name=\"section\" value=\"A\">A</option>";
-                        txt += "<option namme=\"section\" value=\"B\">B</option>";
-                        txt += "<option namme=\"section\"  value=\"C\">C</option>";
+                        txt += "<option name=\"section\" value=\"B\">B</option>";
+                        txt += "<option name=\"section\"  value=\"C\">C</option>";
                         txt += "</select></td>";
-                        txt += "<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>"
+                        txt += "<td style=\"width:15%\"><input type=\"button\" id = \"remove\" name = \"removebtn\" class=\"removeRow btn bg-transparent\" value=\"⛔\" /></td>"
                         txt += "</tr>";
                         $("#courses").append(txt);
                         s=course.section;
-                        var id = document.getElementsByName("csection")[x].id;
+                        var id ='section_'+course.course__courseCode+'';
                         console.log(id);
                         $("#"+id).val(course.section).change();
                     }
+                    for(i=0;i<document.getElementById('selectedcourse').rows.length-1;i++){
+                            if(i==0){
+                                credit=0
+                            }
+                            else {
+                                credit=credit+parseInt(document.getElementById('selectedcourse').rows[i].cells[2].innerHTML)
+                            }
+                    }
+
+                    document.getElementById('totalCredit').innerHTML="Credit Taken: "+credit;
                     if(document.getElementById('selectedcourse').rows.length>2){
                         document.getElementById('submitbtn').innerText="Update";
+                        $('input.removeRow').attr('disabled','disabled');
                         $(".bt :input").prop("disabled", true);
+                        $(".removeRow :input").prop("disabled", true);
                         var c = $("#selectedcourse tr:first td").length;
                         {#$("#selectedcourse tr:gt(1)").append("<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>");#}
                         {#$("#selectedcourse tr:gt(0)").append("<td>Col</td>");#}
@@ -472,6 +551,7 @@
                     else {
                         document.getElementById('submitbtn').innerText="Register";
                         $(".bt :input").prop("disabled", false);
+                        $(".removeRow :input").prop("disabled", false);
                     }
                     {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
                     {#$('#memberNumber'+member_id).text(data.member_num);#}
@@ -506,5 +586,7 @@
 
 {#$( "#selectSemester" ).addClass( "form-control show-tick selectSemester" );#}
     </script>
+
     <script src="{% static 'js/dnd-table.js' %}"></script>
+
 {% endblock %}
