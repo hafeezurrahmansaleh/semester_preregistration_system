@@ -12,6 +12,15 @@
     <!-- Favicon-->
 </head>
 <body class="signup-page">
+{#    <div class="col-md-8">#}
+{#    {% if messages %}#}
+{#        {% for message in messages %}#}
+{#            <div class="alert alert-{{ message.tags }}">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+    </div>
     <div class="signup-box">
         <div class="logo">
             <h3 style="text-align: center; color: white">Daffodil International University</h3>
@@ -23,19 +32,19 @@
            </div>
             <div class="body">
                 <form method="POST">
-                                    {% csrf_token %}
-                                        {{ form|crispy }}
+                            {% csrf_token %}
+                                {{ form|crispy }}
 
-                        <div class="form-group">
-                            <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
-                            <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
-                        </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
+                        <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
+                    </div>
 
-                            <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
-                            <div class="m-t-25 m-b--5 align-center">
-                                <a href="{% url 'account_login' %}">You already have a active account?</a>
-                            </div>
-                        </form>
+                    <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
+                    <div class="m-t-25 m-b--5 align-center">
+                        <a href="{% url 'account_login' %}">You already have a active account?</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

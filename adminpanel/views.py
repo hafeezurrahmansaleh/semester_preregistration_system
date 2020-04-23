@@ -5,11 +5,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 from teacher.models import TeacherInfo
 from student.models import StudentInfo
+from django.contrib.auth.decorators import login_required
+from users.decorators import admin_required
 from .models import *
 
 def login(request):
     return render(request, 'adminpanel/login.html')
 
+
+@login_required
+@admin_required
 def index(request):
     course = Courses.objects.all()
     teacher = TeacherInfo.objects.all()
