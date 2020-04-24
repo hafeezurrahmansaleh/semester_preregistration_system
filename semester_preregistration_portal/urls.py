@@ -32,3 +32,4 @@ urlpatterns = [
     # path('accounts/', include('allauth.urls')),
     # path('profile/', user_views.home, name='profile'),
 ]
+# handler404 = 'views.error404'

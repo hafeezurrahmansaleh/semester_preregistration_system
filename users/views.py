@@ -39,7 +39,13 @@ class StudentSignUpView(CreateView):
 
     def form_valid(self, form):
         form.save()
-        # login(self.request, user)
+        mgs = StudentSignUpForm.mgs
+        if 'Your email not' in mgs:
+            messages.error(self.request, mgs)
+        elif 'Already have' in mgs:
+            messages.warning(self.request, mgs)
+        elif 'Successfully active' in mgs:
+            messages.success(self.request, mgs)
         return redirect('account_login')
 
 
@@ -54,7 +60,13 @@ class TeacherSignUpView(CreateView):
 
     def form_valid(self, form):
         form.save()
-        # login(self.request, user)
+        mgs = StudentSignUpForm.mgs
+        if 'Your email not' in mgs:
+            messages.error(self.request, mgs)
+        elif 'Already have' in mgs:
+            messages.warning(self.request, mgs)
+        elif 'Successfully active' in mgs:
+            messages.success(self.request, mgs)
         return redirect('account_login')
 
 

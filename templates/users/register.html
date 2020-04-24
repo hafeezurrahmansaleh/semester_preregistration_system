@@ -14,13 +14,13 @@
 <body class="signup-page">
 {#    <div class="col-md-8">#}
 {#    {% if messages %}#}
-{#        {% for message in messages %}#}
-{#            <div class="alert alert-{{ message.tags }}">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    {% endif %}#}
-    </div>
+{#<div class="alert alert-success">#}
+{#    {% for m in messages %}#}
+{#    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endif %}#}
+{#    </div>#}
     <div class="signup-box">
         <div class="logo">
             <h3 style="text-align: center; color: white">Daffodil International University</h3>
