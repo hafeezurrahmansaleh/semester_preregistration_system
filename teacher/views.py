@@ -1,35 +1,37 @@
-from django.shortcuts import render
-<<<<<<< HEAD
-from adminpanel.models import Courses
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from adminpanel.models import Courses, SemesterInfo,CoursePreRegistration
 from student.models import StudentInfo
-from .models import *
+from .models import TeacherInfo
+from django.db.models import Sum
 
 def teacherPanelHome(request):
-
     teacher = TeacherInfo.objects.get(tEmail = request.user.email)
     studentInfo = StudentInfo.objects.filter(stAdvisor=teacher)
+    semester=SemesterInfo.objects.get(semesterCode='201')
+    regStudents= CoursePreRegistration.objects.filter(student__stAdvisor=teacher, semester=semester).values('student__stID','student__stName').order_by('student__stID').annotate(credit=Sum('course__courseCredit')).distinct()
     course = Courses.objects.all()
     print(teacher.tName)
     context = {
         'courses' : course,
         'teachers': teacher,
-        'students' :studentInfo
-=======
-<<<<<<< HEAD
-from adminpanel.models import Courses
-=======
-from django.contrib.auth.decorators import login_required
-from users.decorators import teacher_required
->>>>>>> 832dd4ff9d6c127e8db85eb2ac401c9342f95669
-from .models import *
-
-def teacherPanelHome(request):
-    id = 1
-    teacher = TeacherInfo.objects.get(pk=id)
-    course = Courses.objects.all()
-    context = {
-        'teacher' : teacher,
-        'course' : course
->>>>>>> refs/remotes/origin/master
+        'students' :studentInfo,
+        'regStudents' :regStudents,
     }
     return render(request, 'teacherpanel/tphome.html',context)
+
+def advisestudent(request, stID):
+    tEmail = request.user.email
+    advisor = TeacherInfo.objects.get(tEmail=tEmail)
+    if(StudentInfo.objects.get(stID=stID, stAdvisor=advisor)):
+        student = StudentInfo.objects.get(stID=stID)
+        courses = Courses.objects.all()
+        semester = SemesterInfo.objects.all()
+        context = {
+            'courses': courses,
+            'student': student,
+            'semesters': semester
+        }
+        return render(request, 'studentpanel/stphome.html', context)
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

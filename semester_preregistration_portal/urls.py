@@ -27,7 +27,7 @@ urlpatterns = [
     path('accounts/', include('users.urls')),
     path('', include('users.urls')),
     path('error404/<msg>',views.error404, name='error404' ),
-    path('prevpage',views.prevPage, name='prevPage' )
+    path('prevpage',views.prevPage, name='prevPage' ),
 
     # path('accounts/', include('allauth.urls')),
     # path('profile/', user_views.home, name='profile'),

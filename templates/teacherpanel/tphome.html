@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 
-
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,9 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<<<<<<< HEAD
 <body class="theme-green">
- <nav class="navbar" style="background-color: #026a57">
+ <nav class="navbar" style="background-color: #00838f">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
@@ -212,6 +211,9 @@
                         </ul>
                     </li>
                     <li >
+                        <a href="{% url 'change_password' %}">Change Password</a>
+                    </li>
+                    <li >
                         <a href="{% url 'logout' %}">Log out</a>
                     </li>
                     <!-- #END# Tasks -->
@@ -230,7 +232,7 @@
                         </div>
                         <div class="content">
                             <div class="text">TOTAL ADVISING STUDENTS</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">50</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">{{ students.count }}</div>
                         </div>
                     </div>
                 </div>
@@ -241,31 +243,36 @@
                         </div>
                         <div class="content">
                             <div class="text">REGISTERED IN LAST SEMESTER</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">48</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">0</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#regiteredStudents">
                     <div class="info-box-2 bg-teal hover-zoom-effect">
                         <div class="icon">
                             <i class="material-icons">check_circle</i>
                         </div>
                         <div class="content">
                             <div class="text">REGISTERED TILL NOW</div>
-                            <div class="number count-to" data-from="0" data-to="117" data-speed="1000" data-fresh-interval="20">30</div>
+                            <div class="number count-to" data-from="0" data-to="117" data-speed="1000" data-fresh-interval="20">{{ regStudents.count }}</div>
                         </div>
                     </div>
+                    </a>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-2 bg-blue hover-zoom-effect">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#notRegiteredStudents">
+                    <div class="info-box-2 bg-blue hover-zoom-effect" >
                         <div class="icon">
                             <i class="material-icons">hourglass_full</i>
                         </div>
                         <div class="content">
                             <div class="text">NOT RESPONDED</div>
-                            <div class="number count-to" data-from="0" data-to="1432" data-speed="1500" data-fresh-interval="20">20</div>
+                            {% load mathfilters %}
+                            <div class="number count-to" data-from="0" data-to="1432" data-speed="1500" data-fresh-interval="20">{{ students.count|sub:regStudents.count }} </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         <div>
@@ -351,7 +358,7 @@
                                             <th style="width: 18%">ID</th>
                                             <th style="width: 30%">Student Name</th>
                                             <th style="width: 20%">Credit Taken</th>
-
+                                            <th></th>
                                         </tr>
                                     </thead>
 
@@ -363,7 +370,7 @@
                                            <td>{{ student.stID }}</td>
                                              <td style="text-align: left">{{ student.stName }}</td>
                                            <td>8</td>
-
+                                            <td><a href="/teacher/advisestudent/{{ student.stID }}" class="btn btn-primary viewsection">View</a></td>
                                          </tr>
                                     {% endfor %}
                                     </tbody>
@@ -381,75 +388,166 @@
             </div>
         </div>
     </section>
-=======
-<body>
-  <div style="margin-left:100px; padding-top:60px;">
-       <div style="width: 90%;margin: auto;">
-        <div>
-            <span>Advisor Name : </span>{{ teacher.tName }}<br>
-            <span>Advisor ID: </span>{{ teacher.tID }}<br>
-            <span>Number of Student</span>
+    <div class="modal fade" id="regiteredStudents" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="header bg-green">
+                            <h2>
+                                Pre-registered Sudent List <small><span class=". . . . ."></span></small>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            {#        course table start#}
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 500px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 10%;">SL</th>
+                                                    <th style="width: 18%">Student ID</th>
+                                                    <th style="width: 35%">Student Name</th>
+                                                    <th style="width: 10%">Credit Taken</th>
+                                                    <th style="width: 15%"></th>
+                                                </tr>
+                                            </thead>
 
+                                            <tbody>
+                                            {% for regStudent in regStudents %}
+                                                 <tr style="text-align: center">
+                                                   <th scope="row">{{ forloop.counter }}</th>
+
+                                                   <td>{{ regStudent.student__stID }}</td>
+                                                     <td style="text-align: left">{{ regStudent.student__stName }}</td>
+                                                   <td>{{ regStudent.credit }}</td>
+                                                    <td>
+                                                       <button class="btn bg-green waves-effect" type="button" data-toggle="tooltip" data-original-title="Write something" data-placement="top">
+                                                            <i class="material-icons">chat</i>
+                                                        </button>
+                                                       <button style="margin-left: 20px" class="btn bg-teal waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
+                                                            <i class="material-icons">input</i>
+                                                        </button>
+                                                   </td>
+                                                 </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div style="float: right"><button  type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose" >CLOSE</button></div>
+                    </div>
+                </div>
+            </div>
         </div>
-   <div style="align: center">
-    <div>
-      <div  style="margin-right:60px; float:left; padding-top: 10px;">
-        <select style="margin-right:5px; width:50%; height:100px">
-            <option value="semester">Select Semester</option>
-            <option value="fall">Fall 2019</option>
-            <option value="summer">Summer2020</option>
-            <option value="Spring">Spring 2020</option>
-        </select>
-        <select style="margin-right:10px">
-            <option value="level">Select Level</option>
-            <option value="level1">Level 1</option>
-            <option value="level2">Level 2</option>
-            <option value="level3">Level 3</option>
-            <option value="level4">Level 4</option>
-        </select>
-        <select style="padding-top:5px">
-            <option value="term">Select Term</option>
-            <option value="term1">Term 1</option>
-            <option value="term2">Term 2</option>
-            <option value="term3">Term 3</option>
-        </select>
-      </div>
     </div>
-    <div style="width: 20%; float: left; margin-left: 30px; padding-top:10px">
-      <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Search</button>
-  </div>
-</div>
+    <div class="modal fade" id="notRegiteredStudents" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="header bg-red">
+                            <h2>
+                                Not Registered<small>...........</small>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            {#        course table start#}
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 514px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 10%;">SL</th>
+                                                    <th style="width: 18%">Student ID</th>
+                                                    <th style="width: 35%">Student Name</th>
+                                                    <th style="width: 10%">Mobile</th>
+                                                    <th style="width: 15%"></th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for student in students %}
+                                                {% for regStudent in regStudents %}
+                                                    {% if student.stID != regStudent.student__stID %}
+                                                     <tr style="text-align: center">
+                                                       <th scope="row">{{ forloop.parentloop.counter }}</th>
+
+                                                       <td>{{ student.stID }}</td>
+                                                         <td style="text-align: left">{{ student.stName }}</td>
+                                                       <td>{{ student.stPhone }}</td>
+                                                         <td>
+                                                           <button class="btn bg-red waves-effect" type="button" data-toggle="tooltip" data-original-title="Write something..." data-placement="top">
+                                                                <i class="material-icons">chat</i>
+                                                            </button>
+                                                           <button style="margin-left: 20px" class="btn bg-deep-orange waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
+                                                                <i class="material-icons">input</i>
+                                                            </button>
+                                                       </td>
+                                                     </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right"><button  type="button" class="btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose" >CLOSE</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+<section>
+<footer >
+    <div style="background-color: #00838f; height: 100px; justify-content: center;
+  align-items: center; display: flex; ">
+        <div><p>DEVELOPED BY-</p></div><br>
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Hafeezurrahman Saleh" data-placement="top" href=""
+       src="{% static 'images/saleh.JPG' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Subroto Karmokar" data-placement="top" href=""
+       src="{% static 'images/user.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Mostafa Munna" data-placement="top" href=""
+       src="{% static 'images/user.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Nagma Islam" data-placement="top" href=""
+       src="{% static 'images/nadia.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+
     </div>
-    <div style="width:50%;">
-        <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Number of Courses</th>
-      <th scope="col">Course Code</th>
-      <th scope="col">Course Title</th>
-      <th scope="col">Number of Students</th>
-      <th scope="col">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for course in course %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ course.courseCode }}</td>
-      <td>{{ course.courseTitle }} </td>
-      <td>0</td>
-      <td><button type="button" class="btn btn-success">View</button></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    <div style="height: 50px; background-color:#006972; color: white; text-align: center ">
+        <br><p >2020©All right reserved by Daffodil International University</p>
     </div>
-  </div>
->>>>>>> refs/remotes/origin/master
+</footer>
+</section>
 </body>
 </html>
 
