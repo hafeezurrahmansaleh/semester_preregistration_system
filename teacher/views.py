@@ -1,17 +1,14 @@
-<<<<<<< HEAD
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from adminpanel.models import Courses, SemesterInfo,CoursePreRegistration
 from student.models import StudentInfo
 from .models import TeacherInfo
 from django.db.models import Sum
-=======
 from django.shortcuts import render
 from adminpanel.models import Courses
 from student.models import StudentInfo
 from .models import TeacherInfo
->>>>>>> cea14217e08b3699f9d657f9c8487490f4a36fbb
-
 def teacherPanelHome(request):
     teacher = TeacherInfo.objects.get(tEmail = request.user.email)
     studentInfo = StudentInfo.objects.filter(stAdvisor=teacher)
@@ -22,7 +19,6 @@ def teacherPanelHome(request):
     context = {
         'courses' : course,
         'teachers': teacher,
-<<<<<<< HEAD
         'students' :studentInfo,
         'regStudents' :regStudents,
     }
@@ -43,9 +39,4 @@ def advisestudent(request, stID):
         return render(request, 'studentpanel/stphome.html', context)
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-=======
-        'students' :studentInfo
-    }
 
-    return render(request, 'teacherpanel/tphome.html',context)
->>>>>>> cea14217e08b3699f9d657f9c8487490f4a36fbb
