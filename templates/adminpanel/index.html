@@ -284,7 +284,7 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="{% url 'index' %}">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -541,6 +541,41 @@
 
     <section class="content" style="margin-bottom: -100px">
         <div class="container-fluid">
+     <div>
+         {% if messages %}
+             {% for message in messages %}
+                 {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Failed!</strong> {{ message }}
+                 {% elif  message.tags == 'success' %}
+                     <div class="alert alert-success" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Success!</strong> {{ message }}
+                 {% elif  message.tags == 'warning' %}
+                     <div class="alert alert-warning" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Warning!</strong> {{ message }}
+                 {% endif %}
+
+                 </div>
+             {% endfor %}
+         {% endif %}
+     </div>
+        <script>
+                 window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove();
+                    });
+                }, 3000);
+        </script>
+
+{#<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+
+{#<div class="alert alert-success" id="success-alert">#}
+{#  <button type="button" class="close" data-dismiss="alert">x</button>#}
+{#  <strong>Success! </strong> Product have added to your wishlist.#}
+{#</div>#}
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">

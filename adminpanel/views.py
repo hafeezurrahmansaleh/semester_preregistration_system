@@ -2,6 +2,7 @@ import openpyxl
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 from teacher.models import TeacherInfo
 from student.models import StudentInfo
@@ -114,27 +115,48 @@ def insert(request):
                 newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
                 newSemester.save()
 
+            messages.success(request, f'successfully insert into the system!')
             return redirect('index')
     except :
-        return redirect('error404','Something wromh!!!')
+        messages.error(request, f'Something went wrong. Please insert input properly!')
+        return redirect(index)
+        # return redirect('error404','Something wromh!!!')
 
 
 
 
 def teacherDelete(request,tid):
-    teacher = TeacherInfo.objects.get(pk=tid)
-    teacher.delete()
-    return redirect('index')
+    try:
+        teacher = TeacherInfo.objects.get(pk=tid)
+        teacher.delete()
+        messages.success(request, f'Successfully item deleted!')
+        return redirect('index')
+    except:
+        messages.error(request, f'Something went wrong. Operation failed!')
+        return redirect('index')
+
 
 def studentDelete(request,stid):
-    student = StudentInfo.objects.get(pk=stid)
-    student.delete()
-    return redirect('index')
+    try:
+        student = StudentInfo.objects.get(pk=stid)
+        student.delete()
+        messages.success(request, f'Successfully item deleted!')
+        return redirect('index')
+    except:
+        messages.error(request, f'Something went wrong. Operation failed!')
+        return redirect('index')
+
 
 def courseDelete(request,courseCode):
-    course = Courses.objects.get(pk=courseCode)
-    course.delete()
-    return redirect('index')
+    try:
+        course = Courses.objects.get(pk=courseCode)
+        course.delete()
+        messages.success(request, f'Successfully item deleted!')
+        return redirect('index')
+    except:
+        messages.error(request, f'Something went wrong. Operation failed!')
+        return redirect('index')
+
 
 def studentList(request, courseCode, semesterID):
 
@@ -176,118 +198,124 @@ def studentList(request, courseCode, semesterID):
 #             return redirect( < your_upload_file_fail_url >)
 @csrf_exempt
 def fileUpload(request):
-    if "GET" == request.method:
-        return render(request, 'adminpanel/index.html', {})
-    else:
-        doc = request.FILES
-        excel_file = doc['excel_file']
+    try:
+        if "GET" == request.method:
+            return render(request, 'adminpanel/index.html', {})
+        else:
+            doc = request.FILES
+            excel_file = doc['excel_file']
 
-        # you may put validations here to check extension or file size
+            # you may put validations here to check extension or file size
 
-        wb = openpyxl.load_workbook(excel_file)
+            wb = openpyxl.load_workbook(excel_file)
 
-        # getting all sheets
-        sheets = wb.sheetnames
-        print(sheets)
+            # getting all sheets
+            sheets = wb.sheetnames
+            print(sheets)
 
-        # getting a particular sheet
-        worksheet = wb["Sheet1"]
-        print(worksheet)
+            # getting a particular sheet
+            worksheet = wb["Sheet1"]
+            print(worksheet)
 
-        # getting active sheet
-        active_sheet = wb.active
-        print(active_sheet)
+            # getting active sheet
+            active_sheet = wb.active
+            print(active_sheet)
 
-        # reading a cell
-        # print(worksheet["B"][0].value)
+            # reading a cell
+            # print(worksheet["B"][0].value)
 
-        excel_data = list()
-        # iterating over the rows and
-        # getting value from each cell in row
-        counter = 0
-        table = request.POST['fileuploader']
-        if table == 'teacher':
-         for row in worksheet.iter_rows():
-            row_data = list()
-            # print(row[0].value)
+            excel_data = list()
+            # iterating over the rows and
+            # getting value from each cell in row
+            counter = 0
+            table = request.POST['fileuploader']
+            if table == 'teacher':
+                for row in worksheet.iter_rows():
+                    row_data = list()
+                    # print(row[0].value)
 
-            for cell in row:
-                row_data.append(str(cell.value))
-                if (counter == 0):
-                   continue
-                t = TeacherInfo.objects.filter(tID=(row[3].value))
-                if (t.count() == 0):
-                    try:
-                        TeacherInfo.objects.create(
-                            tName=row[0].value,
-                            tInitial=row[1].value,
-                            tDesignation=row[2].value,
-                            tID=row[3].value,
-                            tPhone=row[4].value,
-                            tEmail=row[5].value
-                        )
-                    except:
-                        advisor = ""
-            excel_data.append(row_data)
-            print(row_data)
-            counter+=1
-        elif table == 'student':
-            for row in worksheet.iter_rows():
-                row_data = list()
-                # print(row[0].value)
+                    for cell in row:
+                        row_data.append(str(cell.value))
+                        if (counter == 0):
+                            continue
+                        t = TeacherInfo.objects.filter(tID=(row[3].value))
+                        if (t.count() == 0):
+                            try:
+                                TeacherInfo.objects.create(
+                                    tName=row[0].value,
+                                    tInitial=row[1].value,
+                                    tDesignation=row[2].value,
+                                    tID=row[3].value,
+                                    tPhone=row[4].value,
+                                    tEmail=row[5].value
+                                )
+                            except:
+                                advisor = ""
+                    excel_data.append(row_data)
+                    print(row_data)
+                    counter += 1
+            elif table == 'student':
+                for row in worksheet.iter_rows():
+                    row_data = list()
+                    # print(row[0].value)
 
-                for cell in row:
-                    row_data.append(str(cell.value))
-                    if (counter == 0):
-                        continue
-                    s = StudentInfo.objects.filter(stID=(row[0].value))
-                    if (s.count() == 0):
-                        try:
-                            advisor = TeacherInfo.objects.get(tInitial=row[5].value)
-                        except:
-                            advisor = ""
-                        StudentInfo.objects.create(
-                            stID=row[0].value,
-                            stName=row[1].value,
-                            stGender=row[2].value,
-                            stPhone=row[3].value,
-                            stEmail=row[4].value,
-                            stAdvisor=advisor,
-                        )
-
-                excel_data.append(row_data)
-                print(row_data)
-                counter += 1
-        elif table == 'course':
-            for row in worksheet.iter_rows():
-                row_data = list()
-                # print(row[0].value)
-
-                for cell in row:
-                    row_data.append(str(cell.value))
-                    if (counter == 0):
-                        continue
-                    c = Courses.objects.filter(courseCode=(row[0].value))
-                    if (c.count() == 0):
-                        try:
-                            Courses.objects.create(
-                                courseCode=row[0].value,
-                                courseTitle=row[1].value,
-                                courseCredit=row[2].value,
-                                level=row[3].value,
-                                term=row[4].value
+                    for cell in row:
+                        row_data.append(str(cell.value))
+                        if (counter == 0):
+                            continue
+                        s = StudentInfo.objects.filter(stID=(row[0].value))
+                        if (s.count() == 0):
+                            try:
+                                advisor = TeacherInfo.objects.get(tInitial=row[5].value)
+                            except:
+                                advisor = ""
+                            StudentInfo.objects.create(
+                                stID=row[0].value,
+                                stName=row[1].value,
+                                stGender=row[2].value,
+                                stPhone=row[3].value,
+                                stEmail=row[4].value,
+                                stAdvisor=advisor,
                             )
-                        except:
-                            advisor = ""
 
-                excel_data.append(row_data)
-                print(row_data)
-                counter += 1
+                    excel_data.append(row_data)
+                    print(row_data)
+                    counter += 1
+            elif table == 'course':
+                for row in worksheet.iter_rows():
+                    row_data = list()
+                    # print(row[0].value)
+
+                    for cell in row:
+                        row_data.append(str(cell.value))
+                        if (counter == 0):
+                            continue
+                        c = Courses.objects.filter(courseCode=(row[0].value))
+                        if (c.count() == 0):
+                            try:
+                                Courses.objects.create(
+                                    courseCode=row[0].value,
+                                    courseTitle=row[1].value,
+                                    courseCredit=row[2].value,
+                                    level=row[3].value,
+                                    term=row[4].value
+                                )
+                            except:
+                                advisor = ""
+
+                    excel_data.append(row_data)
+                    print(row_data)
+                    counter += 1
+
+            messages.success(request, f'Successfully Uploaded file into the system!')
+            return redirect(index)
+    except :
+        messages.error(request, f'Something went wrong. Invalid file type!')
         return redirect(index)
-
+        # return redirect('error404','please choose a file!!!')
     
 def error404(request, msg):
-    return render(request,'404.html', {'message':msg})
+    return render(request,'404.html')
 
 def prevPage(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

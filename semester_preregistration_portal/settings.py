@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'adminpanel',
     'advisor',
     'users',
-    'django.contrib.sites',#allauth
+    'django.contrib.sites',
+    #allauth
     # 3rd party
     'allauth',
     'allauth.account',

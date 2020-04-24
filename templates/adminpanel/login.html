@@ -7,7 +7,15 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <div style="width: 40%; margin-left:auto; margin-right: auto;  align:center; padding-top:180px">
+        {% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
+    {% endfor %}
+</div>
+{% endif %}
     	<form>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>

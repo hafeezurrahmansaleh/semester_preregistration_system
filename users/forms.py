@@ -10,7 +10,7 @@ from teacher.models import TeacherInfo
 
 
 class StudentSignUpForm(forms.ModelForm):
-
+    mgs = ""
     class Meta:
         model = User
         fields = ('email',)
@@ -41,20 +41,24 @@ class StudentSignUpForm(forms.ModelForm):
                 if commit:
                     user.save()
                     send_mail(subject, message, email_from, recipient_list)
+                    StudentSignUpForm.mgs = "Successfully active you account. please check your Email!"
             else:
-                print("not found")
+                #print("not found")
                 # messages.error(self, 'not found.')
+                StudentSignUpForm.mgs = "Your email not found. Please contact to Admin!"
                 return redirect('student_signup')
 
         else:
-            print("already have account in this email")
+            StudentSignUpForm.mgs = "Already have an account in this email!"
+            # print("already have account in this email")
             return redirect('account_login')
         return user
 
 
 #teacher
 class TeacherSignUpForm(forms.ModelForm):
-
+    mgs = ""
+    type = ""
     class Meta:
         model = User
         fields = ('email',)
@@ -75,18 +79,22 @@ class TeacherSignUpForm(forms.ModelForm):
                 message = "you password is: " + password
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [raw_email, ]
-                send_mail(subject, message, email_from, recipient_list)
+                #send_mail(subject, message, email_from, recipient_list)
 
                 user.username = tec.tID
                 user.set_password(password)
                 user.is_teacher = True
                 if commit:
                     user.save()
+                    send_mail(subject, message, email_from, recipient_list)
+                    TeacherSignUpForm.mgs = "Successfully active you account. please check your Email!"
             else:
-                print("not found")
+                TeacherSignUpForm.mgs = "Your email not found. Please contact to Admin!"
+                #print("not found")
                 # messages.error(self, 'not found.')
-                return redirect('student_signup')
+                return redirect('teacher_signup')
         else:
-            print("already have account in this email")
-            return redirect('teacher_signup')
+            TeacherSignUpForm.mgs = "Already have an account in this email!"
+            # print("already have account in this email")
+            return redirect('account_login')
         return user
