@@ -148,7 +148,7 @@ def  finalregistration(request, semid, tinitial):
         'payments':payments,
     }
     print(payments[0].comment)
-    return  render(request, 'teacherpanel/finalregistrationbackup.html', context)
+    return  render(request, 'teacherpanel/finalregistration.html', context)
 @csrf_exempt
 def findregstatus(request):
     semester = request.POST['semester']
