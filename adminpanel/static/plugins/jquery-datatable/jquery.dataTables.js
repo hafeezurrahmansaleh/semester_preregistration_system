@@ -2,6 +2,28 @@
  * ©2008-2015 SpryMedia Ltd - datatables.net/license
  */
 
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#example thead tr').clone(true).appendTo( '#example thead' );
+    $('#example thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="form-control input" style="width: 100%" placeholder="Search '+title+'" />' );
+
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    var table = $('#example').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true
+    } );
+} );
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
@@ -10275,7 +10297,7 @@
 		 */
 		"bFilter": true,
 	
-	
+
 		/**
 		 * Enable or disable the table information display. This shows information
 		 * about the data that is currently visible on the page, including information
@@ -10350,7 +10372,7 @@
 		 *      } );
 		 *    } );
 		 */
-		"bPaginate": true,
+		"bPaginate": false,
 	
 	
 		/**

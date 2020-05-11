@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+          table td td:empty::before {content: "0"}
+    </style>
+</head>
+<body>
+<section class="content " style="margin-left: 30px; margin-top: 30px">
+        <div class="container-fluid">
+
+            <!-- Example Tab -->
+            <div class="row ">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card  bg-teal" style="color: white">
+                        <div class="header">
+                            <h2>
+                                Report Generator
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" data-toggle="tab">HOME</a></li>
+                                <li role="presentation"><a href="#regstudent" data-toggle="tab">Registered Students</a></li>
+                                <li role="presentation"><a href="#unregstudent" data-toggle="tab">Not Done</a></li>
+                                <li role="presentation"><a href="#teachersummary" data-toggle="tab">Teacher Summary</a></li>
+                                <li role="presentation"><a href="#coursesummary" data-toggle="tab">Course Summary</a></li>
+                                <li role="presentation"><a href="#allstudents" data-toggle="tab">Student Summary</a></li>
+                                <li role="presentation"><a href="#coursesections" data-toggle="tab">Section Limit</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content bg-white" style="margin: 70px; margin-top: 10px; color: #0f0f0f; padding: 20px">
+                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                    <b>Home Content</b>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
+                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
+                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
+                                        sadipscing mel.
+                                    </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="regstudent">
+                                {#        course table start#}
+                                    <h4>Registered Students: {{ regStudents.count }}</h4>
+                                     <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 500px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 6%;">SL</th>
+                                                    <th style="width: 15%">Student ID</th>
+                                                    <th style="width: 20%">Student Name</th>
+                                                    <th style="width: 20%">Student Email</th>
+                                                    <th style="width: 8%">Advisor</th>
+                                                    <th style="width: 5%">Credit</th>
+                                                    <th style="width: 25%">Remark</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for regStudent in regStudents %}
+                                                 <tr style="text-align: center">
+                                                   <th scope="row" style="width: 6%;">{{ forloop.counter }}</th>
+
+                                                   <td style="width: 15%;">{{ regStudent.student__stID }}</td>
+                                                     <td style="text-align: left;width: 20%;">{{ regStudent.student__stName }}</td>
+                                                     <td style="text-align: left;width: 20%;">{{ regStudent.student__stEmail }}</td>
+                                                     <td style="text-align: center;width: 8%;">{{ regStudent.student__stAdvisor__tInitial }}</td>
+                                                     <td style="width: 5%;">{{ regStudent.credit }}</td>
+                                                     <td style="width: 25%"><textarea readonly id="{{ regStudent.student_id }}txt"  style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ regStudent.student__remarks__remark }}</textarea></td>
+
+                                                 </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="unregstudent">
+                                {#        course table start#}
+                                    <h4>Unregistered Students: {{ regStudents.count }}</h4>
+                                     <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 500px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 6%;">SL</th>
+                                                    <th style="width: 15%">Student ID</th>
+                                                    <th style="width: 20%">Student Name</th>
+                                                    <th style="width: 20%">Student Email</th>
+                                                    <th style="width: 8%">Advisor</th>
+                                                    <th style="width: 25%">Remark</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for regStudent in unregStudents %}
+                                                 <tr style="text-align: center">
+                                                   <th scope="row" style="width: 6%;">{{ forloop.counter }}</th>
+                                                   <td style="width: 15%;">{{ regStudent.student__stID }}</td>
+                                                     <td style="text-align: left;width: 20%;">{{ regStudent.student__stName }}</td>
+                                                     <td style="text-align: left;width: 20%;">{{ regStudent.student__stEmail }}</td>
+                                                     <td style="text-align: center;width: 8%;">{{ regStudent.student__stAdvisor__tInitial }}</td>
+                                                     <td style="width: 25%"><textarea readonly id="{{ regStudent.student_id }}txt"  style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ regStudent.student__remarks__remark }}</textarea></td>
+
+                                                 </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="teachersummary">
+                                    <b>Teacher Summary</b>
+                                         <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="table-responsive" style="height: 514px; overflow-y: scroll">
+                                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">SL</th>
+                                                        <th style="width: 14%">Teacher Initial</th>
+                                                        <th style="width: 25%">Teacher Name</th>
+                                                        <th style="width: 15%">Assigned Students</th>
+                                                        <th style="width: 15%">Student Registered</th>
+                                                        <th style="width: 15%">Percentage</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                 {% for num in studentnum %}
+
+                                                         <tr style="text-align: center">
+                                                           <th scope="row" style="width: 5%;">{{ forloop.counter }}</th>
+                                                           <td style="width: 14%">{{ num.tInitial }}</td>
+                                                         <td style="text-align: left;width: 25%">{{ num.tName }}</td>
+                                                         <td style="width: 15%">{{ num.numofstudent }} </td>
+                                                         <td style="width: 15%;"class="zero">
+                                                            {% for info in tsummury  %}
+                                                                 {% if num.tInitial == info.student__stAdvisor__tInitial %}
+                                                                    &nbsp;{{ 0 |add:info.reg }}
+{#                                                                     <td style="width: 15%">{% widthratio info.reg num.numofstudent 100 as width %} {{ width}}%</td>#}
+                                                                 {% endif %}
+                                                                 {% endfor %}
+                                                            </td>
+                                                         <td style="width: 15%;"class="zero">
+                                                            {% for info in tsummury  %}
+                                                                 {% if num.tInitial == info.student__stAdvisor__tInitial %}
+                                                                     &nbsp; {% widthratio info.reg num.numofstudent 100 as width %} {{ width}}%
+                                                                 {% endif %}
+                                                                 {% endfor %}
+                                                            </td>
+                                                         </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="coursesummary">
+                                {#        course table start#}
+                                    <h4>Total Courses  {{ csummary.count }}</h4>
+                                     <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 500px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead style="text-align: center">
+                                                <tr >
+                                                    <th style="width: 7%;">SL</th>
+                                                    <th style="width: 15%">Course Code</th>
+                                                    <th style="width: 25%">Course Title</th>
+                                                    <th style="width: 10%">Students Enrolled</th>
+                                                    <th style="width: 15%">Number of Section</th>
+                                                    <th style="width: 20%">Section</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for course in csummary %}
+                                                 <tr >
+                                                   <th scope="row" style="width: 7%;">{{ forloop.counter }}</th>
+
+                                                   <td style="width: 15%;">{{ course.course__courseCode }}</td>
+                                                     <td style="text-align: left;width: 25%;">{{ course.course__courseTitle }}</td>
+                                                     <td style="text-align: center;width: 20%;">{{ course.regstudents }}</td>
+                                                     <td style="text-align: center;width: 15%;">{{ course.course__totalSection }}</td>
+                                                    <td style="text-align: left;width: 20%;">
+                                                     {% for c in csummary1 %}
+                                                         {% if c.course__courseCode == course.course__courseCode %}
+                                                            {{ c.section }}---{{ c.nstudent }}<br>
+                                                         {% endif %}
+                                                     {% endfor %}
+                                                     </td>
+
+                                                 </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="allstudents">
+                                {#        course table start#}
+                                    <h4>Total Student: {{ sdetails.count }}</h4>
+                                    <div class="row clearfix">
+                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="table-responsive" style="height: 580px; overflow-y: scroll">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="studentsummarytable" style="width: 1500px;overflow-x: scroll">
+                            <thead>
+                                <tr style="vertical-align: middle">
+                                    <th style="width: 3%;">SL</th>
+                                    <th style="width: 8%">Student ID</th>
+                                    <th style="width: 10%">Student Name</th>
+                                    <th style="width: 10%">Student Email</th>
+                                    <th style="width: 8%">Phone</th>
+                                    <th style="width: 5%">Advisor</th>
+                                    <th style="width: 12%">Advisor Name</th>
+                                    <th style="width: 25%">Courses</th>
+                                    <th style="width: 15%">Remark</th>
+                                    <th style="width: 7%">Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for student in sdetails %}
+                                 <tr >
+                                   <th scope="row" style="width: 3%;">{{ forloop.counter }} &nbsp; </th>
+                                   <td style="width: 8%;" ><p ><b> &nbsp;{{ student.stID }}</b></p></td>
+                                    <td style="text-align: left;width:10%;">{{ student.stName }} &nbsp; </td>
+                                   <td style="width: 10%;">{{ student.stEmail }} &nbsp; </td>
+                                   <td style="width: 8%;">{{ student.stPhone }} &nbsp; </td>
+                                   <td style="width: 5%;">{{ student.tInitial }} &nbsp; </td>
+                                   <td style="width: 12%;">{{ student.tName }} &nbsp; </td>
+                                   <td style="width: 25%;"  id="{{ student.stID }}">
+
+                                    &nbsp;
+                                   </td>
+                                       <td style="width: 15%">{{ student.remark }} &nbsp; </td>
+                                   </td>
+                                 <td style="width: 7%;">{{ student.Registered }} &nbsp; </td>
+                                 </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                                     </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="coursesections">
+                                {#        course table start#}
+                                    <h4>Total Courses  {{ csummary.count }}</h4>
+                                     <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="height: 500px; overflow-y: scroll">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="coursesection">
+                                            <thead style="text-align: center">
+                                                <tr >
+                                                    <th style="width: 7%;">SL</th>
+                                                    <th style="width: 15%">Course Code</th>
+                                                    <th style="width: 25%">Course Title</th>
+                                                    <th style="width: 20%">Section</th>
+                                                    <th style="width: 20%">Section Limit</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for course in csummary %}
+                                                 <tr >
+                                                   <th scope="row" style="width: 7%;">{{ forloop.counter }}</th>
+
+                                                   <td style="width: 15%;">{{ course.course__courseCode }}</td>
+                                                     <td style="text-align: left;width: 25%;">{{ course.course__courseTitle }}</td>
+                                                     <td style="text-align: center;width: 15%;" id="sections{{ course.course_id }}"></td>
+                                                    <td style="text-align: left;width: 20%;" id="sectionlimit{{ course.course_id }}"> </td>
+
+                                                 </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<script type="text/javascript">
+    function nextChar(c) {
+            return String.fromCharCode(c.charCodeAt(0) + 1);
+            }
+ $(document).ready(function() {
+     var semester = '201';
+     req = $.ajax({
+        url: '/adminpanel/getcourses/',
+        type: 'POST',
+        data: {
+            semester: semester,
+        },
+    });
+     req.done(function(data) {
+        var x, txt = '', counter=0;
+        var courses = JSON.parse(data);
+
+        for (x in courses) {
+            var courseinfo = courses[x];
+            counter++;
+            try {
+                var table = $('#coursesection').DataTable();
+                var cval = 'A', nval;
+                for (l = 1; l <= courseinfo.totalSection; l++) {
+                    var coursecell = document.getElementById('sections' + courseinfo.id).innerHTML;
+                    if (l==courseinfo.totalSection) {
+                        {#document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval;#}
+                        table.cell('#sections' + courseinfo.id ).data(coursecell + cval ).invalidate().draw();
+                    }
+                    else {
+                        {#document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval + ',';#}
+                        table.cell('#sections' + courseinfo.id ).data(coursecell + cval + ',').invalidate().draw();
+                    }
+                    nval = nextChar(cval);
+                    cval = nval;
+                    table.cell( this ).data();
+                }
+                if (courseinfo.courseTitle.includes('Project') || courseinfo.courseTitle.includes('project')) {
+                    {#document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 25;#}
+                    table.cell('#sectionlimit' + courseinfo.id ).data(25).invalidate().draw();
+                }
+                else {
+                    {#document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 35;#}
+                    table.cell('#sectionlimit' + courseinfo.id ).data(35).invalidate().draw();
+                }
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+
+    });
+
+
+     req = $.ajax({
+        url: '/adminpanel/gettakencourses/',
+        type: 'POST',
+        data: {
+            semester: semester,
+        },
+    });
+     req.done(function(data) {
+         var table = $('#studentsummarytable').DataTable();
+        var x, txt = '', counter=0;
+        var studentstatus = JSON.parse(data);
+
+        for (x in studentstatus) {
+            var course = studentstatus[x];
+            counter++;
+            try {
+                var coursecell = document.getElementById(course.student__stID).innerHTML+"\n";
+                {#table.cell('#'+course.student__stID).data("\n"+coursecell+"\n"+course.course__courseCode+"--"+ course.course__courseTitle+"--"+course.section+"<br>").invalidate().draw();#}
+                document.getElementById(course.student__stID).innerHTML = "\n"+coursecell+"\n"+course.course__courseCode+"--"+ course.course__courseTitle+"--"+course.section+"<br>";
+                {#console.log(course.student__stID+"   "+ course.course__courseCode+"   "+coursecell);#}
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+
+    });
+
+ });
+
+</script>
+</body>
+</html>
+{% endblock %}

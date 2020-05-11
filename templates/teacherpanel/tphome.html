@@ -5,20 +5,28 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+
+    </style>
 </head>
 <body class="theme-green">
  <nav class="navbar" style="background-color: #00838f">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">TEACHER PORTAL</a>
+            <div class="navbar-header" style="text-align: center">
+
+
+                <div class=" " style="text-align: center">
+                <h4 style="text-align: center">Name: {{ teacher.tName }}</h4>
+                <h4 style="text-align: center">ID: {{ teacher.tName }}</h4>
             </div>
+            </div>
+
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
@@ -236,17 +244,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-2 bg-indigo hover-zoom-effect">
-                        <div class="icon">
-                            <i class="material-icons">done_all</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">REGISTERED IN LAST SEMESTER</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">0</div>
-                        </div>
-                    </div>
-                </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <a href="javascript:void(0);" class="menu-toggle" data-toggle="modal" data-target="#regiteredStudents">
                     <div class="info-box-2 bg-teal hover-zoom-effect">
@@ -254,7 +251,7 @@
                             <i class="material-icons">check_circle</i>
                         </div>
                         <div class="content">
-                            <div class="text">REGISTERED TILL NOW</div>
+                            <div class="text">PRE-REGISTERED TILL NOW</div>
                             <div class="number count-to" data-from="0" data-to="117" data-speed="1000" data-fresh-interval="20">{{ regStudents.count }}</div>
                         </div>
                     </div>
@@ -274,22 +271,29 @@
                     </div>
                     </a>
                 </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <a href="finalregistration/201/{{ teachers.id }}">
+                     <div class="info-box-2 bg-indigo hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">input</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">REGISTER NOW</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">{{ regstatus.count }}</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
             </div>
         <div>
 {#        course table start#}
-              <div style="float: left; width: 60%" class="row clearfix">
+              <div style="float: left; width: 750px" class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <span>
-                            <h2>
-                                Pre-Registered Courses
-                                <select >
-                              <option>Spring 2020</option>
-                              <option>Fall 2019</option>
-                              <option>Summer 2019</option>
-                              <option>Spring 2019</option>
-                            </select></span>
+                            <h2 style="text-align: center">
+                                Summer 2020
                             </h2>
 
                             <ul class="header-dropdown m-r--5">
@@ -323,7 +327,6 @@
                                     {% for course in courses %}
                                          <tr style="text-align: center">
                                            <th scope="row">{{ forloop.counter }}</th>
-
                                            <td>{{ course.courseCode }}</td>
                                              <td style="text-align: left">{{ course.courseTitle }}</td>
                                            <td>{{ course.courseCredit }}</td>
@@ -339,7 +342,7 @@
                 </div>
             </div>
 {#        student table start#}
-              <div style="float: right; width: 42%" class="row clearfix">
+              <div style=" width: 650px;overflow: auto" class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -370,7 +373,7 @@
                                            <td>{{ student.stID }}</td>
                                              <td style="text-align: left">{{ student.stName }}</td>
                                            <td>8</td>
-                                            <td><a href="/teacher/advisestudent/{{ student.stID }}" class="btn btn-primary viewsection">View</a></td>
+                                            <td><input type="button" id="{{ student.stID }}"  class="btn btn-primary viewcourse" value="View" href="javascript:void(0);"  data-toggle="modal" data-target="#defaultModal"/></td>
                                          </tr>
                                     {% endfor %}
                                     </tbody>
@@ -388,9 +391,8 @@
             </div>
         </div>
     </section>
-<<<<<<< HEAD
     <div class="modal fade" id="regiteredStudents" tabindex="-1" role="dialog" >
-        <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
+        <div class="modal-dialog modal-lg" role="document"  >
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="card">
@@ -419,27 +421,28 @@
                                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 10%;">SL</th>
-                                                    <th style="width: 18%">Student ID</th>
-                                                    <th style="width: 35%">Student Name</th>
-                                                    <th style="width: 10%">Credit Taken</th>
-                                                    <th style="width: 15%"></th>
+                                                    <th style="width: 3%;">SL</th>
+                                                    <th style="width: 15%">Student ID</th>
+                                                    <th style="width: 20%">Student Name</th>
+                                                    <th style="width: 4%">Credit</th>
+                                                    <th style="width: 45%">Remark</th>
+                                                    <th style="width: 25%"></th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                             {% for regStudent in regStudents %}
                                                  <tr style="text-align: center">
-                                                   <th scope="row">{{ forloop.counter }}</th>
+                                                   <th scope="row" style="width: 3%;">{{ forloop.counter }}</th>
 
-                                                   <td>{{ regStudent.student__stID }}</td>
-                                                     <td style="text-align: left">{{ regStudent.student__stName }}</td>
-                                                   <td>{{ regStudent.credit }}</td>
-                                                    <td>
-                                                       <button class="btn bg-green waves-effect" type="button" data-toggle="tooltip" data-original-title="Write something" data-placement="top">
-                                                            <i class="material-icons">chat</i>
-                                                        </button>
-                                                       <button style="margin-left: 20px" class="btn bg-teal waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
+                                                   <td style="width: 15%;">{{ regStudent.student__stID }}</td>
+                                                     <td style="text-align: left;width: 20%;">{{ regStudent.student__stName }}</td>
+                                                   <td style="width: 4%;">{{ regStudent.credit }}</td>
+                                                       <td style="width: 35%"><textarea readonly id="{{ regStudent.student_id }}txt"  style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ regStudent.student__remarks__remark }}</textarea></td>
+                                                         <td style="width: 25%">
+                                                           <button class="btn bg-green waves-effect addnote" style="width: 50%;float: left;margin-top:3px;height: 100%" id="{{ regStudent.student_id }}" data-html="true" type="button"  >Add Note
+                                                            </button>
+                                                       <button style="margin-left: 5px;float: right; width: 40%;height: 100%" class="btn bg-teal waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
                                                             <i class="material-icons">input</i>
                                                         </button>
                                                    </td>
@@ -457,7 +460,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="notRegiteredStudents" tabindex="-1" role="dialog" >
+    <div class="modal fade" id="notRegiteredStudents"  tabindex="-1" role="dialog" >
         <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
             <div class="modal-content">
                 <div class="modal-body">
@@ -487,36 +490,130 @@
                                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 10%;">SL</th>
-                                                    <th style="width: 18%">Student ID</th>
-                                                    <th style="width: 35%">Student Name</th>
-                                                    <th style="width: 10%">Mobile</th>
-                                                    <th style="width: 15%"></th>
+                                                    <th style="width: 3%;">SL</th>
+                                                    <th style="width: 14%">Student ID</th>
+                                                    <th style="width: 25%">Student Name</th>
+                                                    <th style="width: 5%">Mobile</th>
+                                                    <th style="width: 40%">Remark</th>
+                                                    <th style="width: 7%">Action</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                {% for student in students %}
-                                                {% for regStudent in regStudents %}
-                                                    {% if student.stID != regStudent.student__stID %}
+                                                {% for student in notregistered %}
                                                      <tr style="text-align: center">
-                                                       <th scope="row">{{ forloop.parentloop.counter }}</th>
+                                                       <th scope="row" style="width: 3%;">{{ forloop.counter }}</th>
 
-                                                       <td>{{ student.stID }}</td>
-                                                         <td style="text-align: left">{{ student.stName }}</td>
-                                                       <td>{{ student.stPhone }}</td>
-                                                         <td>
-                                                           <button class="btn bg-red waves-effect" type="button" data-toggle="tooltip" data-original-title="Write something..." data-placement="top">
-                                                                <i class="material-icons">chat</i>
-                                                            </button>
-                                                           <button style="margin-left: 20px" class="btn bg-deep-orange waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
-                                                                <i class="material-icons">input</i>
+                                                       <td style="width: 14%">{{ student.stID }}</td>
+                                                         <td style="text-align: left;width: 25%">{{ student.stName }}</td>
+                                                         <td style="width: 5%">{{ student.stPhone }}</td>
+                                                       <td style="width: 40%"><textarea readonly id="{{ student.id }}txt"  style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ student.remarks__remark }}</textarea></td>
+                                                         <td style="width: 7%">
+                                                           <button class="btn bg-red waves-effect addnote" style="width: 100%" id="{{ student.id }}" data-html="true" type="button"  >Add Note
                                                             </button>
                                                        </td>
+
                                                      </tr>
-                                                    {% endif %}
-                                                {% endfor %}
                                             {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right"><button  type="button" class=" btn btn-link waves-effect" data-dismiss="modal" name="teacher_close" id="teacherClose" >CLOSE</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <script>
+function f() {
+    x = document.getElementsByTagName("textarea");
+    x.contentEditable = false;
+}
+</script>
+     <script type="text/javascript">
+            $(document).ready(function() {
+                $('.addnote').on('click', function(e) {
+                    {#try {#}
+                    var id = this.id;
+                    var txtid = id+'txt';
+                    var remark = document.getElementById(txtid).value;
+                    console.log(document.getElementById(id).innerText);
+                    var x = document.getElementById(txtid);
+                    if (document.getElementById(id).innerText == "Save") {
+                        alert(remark);
+                        req = $.ajax({
+                            url: '/teacher/saveremark',
+                            type: 'POST',
+                            data: {
+                                sid: id,
+                                remark: remark,
+                                semester: '201'
+                            },
+
+                        });
+
+                        x.contentEditable = "false";
+                        console.log(x.value);
+                        {#button.innerHTML = "Add Note";#}
+                        x.readOnly=true;
+                        x.classList.remove("form-control");
+                        x.classList.remove("input");
+                        document.getElementById(id).innerText='Add Note';
+                        alert('Succefully Updated');
+                    }
+
+                    else {
+                        document.getElementById(id).innerText='Save';
+                         x.contentEditable = "true";
+                        x.className += ' form-control input';
+                        x.focus();
+                        x.readOnly=false;
+                        return;
+                    }
+            });
+         });
+
+
+    </script>
+
+    <div class="modal fade in" id="defaultModal"  tabindex="-1" role="dialog" >
+        <div class="modal-dialog" role="document"  >
+            <div class="modal-content modal-col-teal">
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="header bg-teal" style="text-align: center">
+                            <h2>
+                                Pre Registered Courses
+                            </h2>
+                            <h2>
+                                <label id="sname"></label><br>
+                                <label id="sid"></label><br>
+                                <label id="tcredit"></label>
+                                Semester: Summer 2020
+                            </h2>
+                        </div>
+                        <div class="body" >
+                            {#        course table start#}
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" >
+                                        <table class="table table-bordered table-hover" id="registeredCourses">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 10%;">SL</th>
+                                                    <th style="width: 18%">Code</th>
+                                                    <th style="width: 45%">Course Title</th>
+                                                    <th style="width: 10%">Credit</th>
+                                                    <th style="width: 10%">Section</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <td colspan="5" style="width: 30%; text-align: center"><a  id="update"  class="btn btn-primary btn-lg cregister" href="/teacher/"   >Update Registration Info</a></td>
+                                                </tfoot>
+                                            <tbody id="courses">
                                             </tbody>
                                         </table>
                                     </div>
@@ -529,7 +626,6 @@
             </div>
         </div>
     </div>
-<section>
 <footer >
     <div style="background-color: #00838f; height: 100px; justify-content: center;
   align-items: center; display: flex; ">
@@ -537,21 +633,65 @@
         <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Hafeezurrahman Saleh" data-placement="top" href=""
        src="{% static 'images/saleh.JPG' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
         <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Subroto Karmokar" data-placement="top" href=""
-       src="{% static 'images/user.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+       src="{% static 'images/munna.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
         <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Mostafa Munna" data-placement="top" href=""
-       src="{% static 'images/user.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+       src="{% static 'images/subroto.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
         <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Nagma Islam" data-placement="top" href=""
        src="{% static 'images/nadia.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
 
     </div>
     <div style="height: 50px; background-color:#006972; color: white; text-align: center ">
-        <br><p >2020©All right reserved by Daffodil International University</p>
+        <br><p >2020©All Department of Software Engineering, DIU</p>
     </div>
 </footer>
 </section>
-=======
->>>>>>> cea14217e08b3699f9d657f9c8487490f4a36fbb
+
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function() {
+                $('.viewcourse').on('click', function() {
+                {#var semester = document.getElementById('selectSemester').value;#}
+                var semester = '201';
+                var sid = this.id;
+                req = $.ajax({
+                    url : '/teacher/registeredCourses',
+                    type : 'POST',
+                    data : { semester : semester, stID: sid }
+                });
+                console.log(sid);
+                req.done(function(data) {
+                    var Table = document.getElementById("courses");
+                    Table.innerHTML = "";
 
+                    var courses = JSON.parse(data);
+                    var txt = '';
+                    var x,sl=0,i,sname,sid;
+                    for (x in courses) {
+                         var txt = '';
+                        var course = courses[x];
+                        sl=sl+1;
+                        txt += "<tr>";
+                        txt += "<td style=\"width:16%; font-weight:bold\">" + sl + "</td>";
+                        txt += "<td style=\"width:16%; font-weight:bold\">" + course.course__courseCode + "</td>";
+                        txt += "<td style=\"width:39%\">" + course.course__courseTitle + "</td>";
+                        txt += "<td style=\"width:10%\">" + course.course__courseCredit + "</td>";
+                        txt += "<td style=\"width:10%\">" + course.section + "</td>";
+                        txt += "</tr>";
+                        $("#courses").append(txt);
+                        s=course.section;
+                        sname=course.student__stName;
+                        sid=course.student__stID;
+                        std=course.student_id;
+                    }
+                    document.getElementById('sid').innerHTML=sid;
+                    document.getElementById('sname').innerHTML=sname;
+                   // $("#update").attr("href", '"teacher/updateregistration/'+semester+'/'+std+'"');
+                    $("a[href='/teacher/']").attr('href', "updateregistration/"+semester+"/"+std+"");
+                    {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
+                    {#$('#memberNumber'+member_id).text(data.member_num);#}
+                });
+            });
+        });
+</script>
 {% endblock %}

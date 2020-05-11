@@ -1,14 +1,16 @@
 import openpyxl
-from django.http import HttpResponseRedirect
+from django.db.models import Sum, Count, Subquery
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-
+from django.core.serializers import json
 from teacher.models import TeacherInfo
 from student.models import StudentInfo
 from django.contrib.auth.decorators import login_required
 from users.decorators import admin_required
 from .models import *
+import json
 
 def login(request):
     return render(request, 'adminpanel/login.html')
@@ -17,15 +19,17 @@ def login(request):
 @login_required
 @admin_required
 def index(request):
-    course = Courses.objects.all()
-    teacher = TeacherInfo.objects.all()
+    course = Courses.objects.all().order_by('level', 'term', 'courseCode')
     student = StudentInfo.objects.all()
+    teacher = TeacherInfo.objects.all().values('tID','id','tInitial','tPhone','tEmail','tName','tDesignation').annotate(numofstudent=Count('studentinfo',distinct=True))
     semester = SemesterInfo.objects.all()
+    waivers = WaiverInfo.objects.filter(semester__semesterCode='201')
     context = {
         'courses':course,
         'teachers':teacher,
         'students':student,
         'semesters':semester,
+        'waivers':waivers,
     }
     return render(request, 'adminpanel/index.html',context)
 def insert(request):
@@ -37,15 +41,17 @@ def insert(request):
             courseCredit = request.POST['ccredit']
             courseLevel = request.POST['clevel']
             courseTerm = request.POST['cterm']
+            totalSection = request.POST['tsection']
             if Courses.objects.filter(courseCode=courseCode):
                 course = Courses.objects.get(courseCode=courseCode)
                 course.courseTitle = courseTitle
                 course.courseCredit = courseCredit
                 course.level = courseLevel
                 course.term = courseTerm
+                course.totalSection = totalSection
                 course.save()
             else:
-                newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm)
+                newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm,totalSection=totalSection)
                 newCourse.save()
 
             return redirect('index')
@@ -117,6 +123,28 @@ def insert(request):
 
             messages.success(request, f'successfully insert into the system!')
             return redirect('index')
+        # elif table =='waiver':
+        #     semesterCode = request.POST['scode']
+        #     semesterTitle = request.POST['stitle']
+        #     regOpenDate = request.POST['regOpenDate']
+        #     # formatedregOpenDate = regOpenDate.strftime("%YYYY-%MM-%DD")
+        #     regClosedDate = request.POST['regClosedDate']
+        #     # formatedregClosedDate = regClosedDate.strftime("%YYYY-%MM-%DD")
+        #     print(regOpenDate)
+        #
+        #     if SemesterInfo.objects.filter(semesterCode=semesterCode).exists():
+        #         semester = SemesterInfo.objects.get(semesterCode=semesterCode)
+        #         semester.semesterCode = semesterCode
+        #         semester.semesterTitle = semesterTitle
+        #         semester.regOpenDate = regOpenDate
+        #         semester.regClosedDate = regClosedDate
+        #         semester.save()
+        #     else:
+        #         newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
+        #         newSemester.save()
+        #
+        #     messages.success(request, f'successfully insert into the system!')
+        #     return redirect('index')
     except :
         messages.error(request, f'Something went wrong. Please insert input properly!')
         return redirect(index)
@@ -306,7 +334,42 @@ def fileUpload(request):
                     excel_data.append(row_data)
                     print(row_data)
                     counter += 1
+            elif table == 'waiver':
+                for row in worksheet.iter_rows():
+                    row_data = list()
+                    # print(row[0].value)
 
+                    for cell in row:
+                        row_data.append(str(cell.value))
+                        if (counter == 0):
+                            continue
+                        # try:
+                        # print(row[0].value)
+                        # student = StudentInfo.objects.get(stID=row[0].value)
+                        # except:
+                        #     student = ""
+                        # try:
+                        semester = SemesterInfo.objects.get(semesterCode='201')
+                        # except:
+                        #     semester = ""
+                        c = WaiverInfo.objects.filter(studentID=row[0].value)
+                        if (c.count() == 0):
+                            try:
+                                WaiverInfo.objects.create(
+                                    studentID=row[0].value,
+                                    semester=semester,
+                                    existingWaiver=row[1].value,
+                                    specialWaiver=row[2].value,
+                                    totalWaiver=row[3].value,
+                                    amountofWaiver=row[4].value,
+                                    percentofWaiver=row[5].value,
+                                )
+                            except:
+                                msg = ""
+
+                    excel_data.append(row_data)
+                    print(row_data)
+                    counter += 1
             messages.success(request, f'Successfully Uploaded file into the system!')
             return redirect(index)
     except :
@@ -319,3 +382,63 @@ def error404(request, msg):
 
 def prevPage(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+@login_required
+def reportGenerator(request):
+    studentinfo = StudentInfo.objects.all()
+    semester=SemesterInfo.objects.get(semesterCode='201')
+    regStudents= CoursePreRegistration.objects.filter(semester=semester).values('student_id', 'student__stID','student__stEmail','student__stAdvisor__tInitial','student__stName', 'student__remarks__remark').annotate(credit=Sum('course__courseCredit')).distinct()
+    # notregistered = studentinfo.exclude(stID__in=[o['student__stID'] for o in regStudents]).values('id','stID','stName','stPhone', 'stEmail', 'stAdvisor','remarks__remark')
+    teacher = TeacherInfo.objects.values('tInitial')
+    studentnum = TeacherInfo.objects.all().values('tInitial','tName').annotate(numofstudent=Count('studentinfo',distinct=True))
+    tsummury = CoursePreRegistration.objects.filter(student__stAdvisor__tInitial__in=teacher).values( 'student__stAdvisor__tInitial').annotate(reg=Count('student__stID', distinct=True))\
+        # .extra(select={'val': "select count(stID, distinct =TRUE ) from student.studentInfo where stAdvisor = $s"}, select_params=('student__stAdvisor__tInitial',))
+                                                                                                                                               # ,student= teacher.filter(tInitial='student__stAdvisor__tInitial').values('numofstudent') ).distinct()
+     # count = CoursePreRegistration.objects.filter(semester=semester, course__courseCode=ccode, section=sec).values(
+    #     'id').count()
+    csummary1 = CoursePreRegistration.objects.filter(semester=semester).values('course__courseCode', 'section').annotate(nstudent=Count('id')).order_by('course__level', 'course__term', 'course__courseCode')
+    csummary= CoursePreRegistration.objects.filter(semester=semester).values('course_id','course__courseCode', 'course__courseTitle', 'course__totalSection').annotate(regstudents = Count('course_id')).order_by('course__level', 'course__term', 'course__courseCode')
+        # .extra(select={'seca': "select student_id from CoursePreRegistration  where id = 400"}, )
+    # # sdetails = StudentInfo.objects.values('stID',
+    # #                                        'stName',
+    # #                                        'stEmail',
+    # #                                        'stPhone',
+    # #                                      'stAdvisor__tInitial',
+    # #                                      'stAdvisor__tName',
+    # #                                        'remarks__remark' ).distinct().order_by('stAdvisor__tInitial')
+    sdetails=StudentInfo.objects.raw('''SELECT DISTINCT student_studentinfo.stID,student_studentinfo.id, student_studentinfo.stName,student_studentinfo.stEmail,
+student_studentinfo.stPhone,teacher_teacherinfo.tInitial,teacher_teacherinfo.tName, 
+adminpanel_remarks.remark,
+CASE WHEN adminpanel_coursepreregistration.student_id IS NOT NULL THEN 'Registered' ELSE 'Not Registered' END as Registered
+FROM student_studentinfo 
+LEFT JOIN users_user on student_studentinfo.stID=users_user.username
+LEFT JOIN teacher_teacherinfo on teacher_teacherinfo.id = student_studentinfo.stAdvisor_id
+LEFT JOIN adminpanel_coursepreregistration on  student_studentinfo.id = adminpanel_coursepreregistration.student_id
+LEFT JOIN adminpanel_remarks on  student_studentinfo.id= adminpanel_remarks.student_id
+order by teacher_teacherinfo.tInitial''')
+    print(sdetails[0].stName+"   "+ sdetails[1].stName+"   "+ sdetails[2].stName+"   "+ sdetails[3].stName)
+    context = {
+        'regStudents':regStudents,
+        # 'notregistered':notregistered,
+        'tsummury':tsummury,
+        'studentnum':studentnum,
+        'csummary':csummary,
+        'csummary1':csummary1,
+        'sdetails':sdetails,
+    }
+    return render(request, 'adminpanel/report.html', context)
+@csrf_exempt
+def gettakencourses(request):
+    cdetails = CoursePreRegistration.objects.filter(semester__semesterCode='201').values('student__stID',
+                                                                                         'course__courseCode',
+                                                                                         'course__courseTitle',
+                                                                                         'course__courseCredit',
+                                                                                         'section').distinct().order_by('student__stAdvisor__tInitial')
+
+    data = json.dumps(list(cdetails))
+    return HttpResponse(data)
+
+@csrf_exempt
+def getcourses(request):
+    courses = Courses.objects.values('id','courseCode', 'courseTitle', 'totalSection').order_by('level', 'term', 'courseCode')
+    data = json.dumps(list(courses))
+    return HttpResponse(data)

@@ -6,4 +6,7 @@ urlpatterns = [
     path('registercourse',views.registerCourse,name='registercourse'),
     path('findregisteredcourses',views.findRegisteredCourses,name='findregisteredcourses'),
     path('dropcourses',views.dropCourses,name='dropcourses'),
+    path('getstudentpersection',views.getstudentpersection,name='getstudentpersection'),
+    path('addpaymentstatus',views.addpaymentstatus,name='addpaymentstatus'),
+
 ]

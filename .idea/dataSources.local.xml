@@ -2,28 +2,13 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="Django default" uuid="142e2c25-e53f-41d6-b9fc-a6d238fea178">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <secret-storage>forget</secret-storage>
-      <schema-mapping />
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
     </data-source>
     <data-source name="semesterpreregistration@localhost" uuid="8e6d93cd-acf7-44ee-9be4-bd364ad8d157">
-<<<<<<< HEAD
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <introspection-schemas>*:semesterpreregistration</introspection-schemas>
     </data-source>
     <data-source name="db" uuid="2cef695e-d7d7-4bf2-b733-56d649b36cb1">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <introspection-schemas>*:main</introspection-schemas>
-=======
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <secret-storage>forget</secret-storage>
-      <schema-mapping />
-    </data-source>
-    <data-source name="db" uuid="2cef695e-d7d7-4bf2-b733-56d649b36cb1">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" exact-version="0" />
-      <secret-storage>forget</secret-storage>
-      <schema-mapping />
->>>>>>> cea14217e08b3699f9d657f9c8487490f4a36fbb
     </data-source>
   </component>
 </project>

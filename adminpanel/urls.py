@@ -8,4 +8,7 @@ urlpatterns = [
     path('courseDelete/<courseCode>/',views.courseDelete,name='ctdelete' ),
     path('studentlist/<courseCode>/<semesterID>/',views.studentList,name='studentlist' ),
     path('fileupload/',views.fileUpload,name='fileupload' ),
+    path('reportgenerator/',views.reportGenerator,name='reportgenerator' ),
+    path('gettakencourses/',views.gettakencourses,name='gettakencourses' ),
+    path('getcourses/',views.getcourses,name='getcourses' ),
 ]

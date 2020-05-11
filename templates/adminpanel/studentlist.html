@@ -11,6 +11,7 @@
         }
     </style>
      <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 
     <meta charset="UTF-8">
@@ -227,21 +228,7 @@
         </div>
     </nav>
     <!-- #Top Bar -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
+
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
@@ -257,7 +244,7 @@
         </div>
     </div>
     <section class="content" style="margin-left: 50px;width: 90%;">
-        <div class="container-fluid" >
+        <div class="container-fluid" id="selectedcourse">
             <div class="row clearfix" >
                 <!-- Basic Examples -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
@@ -287,6 +274,7 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
                                                                 </tr>
                                                             </thead>
 
@@ -297,7 +285,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 <td>{{ studentlist.student.stPhone }}
+                                                                         <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                     </td>
+                                                                    <td style="width: 12%">
+                                                                        <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" type="button"  >Drop
+                                                                        </button>
+                                                                     </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -326,6 +320,7 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
                                                                 </tr>
                                                             </thead>
 
@@ -336,7 +331,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 <td>{{ studentlist.student.stPhone }}
+                                                                         <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                     </td>
+                                                                    <td style="width: 12%">
+                                                                        <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" data-html="true" type="button"  >Drop
+                                                                        </button>
+                                                                     </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -365,6 +366,8 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
+
                                                                 </tr>
                                                             </thead>
 
@@ -375,7 +378,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 <td>{{ studentlist.student.stPhone }}
+                                                                         <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                     </td>
+                                                                    <td style="width: 12%">
+                                                                        <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" data-html="true" type="button"  >Drop
+                                                                        </button>
+                                                                     </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -404,6 +413,7 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
                                                                 </tr>
                                                             </thead>
 
@@ -414,7 +424,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                 <td>{{ studentlist.student.stPhone }}
+                                                                         <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                     </td>
+                                                                    <td style="width: 12%">
+                                                                        <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" data-html="true" type="button"  >Drop
+                                                                        </button>
+                                                                     </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -443,6 +459,7 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
                                                                 </tr>
                                                             </thead>
 
@@ -453,7 +470,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}
+                                                                             <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                         </td>
+                                                                        <td style="width: 12%">
+                                                                            <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" data-html="true" type="button"  >Drop
+                                                                            </button>
+                                                                         </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -482,6 +505,7 @@
                                                                     <th style="width: 35%">Student Name</th>
                                                                     <th style="width: 10%">Student Email</th>
                                                                     <th style="width: 10%">Student Phone</th>
+                                                                    <th style="width: 5%">Action</th>
                                                                 </tr>
                                                             </thead>
 
@@ -492,7 +516,13 @@
                                                                      <td>{{ studentlist.student.stID }}</td>
                                                                      <td style="text-align: left">{{ studentlist.student.stName }}</td>
                                                                      <td>{{ studentlist.student.stEmail }}</td>
-                                                                     <td>{{ studentlist.student.stPhone }}</td>
+                                                                     <td>{{ studentlist.student.stPhone }}
+                                                                         <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
+                                                                     </td>
+                                                                    <td style="width: 12%">
+                                                                        <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" data-html="true" type="button"  >Drop
+                                                                        </button>
+                                                                     </td>
                                                                  </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -510,7 +540,37 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+     $(".table").on('click', '.removeRow', function () {
+             var rid = document.getElementById('rid'+this.name).value;
+             var semester = 5;
+             console.log(document.getElementById('rid'+this.name).value);
+             var row = $(this).closest('tr').children()[0];    // Find the row
+             var te = $(row).html();
+             console.log(te);
+            if(rid!=''){
+                try {
+                    req = $.ajax({
+                            url: '/teacher/dropcourse/',
+                            type: 'POST',
+                            data: {
+                                rid: rid,
+                                semester: semester
+                            }
+                        });
+                    alert('Course deleted!');
+                }
+                catch (e) {
+                    alert(e)
+                }
+
+            }
+         $(this).closest('tr').remove();
+        });
+
+</script>
 </section>
+
 </body>
 </html>
 {% endblock %}
