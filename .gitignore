@@ -79,7 +79,8 @@ docs/_build/
 
 # PyBuilder
 target/
-.venv_IPS/
+venv_IPS/
+venv/
 # pyenv
 .python-version
 
