@@ -264,9 +264,6 @@ window.onload = function() {
 
 </script>
 <script type="text/javascript">
-     $(document).ready(function() {
-        document.getElementsByClassName('changesection').style.backgroundColor='red';
-     });
 
     $(document).ready(function() {
         $('#selectedcourse').on('click', '.changesection', function() {
@@ -301,8 +298,6 @@ window.onload = function() {
 
             else {
                 document.getElementById(id).innerText='Save';
-                document.getElementById(id).style.backgroundColor='red';
-                {#$("#" + id).toggleClass("btn bg-red waves-effect changesection");#}
                 //document.querySelector('').innerText = 'Save';
                 x.contentEditable = "true";
                 x.focus();

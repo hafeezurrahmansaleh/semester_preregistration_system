@@ -10,7 +10,8 @@ import json
 from django.contrib.auth.decorators import login_required
 from users.decorators import student_required
 from .models import *
-from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration, WaiverInfo, PaymentInfo
+from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration,WaiverInfo,\
+	PaymentInfo, CourseRegistration
 #email
 from django.core.mail import send_mail
 from django.conf import settings
@@ -19,8 +20,15 @@ from django.conf import settings
 @login_required
 @student_required
 def studentPanelHome(request):
-    courses = Courses.objects.all()
-    student = StudentInfo.objects.get(stEmail = request.user.email)
+    courses = Courses.objects.all().order_by('level', 'term', 'courseCode')
+    try:
+        student = StudentInfo.objects.get(stID = request.user.username)
+    except:
+        student = 'not found'
+    try:
+        regstatus = CourseRegistration.objects.get(student_id=student.id)
+    except:
+        regstatus = 'not found'
     semester = SemesterInfo.objects.all()
     currentsemester = SemesterInfo.objects.get(semesterCode='201')
     try:
@@ -39,8 +47,9 @@ def studentPanelHome(request):
         'semesters' : semester,
         'waiver' : waiver,
         'payment':payment,
+        'regstatus':regstatus,
     }
-    return render(request, 'studentpanel/stp.html',context)
+    return render(request, 'studentpanel/stphome.html',context)
 
 
 @login_required
@@ -50,7 +59,6 @@ def findCourse(request):
     cid = request.POST['cid']
     courses = Courses.objects.filter(pk=cid)
     # print(level+semester)
-    print(cid)
     data = serializers.serialize('json', courses)
     return HttpResponse(data)
 
@@ -97,11 +105,12 @@ def registerCourse(request):
 @student_required
 @csrf_exempt
 def dropCourses(request):
+
     # courseCode = request.POST['ccode']
-    # semesterCode = request.POST['semester']
+    semesterCode = request.POST['semester']
     student = StudentInfo.objects.get(stEmail = request.user.email)
     # course = Courses.objects.get(courseCode=courseCode)
-    semester = SemesterInfo.objects.get(semesterCode='201')
+    semester = SemesterInfo.objects.get(semesterCode=semesterCode)
     CoursePreRegistration.objects.filter(student=student,semester=semester).delete()
     return HttpResponse('success')
 
@@ -136,10 +145,11 @@ def getstudentpersection(request):
         'sec':sec,
     }
     return JsonResponse(data)
+    
 
 @csrf_exempt
 def addpaymentstatus(request):
-    student = StudentInfo.objects.get(stEmail=request.user.email)
+    student = StudentInfo.objects.get(stID=request.user.username)
     semcode = request.POST['semester']
     semester = SemesterInfo.objects.get(semesterCode=semcode)
     comment = request.POST['studentComment']
@@ -150,7 +160,7 @@ def addpaymentstatus(request):
     else:
         pstat = "Not paid"
 
-    if(PaymentInfo.objects.filter(student=student, semester = semester)):
+    if(PaymentInfo.objects.filter(student=student, semester = semester).exists()):
         status = PaymentInfo.objects.get(student=student, semester=semester)
         status.comment = comment
         status.paymentStatus = paymentStatus
@@ -170,3 +180,14 @@ def addpaymentstatus(request):
     except:
         msg = 'Saved but failed to send to your advisor'
     return HttpResponse(msg)
+@login_required
+def gototohomepage(request):
+    if(request.user.is_admin):
+        print('Admin')
+        return redirect('/adminpanel/index')
+    elif(request.user.is_teacher):
+        print('Teacher')
+        return redirect('/teacher/')
+    elif (request.user.is_student):
+        print('Student')
+        return redirect('/student/')

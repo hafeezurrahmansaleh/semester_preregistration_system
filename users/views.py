@@ -60,7 +60,7 @@ class TeacherSignUpView(CreateView):
 
     def form_valid(self, form):
         form.save()
-        mgs = StudentSignUpForm.mgs
+        mgs = TeacherSignUpForm.mgs
         if 'Your email not' in mgs:
             messages.error(self.request, mgs)
         elif 'Already have' in mgs:

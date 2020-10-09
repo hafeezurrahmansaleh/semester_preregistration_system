@@ -43,12 +43,10 @@
                             <!-- Tab panes -->
                             <div class="tab-content bg-white" style="margin: 70px; margin-top: 10px; color: #0f0f0f; padding: 20px">
                                 <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                    <b>Home Content</b>
+                                    <b>Report Generatort</b>
                                     <p>
-                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                        sadipscing mel.
+                                       Here you will find all kind of report related to semester pre registration.... <br><br>
+                                       Select your desire tab and find it now.....
                                     </p>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="regstudent">
@@ -138,35 +136,41 @@
                                                         <th style="width: 14%">Teacher Initial</th>
                                                         <th style="width: 25%">Teacher Name</th>
                                                         <th style="width: 15%">Assigned Students</th>
-                                                        <th style="width: 15%">Student Registered</th>
-                                                        <th style="width: 15%">Percentage</th>
+                                                        <th style="width: 15%">Pre-registered Students</th>
+                                                        <th style="width: 15%">Final registered Students</th>
                                                     </tr>
                                                 </thead>
 
                                                 <tbody>
                                                  {% for num in studentnum %}
 
-                                                         <tr style="text-align: center">
+                                                     <tr style="text-align: center">
                                                            <th scope="row" style="width: 5%;">{{ forloop.counter }}</th>
                                                            <td style="width: 14%">{{ num.tInitial }}</td>
                                                          <td style="text-align: left;width: 25%">{{ num.tName }}</td>
                                                          <td style="width: 15%">{{ num.numofstudent }} </td>
                                                          <td style="width: 15%;"class="zero">
                                                             {% for info in tsummury  %}
-                                                                 {% if num.tInitial == info.student__stAdvisor__tInitial %}
+                                                                 {% if num.tInitial == info.tInitial %}
                                                                     &nbsp;{{ 0 |add:info.reg }}
 {#                                                                     <td style="width: 15%">{% widthratio info.reg num.numofstudent 100 as width %} {{ width}}%</td>#}
                                                                  {% endif %}
-                                                                 {% endfor %}
+                                                            {% endfor %}
+                                                            {% for info in tsummury  %}
+                                                                 {% if num.tInitial == info.tInitial %}
+                                                                     &nbsp; {% widthratio info.reg num.numofstudent 100 as width %}  ({{ width}}%)
+                                                                 {% endif %}
+                                                            {% endfor %}
                                                             </td>
                                                          <td style="width: 15%;"class="zero">
-                                                            {% for info in tsummury  %}
-                                                                 {% if num.tInitial == info.student__stAdvisor__tInitial %}
-                                                                     &nbsp; {% widthratio info.reg num.numofstudent 100 as width %} {{ width}}%
+                                                            {% for fs in finalregistered  %}
+                                                                 {% if num.tInitial == fs.tInitial %}
+                                                                     {{ fs.numoffinalstudent }}
+                                                                     {% widthratio fs.numoffinalstudent num.numofstudent 100 as width %} ({{ width}}%)
                                                                  {% endif %}
-                                                                 {% endfor %}
-                                                            </td>
-                                                         </tr>
+                                                             {% endfor %}
+                                                         </td>
+                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
                                             </table>
@@ -204,7 +208,7 @@
                                                      <td style="text-align: left;width: 25%;">{{ course.course__courseTitle }}</td>
                                                      <td style="text-align: center;width: 20%;">{{ course.regstudents }}</td>
                                                      <td style="text-align: center;width: 15%;">{{ course.course__totalSection }}</td>
-                                                    <td style="text-align: left;width: 20%;">
+                                                    <td style="text-align: center;width: 20%;">
                                                      {% for c in csummary1 %}
                                                          {% if c.course__courseCode == course.course__courseCode %}
                                                             {{ c.section }}---{{ c.nstudent }}<br>
@@ -226,7 +230,7 @@
                                     <div class="row clearfix">
                                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="table-responsive" style="height: 580px; overflow-y: scroll">
-                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="studentsummarytable" style="width: 1500px;overflow-x: scroll">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" style="width: 1500px;overflow-x: scroll">
                             <thead>
                                 <tr style="vertical-align: middle">
                                     <th style="width: 3%;">SL</th>
@@ -252,7 +256,7 @@
                                    <td style="width: 8%;">{{ student.stPhone }} &nbsp; </td>
                                    <td style="width: 5%;">{{ student.tInitial }} &nbsp; </td>
                                    <td style="width: 12%;">{{ student.tName }} &nbsp; </td>
-                                   <td style="width: 25%;"  id="{{ student.stID }}">
+                                   <td style="width: 25%;"><p id="{{ student.stID }}"></p>
 
                                     &nbsp;
                                    </td>
@@ -273,14 +277,15 @@
                                      <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="table-responsive" style="height: 500px; overflow-y: scroll">
-                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" id="coursesection">
+                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                             <thead style="text-align: center">
                                                 <tr >
                                                     <th style="width: 7%;">SL</th>
                                                     <th style="width: 15%">Course Code</th>
                                                     <th style="width: 25%">Course Title</th>
+                                                    <th style="width: 10%">Credit</th>
                                                     <th style="width: 20%">Section</th>
-                                                    <th style="width: 20%">Section Limit</th>
+                                                    <th style="width: 10%">Section Limit</th>
 
                                                 </tr>
                                             </thead>
@@ -292,8 +297,9 @@
 
                                                    <td style="width: 15%;">{{ course.course__courseCode }}</td>
                                                      <td style="text-align: left;width: 25%;">{{ course.course__courseTitle }}</td>
+                                                     <td style="text-align: left;width: 10%;">{{ course.course__courseCredit }}</td>
                                                      <td style="text-align: center;width: 15%;" id="sections{{ course.course_id }}"></td>
-                                                    <td style="text-align: left;width: 20%;" id="sectionlimit{{ course.course_id }}"> </td>
+                                                    <td style="text-align: left;width: 10%;" id="sectionlimit{{ course.course_id }}"> </td>
 
                                                  </tr>
                                             {% endfor %}
@@ -303,6 +309,7 @@
                                 </div>
                             </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -331,29 +338,23 @@
             var courseinfo = courses[x];
             counter++;
             try {
-                var table = $('#coursesection').DataTable();
                 var cval = 'A', nval;
                 for (l = 1; l <= courseinfo.totalSection; l++) {
                     var coursecell = document.getElementById('sections' + courseinfo.id).innerHTML;
                     if (l==courseinfo.totalSection) {
-                        {#document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval;#}
-                        table.cell('#sections' + courseinfo.id ).data(coursecell + cval ).invalidate().draw();
+                        document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval;
                     }
                     else {
-                        {#document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval + ',';#}
-                        table.cell('#sections' + courseinfo.id ).data(coursecell + cval + ',').invalidate().draw();
+                        document.getElementById('sections' + courseinfo.id).innerHTML = coursecell + cval + ',';
                     }
                     nval = nextChar(cval);
                     cval = nval;
-                    table.cell( this ).data();
                 }
                 if (courseinfo.courseTitle.includes('Project') || courseinfo.courseTitle.includes('project')) {
-                    {#document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 25;#}
-                    table.cell('#sectionlimit' + courseinfo.id ).data(25).invalidate().draw();
+                    document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 25
                 }
                 else {
-                    {#document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 35;#}
-                    table.cell('#sectionlimit' + courseinfo.id ).data(35).invalidate().draw();
+                    document.getElementById('sectionlimit' + courseinfo.id).innerHTML = 35
                 }
             }
             catch (e) {
@@ -372,7 +373,6 @@
         },
     });
      req.done(function(data) {
-         var table = $('#studentsummarytable').DataTable();
         var x, txt = '', counter=0;
         var studentstatus = JSON.parse(data);
 
@@ -381,7 +381,6 @@
             counter++;
             try {
                 var coursecell = document.getElementById(course.student__stID).innerHTML+"\n";
-                {#table.cell('#'+course.student__stID).data("\n"+coursecell+"\n"+course.course__courseCode+"--"+ course.course__courseTitle+"--"+course.section+"<br>").invalidate().draw();#}
                 document.getElementById(course.student__stID).innerHTML = "\n"+coursecell+"\n"+course.course__courseCode+"--"+ course.course__courseTitle+"--"+course.section+"<br>";
                 {#console.log(course.student__stID+"   "+ course.course__courseCode+"   "+coursecell);#}
             }

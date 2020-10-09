@@ -11,4 +11,5 @@ urlpatterns = [
     path('reportgenerator/',views.reportGenerator,name='reportgenerator' ),
     path('gettakencourses/',views.gettakencourses,name='gettakencourses' ),
     path('getcourses/',views.getcourses,name='getcourses' ),
+    path('getteacherid/',views.getteacherid,name='getteacherid' ),
 ]

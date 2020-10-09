@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from users import views as user_views
 from adminpanel import views
+from student import views as sviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('', include('users.urls')),
     path('error404/<msg>',views.error404, name='error404' ),
     path('prevpage',views.prevPage, name='prevPage' ),
+    path('gototohomepage',sviews.gototohomepage, name='gototohomepage' ),
 
     # path('accounts/', include('allauth.urls')),
     # path('profile/', user_views.home, name='profile'),

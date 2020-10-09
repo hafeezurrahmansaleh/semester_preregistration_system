@@ -9,4 +9,3 @@ class TeacherInfo(models.Model):
     tDesignation = models.CharField(max_length=20)
     tPhone = models.CharField(max_length=20)
     tEmail = models.CharField(max_length=40)
-

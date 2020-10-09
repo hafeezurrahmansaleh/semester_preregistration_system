@@ -9,8 +9,8 @@ class AdminInfo(models.Model):
 
 
 class Courses(models.Model):
-    courseCode = models.CharField(max_length=10, unique=True)
-    courseTitle = models.CharField(max_length=50)
+    courseCode = models.CharField(max_length=20, unique=True)
+    courseTitle = models.CharField(max_length=100)
     courseCredit = models.IntegerField()
     level = models.IntegerField()
     term = models.IntegerField()
@@ -33,18 +33,20 @@ class CoursePreRegistration(models.Model):
     semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
     section = models.CharField(max_length=5)
     paymentStatus = models.CharField(max_length=20)
-
+    
 
 class Remarks(models.Model):
     student =models.ForeignKey(StudentInfo, on_delete= models.CASCADE)
     semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
     remark = models.CharField(max_length=500, null=True)
+    
 
 class CourseRegistration(models.Model):
     student =models.ForeignKey(StudentInfo, on_delete= models.CASCADE)
     semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
     registered = models.BooleanField(default=False)
-
+    
+    
 class WaiverInfo(models.Model):
     studentID =models.CharField(max_length=40)
     semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
@@ -53,11 +55,12 @@ class WaiverInfo(models.Model):
     totalWaiver = models.IntegerField()
     amountofWaiver = models.IntegerField()
     percentofWaiver = models.IntegerField()
-
+    
 class PaymentInfo(models.Model):
     student = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
     semester = models.ForeignKey(SemesterInfo, on_delete=models.CASCADE)
     paymentStatus = models.BooleanField(default=False)
     comment = models.CharField(null=True, max_length=500)
+
 
 

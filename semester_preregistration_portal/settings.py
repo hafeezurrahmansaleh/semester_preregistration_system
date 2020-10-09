@@ -175,9 +175,10 @@ LOGOUT_REDIRECT_URL = 'account_login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4' #crispy
 
 #email config
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'daffodil.swe21@gmail.com'
-EMAIL_HOST_PASSWORD = 'swe12345678'
+EMAIL_HOST_USER = 'supto.sks@gmail.com'
+EMAIL_HOST_PASSWORD = 'Sk@123456'

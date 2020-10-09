@@ -46,7 +46,7 @@
                Pre-registered Sudent List <small><span class=". . . . ."></span></small>
 
             </h2>
-            <a style="float: left; margin-top: -30px" type="button" id="submitbtn"  class="btn bg-red waves-effect btn-lg  cregister" href="/teacher/"><< Back to Home</a>
+            <a style="float: left; margin-top: -30px" type="button" id="submitbtn"  class="btn bg-red waves-effect btn-lg  cregister" href="/gototohomepage"><< Back to Home</a>
             <ul class="header-dropdown m-r--5">
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -101,14 +101,15 @@
                                         <label for="pscb{{ student.student_id }}" id="psl{{ student.student_id }}">Pending</label>
                                     </td>
                                     <td style="width: 13%" id="stc{{ student.student_id }}">   </td>
-                                    <td style="width: 13%"><textarea readonly id="{{ student.student_id }}txt" style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ student.student__remarks__remark }}</textarea></td>
+                                    <td style="width: 13%"><textarea readonly id="note{{ student.student__stID }}txt" style="height: 50px; width: 100%; border-color: Transparent;" contenteditable="true">{{ student.student__remarks__remark }}</textarea></td>
                                      <td style="width: 10%; align-content: center;">
-                                         <button class="btn bg-blue waves-effect addnote" style="width: 48%;height: 50px" id="{{ student.student_id }}" data-html="true" type="button"  >Note
+                                         <button class="btn bg-blue waves-effect addnote" style="width: 48%;height: 50px" id="note{{ student.student__stID }}" data-html="true" type="button"  >Note
                                         </button>
-                                         <button   id="{{ student.student__stID }}" style="width: 48%;height: 50px"   class="btn bg-red waves-effect register" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
+                                         <button   id="{{ student.student__stID }}" style="width: 48%;height: 50px" class="btn bg-red waves-effect register"  type="button" data-toggle="tooltip" data-original-title="Registration Status" data-placement="top">
                                             <i id="i{{ student.student__stID }}" class="material-icons">input</i>
                                         </button>
-                                             <input type="hidden" id="h{{ student.student__stID  }}" value="true"/>
+                                             <input type="hidden" id="h{{ student.student__stID  }}" />
+                                             <input type="hidden" id="getstIDnote{{ student.student__stID  }}" value="{{ student.student_id }}"/>
 {#                                             {% for status in status %}#}
 {#                                                 {% if status.student__stID==student.student__stID %}#}
 {#                                                    {% if status.registered %}#}
@@ -137,16 +138,19 @@
             $('.addnote').on('click', function(e) {
                 {#try {#}
                 var id = this.id;
+                console.log(id);
                 var txtid = id+'txt';
                 var remark = document.getElementById(txtid).value;
-                console.log(document.getElementById(id).innerText);
+                console.log(id);
                 var x = document.getElementById(txtid);
+                var sid = document.getElementById('getstID'+id).value;
+                console.log(sid);
                 if (document.getElementById(id).innerText == "Save") {
                     req = $.ajax({
                         url: '/teacher/saveremark',
                         type: 'POST',
                         data: {
-                            sid: id,
+                            sid: sid,
                             remark: remark,
                             semester: '201'
                         },
@@ -188,6 +192,7 @@
     req.done(function(data) {
         var x;
         var payments = JSON.parse(data);
+        console.log(payments);
         for (x in payments) {
             var payment = payments[x];
             try {
@@ -227,13 +232,18 @@
                     document.getElementById('i' + btnid).innerHTML = 'done';
                     document.getElementById('p' + btnid).style.backgroundColor = 'teal';
                     document.getElementById('p' + btnid).style.color = 'white';
-                    $("#" + btnid).toggleClass("btn bg-teal waves-effect register");
-                    $("#" + btnid).prop("disabled", true);
-                    document.getElementById('h' + btnid).value = status.registered;
-                    document.getElementById(status.student_id+'txt').style.color = 'black';
+                    // $("#" + btnid).toggleClass("btn bg-green waves-effect register");
+                    document.getElementById('h' + btnid).value = 'true';
+                    document.getElementById('note'+status.student__stID+'txt').style.color = 'black';
+                    $("#"+btnid).removeClass("bg-red");
+                    $("#"+btnid).addClass("bg-green");
                 }
                 else {
-                    document.getElementById('h' + btnid).value = status.registered;
+                    $("#"+btnid).removeClass("bg-green");
+                    $("#"+btnid).addClass("bg-red");
+                    document.getElementById('h' + btnid).value = 'false';
+                    document.getElementById('i' + btnid).innerHTML = 'input';
+                    document.getElementById('note'+status.student__stID+'txt').style.color = 'black';
                 }
             }
             catch (e) {
@@ -261,15 +271,25 @@
                         },
                     });
             req.done(function(data) {
-                if(regstatus){
-                    document.getElementById('i'+btnid).innerText = 'done';
-                    document.getElementById('p'+btnid).style.backgroundColor= 'teal';
-                    document.getElementById('p'+btnid).style.color= 'white';
-                    $("#"+btnid).toggleClass("btn bg-teal waves-effect register");
-                    $("#"+btnid).prop("disabled", true);
+                if(regstatus == 'true' || regstatus == 'True' || regstatus == true){
+                    console.log(btnid);
+                    document.getElementById('note'+btnid+'txt').style.color = 'black';
+                    document.getElementById('i'+btnid).innerHTML = 'input';
+                    document.getElementById('h' + btnid).value = 'false';
+                    document.getElementById('p'+btnid).style.backgroundColor = "white";
+                    document.getElementById('p'+btnid).style.color= 'black';
+                    $("#"+btnid).removeClass("bg-green");
+                    $("#"+btnid).addClass("bg-red");
+                    return;
                 }
                 else
-                    document.getElementById('i'+btnid).innerText = 'input';
+                    document.getElementById('i'+btnid).innerHTML = 'done';
+                    $("#"+btnid).removeClass("bg-red");
+                    $("#"+btnid).addClass("bg-green");
+                    document.getElementById('p'+btnid).style.backgroundColor= 'teal';
+                    document.getElementById('p'+btnid).style.color= 'white';
+                    document.getElementById('h' + btnid).value = 'true';
+                    document.getElementById('note'+btnid+'txt').style.color = 'black';
 
             });
         });

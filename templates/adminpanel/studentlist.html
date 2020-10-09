@@ -228,7 +228,6 @@
         </div>
     </nav>
     <!-- #Top Bar -->
-
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
@@ -253,7 +252,6 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
-                                    <b>Student List</b>
                                     <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-primary">
                                             <div class="panel-heading" role="tab" id="headingOne_1">
@@ -534,6 +532,7 @@
                                     </div>
                                 </div>
                             </div>
+                        <a style="float: left; margin-top: -30px" type="button" id="submitbtn"  class="btn bg-red waves-effect btn-lg  cregister" href="/gototohomepage"><< Back to Home</a>
                         </div>
                     </div>
                 </div>
@@ -542,6 +541,7 @@
     </div>
     <script type="text/javascript">
      $(".table").on('click', '.removeRow', function () {
+         alert("jhh");
              var rid = document.getElementById('rid'+this.name).value;
              var semester = 5;
              console.log(document.getElementById('rid'+this.name).value);

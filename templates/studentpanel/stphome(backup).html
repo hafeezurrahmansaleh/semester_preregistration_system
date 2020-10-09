@@ -1,0 +1,795 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>student</title>
+    <style>
+        .coursetable tbody {
+          display: block;
+          max-height: 262px;
+          overflow-y: scroll;
+        }
+
+        .coursetable thead,
+        .coursetable tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+        .scroll tbody {
+          display: block;
+          max-height: 235px;
+          overflow-y: scroll;
+        }
+
+        .scroll thead,
+        .scroll tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+
+
+    </style>
+</head>
+<body class="theme-blue" style="height: 100%">
+    <nav class="navbar" style="background: #013547;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" style="text-align: center" href="#">Semester Pre-registration Portal</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Call Search -->
+                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <!-- #END# Call Search -->
+                    <!-- Notifications -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">notifications</i>
+                            <span class="label-count">7</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">NOTIFICATIONS</li>
+                            <li class="body">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">person_add</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>12 new members joined</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-cyan">
+                                                <i class="material-icons">add_shopping_cart</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>4 sales made</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-red">
+                                                <i class="material-icons">delete_forever</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy Doe</b> deleted account</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-orange">
+                                                <i class="material-icons">mode_edit</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy</b> changed name</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> commented your post</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">cached</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> updated status</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-purple">
+                                                <i class="material-icons">settings</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>Settings updated</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Notifications</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Notifications -->
+                    <!-- Tasks -->
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">flag</i>
+                            <span class="label-count">9</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">TASKS</li>
+                            <li class="body">
+                                <ul class="menu tasks">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Footer display issue
+                                                <small>32%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Make new buttons
+                                                <small>45%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Create new dashboard
+                                                <small>54%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Solve transition issue
+                                                <small>65%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <h4>
+                                                Answer GitHub questions
+                                                <small>92%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Tasks -->
+                    <li >
+                        <a href="{% url 'change_password' %}">Change Password</a>
+                    </li>
+                    <li >
+                        <a href="{% url 'logout' %}">Log out</a>
+                    </li>
+                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section class="content" style="margin-left: 35px; margin-top: 90px">
+    <div class="container-fluid">
+        <div class="row clearfix">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width: 20%">
+                    <div class="info-box-2 bg-deep-purple hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">autorenew</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">Existing Waiver:</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">{{ waiver.existingWaiver }}%</div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width: 20%">
+                    <div class="info-box-2 bg-teal hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">check_circle</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">COVID-19 Waiver:</div>
+                            <div class="number count-to" data-from="0" data-to="117" data-speed="1000" data-fresh-interval="20">{{ waiver.specialWaiver }}%</div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width: 20%"> 
+                    <div class="info-box-2 bg-blue hover-zoom-effect" >
+                        <div class="icon">
+                            <i class="material-icons">hourglass_full</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">Total Waiver:</div>
+                            {% load mathfilters %}
+                            <div class="number count-to" data-from="0" data-to="1432" data-speed="1500" data-fresh-interval="20">{{ waiver.totalWaiver }}% </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width: 20%">
+            
+                     <div class="info-box-2 bg-indigo hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">monetization_on</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">Amount:</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">{{ waiver.amountofWaiver }}</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width: 20%">
+                    <div class="info-box-2 bg-green hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">done_all</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">% For Summer-20:</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">{{ waiver.existingWaiver }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+  <section class="body" style=" margin-top: 10px;margin-right: 30px;margin-left: 20px;">
+        <div class="container-fluid" style="width: 820px;float: left">
+    <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card" >
+                        <div class="header body " style="background-color: #024963; ">
+                            <h2 style="text-align: center;color: white; ">
+                                COURSE LIST
+                            </h2>
+                        </div>
+                        <div class="body" style="height: 500px">
+                            <div class="table-responsive" style="overflow-x: inherit;" >
+                            <div class="coursetable" >
+                                <table id="example" class="table table-bordered table-striped table-hover  dataTable" >
+
+                                    <thead >
+                                       <tr >
+                                         <th scope="col" style="width: 5%">SL</th>
+                                         <th scope="col" style="width: 30%">Course title</th>
+                                         <th scope="col" style="width: 15%">Course code</th>
+                                         <th scope="col" style="width: 10%">Credit</th>
+                                         <th scope="col" style="width: 10%">Level</th>
+                                         <th scope="col" style="width: 10%">Term</th>
+                                         <th scope="col" style="width: 10%">Enroll </th>
+                                       </tr>
+                                     </thead >
+                                       <tbody class="t_sortable" >
+                                       {% for course in courses %}
+                                         <tr>
+                                           <th scope="row" style="width: 5%; text-align: center">{{ forloop.counter }}</th>
+                                           <td style="width: 30%">{{ course.courseTitle }}</td>
+                                           <td style="width: 15%; text-align: center">{{ course.courseCode }}</td>
+                                           <td style="width: 10%; text-align: center" >{{ course.courseCredit }} </td>
+                                           <td style="width: 10%; text-align: center" >{{ course.level }} </td>
+                                           <td style="width: 10%; text-align: center" >{{ course.term }} </td>
+                                             <td class="bt" style="width: 10%"><input type="button" name="findCoursebtn" class="btn btn-success findCourse" id="{{ course.id }}" value="ADD"/></td>
+                                         </tr>
+                                        {% endfor %}
+                                       </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Examples -->
+    </div>
+        <div class="container-fluid" style="width: 550px; overflow:auto">
+    <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card" style="height: 550px;">
+                        <div class="header" style="margin-bottom: -20px">
+                            <div class="card">
+                                <div class="body " style="text-align: center;color: white; margin-bottom: -30px; background-color: #024963">
+                                    <h4>{{ student.stName }}</h4>
+                                    <h4 id="stID">{{ student.stID }}</h4>
+                                    <h5>{{ student.stEmail }}</h5>
+                                    <h5>Advisor: {{ student.stAdvisor.tName }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body" >
+                        <div class=" table-responsive" style="overflow-x: inherit;">
+                            <form>
+                        <div class="a">
+                           <select id="selectSemester" class="" required>
+                            <option disabled name="semister" value="" selected>Select Semester</option>
+                               {% for sem in semesters %}
+                                   <option name="semister" value="{{ sem.semesterCode }}">{{ sem.semesterTitle }}</option>
+                               {% endfor %}
+                           </select>
+                            <label style="float: right" id="totalCredit"></label>
+                        </div>
+                            <table  id="selectedcourse" class="table table-bordered table-striped table-hover scroll">
+                                <thead >
+                                    <tr >
+                                     <th scope="col" class="nr" style="width: 15%">Code</th>
+                                     <th scope="col" style="width: 38%; text-align: center"> Title</th>
+                                     <th scope="col" style="width: 11%">Credit</th>
+                                     <th scope="col" style="width: 18%">Section</th>
+                                     <th scope="col" style="width: 15%"></th>
+                                   </tr>
+                                </thead>
+                                <tfoot>
+                                <td colspan="5" style="width: 80%"><button type="submit" id="submitbtn"  class="btn btn-primary btn-lg btn-block cregister">Submit Courses</button></td>
+                                </tfoot>
+                                <tbody id="courses" style="font-size: 13px; min-height: 200px; max-height:200px ">
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Examples -->
+    </div>
+        </div>
+</div>
+  </section>
+    <div class="container-fluid" style="width: 100%;background-color: #014054;padding:0">
+        <h6 style="text-align: center; color: white;margin-bottom: -15px;padding-top: 10px" >DEVELOPED BY-</h6>
+    <div style=" height: 100px; justify-content: center;
+  align-items: center; display: flex ; width: 100%">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Hafeezurrahman Saleh" data-placement="top" href="https://www.facebook.com/hafeezurrahman.saleh"
+       src="{% static 'images/saleh.JPG' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Subroto Karmokar" data-placement="top" href=""
+       src="{% static 'images/subroto.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Mostafa Munna" data-placement="top" href=""
+       src="{% static 'images/munna.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Nagma Islam" data-placement="top" href=""
+       src="{% static 'images/nadia.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+       <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Washim Akramm" data-placement="top" href=""
+       src="{% static 'images/washim.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+
+
+    </div>
+    <div style="height: 40px; width: 100%; background-color:#013243; color: white;justify-content: center;
+  align-items: center; display: flex ; ">
+        <br><p style="font-size: 12px" >2020©All right reserved by Daffodil International University</p>
+    </div>
+    </div>
+
+<script type="text/javascript">
+
+function nextChar(c) {
+            return String.fromCharCode(c.charCodeAt(0) + 1);
+            }
+
+            $(document).ready(function() {
+                $('.findCourse').on('click', function() {
+                    var semester = $('#semester').val();
+                    var level = $('#level').val();
+                    var term = $('#term').val();
+                    var cid = this.id;
+                    req = $.ajax({
+                        url : '/student/findcourse',
+                        type : 'POST',
+                        data : { cid : cid, level : level, term : term }
+                    });
+                    req.done(function(data) {
+                        var credit =0;
+                        var ctitle;
+                        var courses = JSON.parse(data);
+                        var txt = '';
+                        var x,i;
+                        for (x in courses) {
+                            var course = courses[x];
+                            txt += "<tr >";
+                            txt += "<td style=\"width:16%; font-weight:bold\">" + course.fields.courseCode + "</td>";
+                            txt += "<td style=\"width:39%\">" + course.fields.courseTitle + "</td>";
+                            txt += "<td style=\"width:10%\">" + course.fields.courseCredit + "</td>";
+                            txt += "<td style=\"width:18%\"><select required  name=\"section\" class='form-control show-tick' id = 'section_"+course.fields.courseCode.replace(/[^a-z0-9,.]/gi, '')+"'>";
+                            txt += "<option selected disabled name=\"section\" value=\"\">---</option>";
+                            txt += "<option name=\"section\" value=\"A\">A</option>";
+                            txt += "</select></td>";
+                            txt += "<td style=\"width:15%\"><input type = \"button\"  class=\"removeRow btn bg-transparent\" value=\"⛔\" /></td>"
+                            txt += "</tr>";
+                            ccode=course.fields.courseCode ;
+                            ctitle=course.fields.courseTitle;
+                        }
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                        for(i=0;i<rowCount;i++){
+                            if (course.fields.courseCode==document.getElementById('selectedcourse').rows[i].cells[0].innerHTML) {
+                                return;
+                            }
+                        }
+                        for(i=0;i<rowCount-1;i++){
+                            if(i==0){
+                                credit=0
+                            }
+                            else {
+                                credit=credit+parseInt(document.getElementById('selectedcourse').rows[i].cells[2].innerHTML)
+                            }
+                        }
+                        credit=credit+parseInt(course.fields.courseCredit);
+                        if(credit>16){
+                            alert("You can take maximum 16 Credits!")
+                        }
+                        else {
+                            document.getElementById('totalCredit').innerHTML="Credit Taken: "+credit;
+                            $("#courses").append(txt);
+                            {#var id = document.getElementsByName("section")[2].id;#}
+                            {#console.log(id);#}
+                            s = course.section;
+                            var id = 'section_' + ccode.replace(/[^a-z0-9,.]/gi, '') + '';
+                            var l = 0;
+                            var cval = 'A', nval;
+                            for (l = 1; l < course.fields.totalSection; l++) {
+                                nval = nextChar(cval);
+                                $("#" + id ).append('<option value="' + nval + '">' + nval + '</option>');
+                                cval = nval;
+
+                            }
+                            cval='A';
+                            nval='A';
+                            //Remove option
+                            for (l = 0; l < 3; l++) {
+
+                                req = $.ajax({
+                                    url: '/student/getstudentpersection',
+                                    type: 'POST',
+                                    data: {
+                                        ccode: ccode,
+                                        semester: '201',
+                                        section: nval
+                                    }
+                                });
+                                req.done(function (data) {
+                                    console.log("Hello"+data.sec);
+                                    if (ctitle.includes('Project') && data.countvalue > 30) {
+                                        $("#" + id).find('option[value=' + data.sec + ']').prop('disabled', true);
+
+                                    }
+                                    else if (data.countvalue > 45) {
+                                        console.log("Hello"+data.sec);
+                                        $("#" + id).find('option[value='+data.sec+']').prop('disabled', true);
+
+                                    }
+
+                                });
+                                nval = nextChar(cval);
+                                cval=nval;
+
+                            }
+                        }
+                        {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
+                        {#$('#memberNumber'+member_id).text(data.member_num);#}
+                    });
+                });
+            });
+        </script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $('.cregister').on('click', function(e) {
+                     var semester = document.getElementById('selectSemester').value;
+                     var rowCount = document.getElementById('selectedcourse').rows.length;
+                    if (semester == "") {
+                        alert("Please select your semester first");
+                        return false;
+                    }
+                    else if (rowCount<3){
+                        alert("No Course Selected!");
+                        return false;
+                    }
+                     var sameEmpty = false;
+                    $("select").each(function() {
+                        if (this.value == "")
+                        {
+                            sameEmpty = true;
+                            return false;
+                        }
+                    });
+
+                    if(sameEmpty) {
+                        alert("Please select your section for all courses");
+                        return false;
+                    }
+                    var semester = document.getElementById('selectSemester').value;
+                    if (document.getElementById('submitbtn').innerText=="Update"){
+                        document.getElementById('submitbtn').innerText="Submit Changes";
+                        {#$('input.removeRow').attr('disabled','enabled');#}
+                        $('.removeRow').prop('disabled', false); //TO ENABLE
+                        $("#submitbtn").toggleClass("btn-primary btn-danger");
+                        $(".bt :input").prop("disabled", false);
+                        e.preventDefault();
+                        return
+                    }
+                    else if (document.getElementById('submitbtn').innerText=="Submit Changes"){
+                        return false;
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                            req = $.ajax({
+                                url: '/student/dropcourses',
+                                type: 'POST',
+                                data: {
+                                    semester: semester
+                                },
+                            });
+                        for (i = 1; i < rowCount - 1; i++) {
+                            courseCode=document.getElementById('selectedcourse').rows[i].cells[0].innerText;
+                            courseSection=document.getElementById("section_"+courseCode.replace(/[^a-z0-9,.]/gi, '')+"").value;
+                            req = $.ajax({
+                                url: '/student/registercourse',
+                                type: 'POST',
+                                data: {
+                                    ccode:courseCode,
+                                    section: courseSection,
+                                    semester: semester
+                                },
+
+                            });
+                        }
+                        alert('Succefully Updated');
+                        location.reload();
+                    }
+                    else if( document.getElementById('submitbtn').innerText=="Submit Courses") {
+                        var semester = document.getElementById('selectSemester').value;
+                        if (semester == "") {
+                            alert("Please select your semester first");
+                            return;
+                        }
+                        var cid;
+                        var rowCount = document.getElementById('selectedcourse').rows.length;
+                        for (i = 1; i < rowCount - 1; i++) {
+                            courseCode=document.getElementById('selectedcourse').rows[i].cells[0].innerText;
+                            courseSection=document.getElementById("section_"+courseCode.replace(/[^a-z0-9,.]/gi, '')+"").value;
+                            req = $.ajax({
+                                url: '/student/registercourse',
+                                type: 'POST',
+                                data: {
+                                    ccode: courseCode,
+                                    section: courseSection,
+                                    semester: semester
+                                }
+                            });
+                        }
+                        alert('Succefully Registered');
+                        location.reload();
+                    }
+                    else {
+                        return false;
+                    }
+                    {# } #}
+                    {#catch (e) {#}
+                    {#    alert('failed '+e);#}
+                {#    }#}
+                });
+            });
+
+    </script>
+    <script type="text/javascript">
+        {#$( document ).ready(function() {#}
+        {#       $("#selectSemester option").filter(function() {#}
+        {#          return this.value == "192";#}
+        {#   }).prop('selected', true);#}
+        {# });#}
+
+        $(document).ready(function() {
+            $("#selectSemester").change(function() {
+                var semester = document.getElementById('selectSemester').value;
+                req = $.ajax({
+                    url : '/student/findregisteredcourses',
+                    type : 'POST',
+                    data : { semester : semester }
+                });
+
+                console.log(semester);
+                req.done(function(data) {
+                    var Table = document.getElementById("courses");
+                    Table.innerHTML = "";
+
+                    var courses = JSON.parse(data);
+                    var txt = '';
+                    var x,sl=0,i;
+                    for (x in courses) {
+                        var txt = '';
+                        var course = courses[x];
+                        sl = sl + 1;
+                        console.log(course.course__courseCode);
+                        txt += "<tr>";
+                        txt += "<td style=\"width:16%; font-weight:bold\">" + course.course__courseCode + "</td>";
+                        txt += "<td style=\"width:39%\">" + course.course__courseTitle + "</td>";
+                        txt += "<td style=\"width:10%\">" + course.course__courseCredit + "</td>";
+                        txt += "<td style=\"width:18%\"><select required name=\"section\" class='form-control show-tick' id = 'section_" + courses[x].course__courseCode.replace(/[^a-z0-9,.]/gi, '') + "' >";
+                        txt += "<option selected disabled name=\"section\" value=\"\" >---</option>";
+                        txt += "<option name=\"section\" value=\"A\">A</option>";
+                        txt += "</select></td>";
+                        txt += "<td style=\"width:15%\"><input type=\"button\" id = \"remove\" name = \"removebtn\" class=\"removeRow btn bg-transparent\" value=\"⛔\" /></td>"
+                        txt += "</tr>";
+                        $("#courses").append(txt);
+                        s = course.section;
+                        var id = 'section_' + course.course__courseCode.replace(/[^a-z0-9,.]/gi, '') + '';
+                        console.log(id);
+                        var l = 0;
+                        var cval = 'A', nval;
+                        for (l = 1; l < course.course__totalSection; l++) {
+                            nval = nextChar(cval);
+                            $("#" + id).append('<option value="' + nval + '">' + nval + '</option>');
+                            cval = nval;
+                        }
+                        $("#" + id).val(course.section).change();
+                        cval = 'A';
+                        nval = 'A';
+                        //Remove option
+                        {#for (l = 0; l < course.course__totalSection; l++) {#}
+                        {##}
+                        {#        req = $.ajax({#}
+                        {#            url: '/student/getstudentpersection',#}
+                        {#            type: 'POST',#}
+                        {#            data: {#}
+                        {#                ccode: course.course__courseCode,#}
+                        {#                semester: '201',#}
+                        {#                section: nval#}
+                        {#            }#}
+                        {#        });#}
+                        {##}
+                        {#    req.success(function (data) {#}
+                        {#        console.log(data.countvalue);#}
+                        {#        if (course.course__courseCode == 'SWE332' && data.countvalue > 25) {#}
+                        {#            $("#" + id).find('option[value=' + data.sec + ']').prop('disabled', true);#}
+                        {#        }#}
+                        {#        else if (data.countvalue > 35   ) {#}
+                        {#            console.log(data.sec);#}
+                        {#            $("#" + id).find('option[value='+data.sec+']').prop('disabled', true);#}
+                        {##}
+                        {#        }#}
+                        {##}
+                        {#    });#}
+                        {#    nval = nextChar(cval);#}
+                        {#    cval=nval;#}
+                        {##}
+                       // #}#}
+                            {##}
+                            {##}
+                            {##}
+
+                            //DUMMY
+                            {#$("select").each(function() {#}
+                            {#    console.log("Eta amar ID: "+this.id);#}
+                            {#    if (this.value == "A")#}
+                            {#    {#}
+                            {#this.option[value='foo']".remove();#}
+                            {#        $("#"+this.id).find('option[value=' + this.value + ']').remove();#}
+                            {#$('"#'+this.id+' option[value=\'A\']"').remove();#}
+                            {#        return false;#}
+                            {#    }#}
+                            {##}
+                            {#);#}
+
+                            for (i = 0; i < document.getElementById('selectedcourse').rows.length - 1; i++) {
+                                if (i == 0) {
+                                    credit = 0
+                                }
+                                else {
+                                    credit = credit + parseInt(document.getElementById('selectedcourse').rows[i].cells[2].innerHTML)
+
+                                }
+                            }
+
+                            document.getElementById('totalCredit').innerHTML = "Credit Taken: " + credit;
+                            if (document.getElementById('selectedcourse').rows.length > 2) {
+                                document.getElementById('submitbtn').innerText = "Pre-Registration Done!";
+                                $('input.removeRow').attr('disabled', 'disabled');
+                                $(".bt :input").prop("disabled", true);
+                                $('#submitbtn').attr('disabled', 'disabled');
+                                $("#submitbtn").toggleClass("btn-primary btn-success");
+                                $(".removeRow :input").prop("disabled", true);
+                                var c = $("#selectedcourse tr:first td").length;
+                                {#$("#selectedcourse tr:gt(1)").append("<td><span  class=\"removeRow\" value=\"\" >⛔</span></td>");#}
+                                {#$("#selectedcourse tr:gt(0)").append("<td>Col</td>");#}
+
+                            }
+                            else {
+                                document.getElementById('submitbtn').innerText = "Register";
+                                $(".bt :input").prop("disabled", false);
+                                $(".removeRow :input").prop("disabled", false);
+                            }
+                            {#$('#memberSection'+member_id).fadeOut(1000).fadeIn(1000);#}
+                            {#$('#memberNumber'+member_id).text(data.member_num);#}
+                        }
+            });
+        });
+         $("#selectedcourse").on('click', '.removeRow', function () {
+             var semester = document.getElementById('selectSemester').value;
+             var row = $(this).closest('tr').children()[0];    // Find the row
+             var te = $(row).html();
+             console.log(te);
+
+             $(this).closest('tr').remove();
+         });
+        });
+
+
+{#$( "#selectSemester" ).addClass( "form-control show-tick selectSemester" );#}
+    </script>
+
+    <script src="{% static 'js/dnd-table.js' %}"></script>
+{% endblock %}

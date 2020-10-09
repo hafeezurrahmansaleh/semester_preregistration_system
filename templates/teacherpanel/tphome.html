@@ -2,7 +2,7 @@
 {% block body %}
 
 {% load static %}
-<!doctype html>
+<!DOCTYP html>
 <html lang="en">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,23 +10,42 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
+    <title>Teacher Panel</title>
+     <style>
+        .coursetable tbody {
+          display: block;
+          max-height: 390px;
+          overflow-y: scroll;
+        }
 
+        .coursetable thead,
+        .coursetable tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+        .scroll tbody {
+          display: block;
+          max-height: 235px;
+          overflow-y: scroll;
+        }
+
+        .scroll thead,
+        .scroll tbody tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
     </style>
 </head>
 <body class="theme-green">
  <nav class="navbar" style="background-color: #00838f">
         <div class="container-fluid">
-            <div class="navbar-header" style="text-align: center">
-
-
-                <div class=" " style="text-align: center">
-                <h4 style="text-align: center">Name: {{ teacher.tName }}</h4>
-                <h4 style="text-align: center">ID: {{ teacher.tName }}</h4>
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" href="index.html">TEACHER PORTAL</a>
             </div>
-            </div>
-
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
@@ -232,7 +251,7 @@
     </nav>
     <section class="content" style="margin-left: 35px;">
         <div class="container-fluid">
-            <div class="row">
+             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box-2 bg-deep-purple hover-zoom-effect">
                         <div class="icon">
@@ -279,7 +298,7 @@
                         </div>
                         <div class="content">
                             <div class="text">REGISTER NOW</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">{{ regstatus.count }}</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"><small style="font-size: medium">Done: </small>{{ regstatus.count }}</div>
                         </div>
                     </div>
                     </a>
@@ -311,14 +330,14 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive" style="height: 514px; overflow-y: scroll">
-                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;">SL</th>
-                                            <th style="width: 18%">Course Code</th>
+                                            <th style="width: 18%">Code</th>
                                             <th style="width: 35%">Course Title</th>
                                             <th style="width: 10%">Credit</th>
-                                            <th style="width: 15%">Total Students</th>
+                                            <th style="width: 15%">Students</th>
                                             <th style="width: 10%">Details</th>
                                         </tr>
                                     </thead>
@@ -326,12 +345,13 @@
                                     <tbody>
                                     {% for course in courses %}
                                          <tr style="text-align: center">
-                                           <th scope="row">{{ forloop.counter }}</th>
-                                           <td>{{ course.courseCode }}</td>
-                                             <td style="text-align: left">{{ course.courseTitle }}</td>
-                                           <td>{{ course.courseCredit }}</td>
-                                             <td>{{ course.registered.count }}</td>
-                                            <td><a href="/adminpanel/studentlist/{{ course.id }}/121" class="btn btn-success viewsection">View</a></td>
+                                           <th scope="row" style="width: 10%;">{{ forloop.counter }}</th>
+
+                                           <td style="text-align: left;width: 18%;">{{ course.courseCode }}</td>
+                                             <td style="text-align: left; width: 35%">{{ course.courseTitle }}</td>
+                                           <td style="width: 10%;">{{ course.courseCredit }}</td>
+                                             <td style="width: 15%;">{{ course.registered.count }}</td>
+                                            <td style="width: 10%;"><a href="/adminpanel/studentlist/{{ course.id }}/201" class="btn btn-success viewsection">View</a></td>
                                          </tr>
                                     {% endfor %}
                                     </tbody>
@@ -342,7 +362,7 @@
                 </div>
             </div>
 {#        student table start#}
-              <div style=" width: 650px;overflow: auto" class="row clearfix">
+              <div style="overflow:auto;" class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -358,10 +378,9 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;">SL</th>
-                                            <th style="width: 18%">ID</th>
-                                            <th style="width: 30%">Student Name</th>
-                                            <th style="width: 20%">Credit Taken</th>
-                                            <th></th>
+                                            <th style="width: 33%">ID</th>
+                                            <th style="width: 43%">Student Name</th>
+                                            <th style="width: 10%%"></th>
                                         </tr>
                                     </thead>
 
@@ -372,7 +391,6 @@
 
                                            <td>{{ student.stID }}</td>
                                              <td style="text-align: left">{{ student.stName }}</td>
-                                           <td>8</td>
                                             <td><input type="button" id="{{ student.stID }}"  class="btn btn-primary viewcourse" value="View" href="javascript:void(0);"  data-toggle="modal" data-target="#defaultModal"/></td>
                                          </tr>
                                     {% endfor %}
@@ -420,15 +438,14 @@
                                     <div class="table-responsive" style="height: 500px; overflow-y: scroll">
                                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                             <thead>
-                                                <tr>
+                                                 <tr>
                                                     <th style="width: 3%;">SL</th>
                                                     <th style="width: 15%">Student ID</th>
                                                     <th style="width: 20%">Student Name</th>
                                                     <th style="width: 4%">Credit</th>
-                                                    <th style="width: 45%">Remark</th>
+                                                    <th style="width: 35%">Remark</th>
                                                     <th style="width: 25%"></th>
                                                 </tr>
-                                            </thead>
 
                                             <tbody>
                                             {% for regStudent in regStudents %}
@@ -440,11 +457,9 @@
                                                    <td style="width: 4%;">{{ regStudent.credit }}</td>
                                                        <td style="width: 35%"><textarea readonly id="{{ regStudent.student_id }}txt"  style="height: 100%; width: 100%; border-color: Transparent;" contenteditable="true">{{ regStudent.student__remarks__remark }}</textarea></td>
                                                          <td style="width: 25%">
-                                                           <button class="btn bg-green waves-effect addnote" style="width: 50%;float: left;margin-top:3px;height: 100%" id="{{ regStudent.student_id }}" data-html="true" type="button"  >Add Note
+                                                           <button class="btn bg-green waves-effect addnote" style="width: 52%;float: left;height: 100%" id="{{ regStudent.student_id }}" data-html="true" type="button"  >Add Note
                                                             </button>
-                                                       <button style="margin-left: 5px;float: right; width: 40%;height: 100%" class="btn bg-teal waves-effect" type="button" data-toggle="tooltip" data-original-title="Go to student portal" data-placement="top">
-                                                            <i class="material-icons">input</i>
-                                                        </button>
+                                                            <input style="float: right; width:43%" class="btn bg-teal waves-effect viewcourse" value="Details" type="button" id="{{ regStudent.student__stID }}"  href="javascript:void(0);"  data-toggle="modal" data-target="#defaultModal">
                                                    </td>
                                                  </tr>
                                             {% endfor %}
@@ -461,7 +476,7 @@
         </div>
     </div>
     <div class="modal fade" id="notRegiteredStudents"  tabindex="-1" role="dialog" >
-        <div class="modal-dialog modal-lg" role="document" style="width: 70%" >
+        <div class="modal-dialog modal-lg" role="document"  >
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="card">
@@ -543,7 +558,7 @@ function f() {
                     console.log(document.getElementById(id).innerText);
                     var x = document.getElementById(txtid);
                     if (document.getElementById(id).innerText == "Save") {
-                        alert(remark);
+                    
                         req = $.ajax({
                             url: '/teacher/saveremark',
                             type: 'POST',
@@ -578,8 +593,7 @@ function f() {
 
 
     </script>
-
-    <div class="modal fade in" id="defaultModal"  tabindex="-1" role="dialog" >
+<div class="modal fade in" id="defaultModal"  tabindex="-1" role="dialog" >
         <div class="modal-dialog" role="document"  >
             <div class="modal-content modal-col-teal">
                 <div class="modal-body">
@@ -610,11 +624,13 @@ function f() {
                                                     <th style="width: 10%">Section</th>
                                                 </tr>
                                             </thead>
+
+                                            <tbody id="courses">
+                                            </tbody>
                                             <tfoot>
                                                 <td colspan="5" style="width: 30%; text-align: center"><a  id="update"  class="btn btn-primary btn-lg cregister" href="/teacher/"   >Update Registration Info</a></td>
                                                 </tfoot>
                                             <tbody id="courses">
-                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -638,16 +654,16 @@ function f() {
        src="{% static 'images/subroto.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
         <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Nagma Islam" data-placement="top" href=""
        src="{% static 'images/nadia.jpg' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+        <input style="margin-left: 20px" type="image" id="image" alt="Login" data-toggle="tooltip" data-original-title="Washim Akramm" data-placement="top" href=""
+       src="{% static 'images/washim.png' %}" class="btn-circle-lg waves-effect waves-circle waves-float">
+
 
     </div>
     <div style="height: 50px; background-color:#006972; color: white; text-align: center ">
-        <br><p >2020©All Department of Software Engineering, DIU</p>
+        <br><p >2020©All right reserved by Department of Software Engineering, DIU</p>
     </div>
 </footer>
 </section>
-
-</body>
-</html>
 <script type="text/javascript">
     $(document).ready(function() {
                 $('.viewcourse').on('click', function() {
@@ -694,4 +710,8 @@ function f() {
             });
         });
 </script>
+
+</body>
+</html>
+
 {% endblock %}

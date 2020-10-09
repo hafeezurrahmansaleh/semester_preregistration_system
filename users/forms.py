@@ -18,12 +18,12 @@ class StudentSignUpForm(forms.ModelForm):
     def save(self, commit=True):
         cleaned_data = super(StudentSignUpForm, self).clean()
         raw_email = cleaned_data.get('email')
-        stu = StudentInfo.objects.filter(stEmail=raw_email).first()
-        usr = User.objects.filter(email=raw_email).first()
+        stu = StudentInfo.objects.filter(stEmail__iexact=raw_email).first()
+        usr = User.objects.filter(email__iexact=raw_email).first()
         print(raw_email)
         if usr is None:
             if stu is not None:
-                print(raw_email)
+                # print(raw_email)
                 user = super().save(commit=False)
                 # username = form.cleaned_data.get('username')
                 password = User.objects.make_random_password(length=6,
@@ -36,6 +36,7 @@ class StudentSignUpForm(forms.ModelForm):
                 # send_mail(subject, message, email_from, recipient_list)
 
                 user.username = stu.stID
+                user.email = stu.stEmail
                 user.set_password(password)
                 user.is_student = True
                 if commit:
@@ -58,7 +59,6 @@ class StudentSignUpForm(forms.ModelForm):
 #teacher
 class TeacherSignUpForm(forms.ModelForm):
     mgs = ""
-    type = ""
     class Meta:
         model = User
         fields = ('email',)
@@ -66,11 +66,11 @@ class TeacherSignUpForm(forms.ModelForm):
     def save(self, commit=True):
         cleaned_data = super(TeacherSignUpForm, self).clean()
         raw_email = cleaned_data.get('email')
-        tec = TeacherInfo.objects.filter(tEmail=raw_email).first()
-        usr = User.objects.filter(email=raw_email).first()
+        tec = TeacherInfo.objects.filter(tEmail__iexact=raw_email).first()
+        usr = User.objects.filter(email__iexact=raw_email).first()
         if usr is None:
             if tec is not None:
-                print(raw_email)
+                # print(raw_email)
                 user = super().save(commit=False)
                 # username = form.cleaned_data.get('username')
                 password = User.objects.make_random_password(length=6, allowed_chars="abcdefghjkmnpqrstuvwxyz01234567889")
@@ -82,6 +82,7 @@ class TeacherSignUpForm(forms.ModelForm):
                 #send_mail(subject, message, email_from, recipient_list)
 
                 user.username = tec.tID
+                user.email = tec.tEmail
                 user.set_password(password)
                 user.is_teacher = True
                 if commit:
@@ -89,12 +90,12 @@ class TeacherSignUpForm(forms.ModelForm):
                     send_mail(subject, message, email_from, recipient_list)
                     TeacherSignUpForm.mgs = "Successfully active you account. please check your Email!"
             else:
-                TeacherSignUpForm.mgs = "Your email not found. Please contact to Admin!"
-                #print("not found")
+                # print("not found")
                 # messages.error(self, 'not found.')
+                TeacherSignUpForm.mgs = "Your email not found. Please contact to Admin!"
                 return redirect('teacher_signup')
         else:
-            TeacherSignUpForm.mgs = "Already have an account in this email!"
             # print("already have account in this email")
+            TeacherSignUpForm.mgs = "Already have an account in this email!"
             return redirect('account_login')
         return user
