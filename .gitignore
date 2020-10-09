@@ -79,7 +79,7 @@ docs/_build/
 
 # PyBuilder
 target/
-
+.venv_IPS/
 # pyenv
 .python-version
 
