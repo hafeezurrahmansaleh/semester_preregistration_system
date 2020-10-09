@@ -81,6 +81,8 @@ docs/_build/
 target/
 venv_IPS/
 venv/
+.idea/
+
 # pyenv
 .python-version
 
