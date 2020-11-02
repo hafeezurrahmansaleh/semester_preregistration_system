@@ -1,6 +1,6 @@
 import openpyxl
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.db.models import Sum, Count, Case, When, Value, Q
@@ -11,6 +11,7 @@ from users.decorators import admin_required
 from .models import *
 import json
 
+
 def login(request):
     return render(request, 'adminpanel/login.html')
 
@@ -20,21 +21,25 @@ def login(request):
 def index(request):
     course = Courses.objects.all().order_by('level', 'term', 'courseCode')
     student = StudentInfo.objects.all()
-    teacher = TeacherInfo.objects.all().values('tID','id','tInitial','tPhone','tEmail','tName','tDesignation').annotate(numofstudent=Count('studentinfo',distinct=True))
+    teacher = TeacherInfo.objects.all().values('tID', 'id', 'tInitial', 'tPhone', 'tEmail', 'tName',
+                                               'tDesignation').annotate(
+        numofstudent=Count('studentinfo', distinct=True))
     semester = SemesterInfo.objects.all()
-    regStudents= CoursePreRegistration.objects.filter().values('student_id').distinct()
+    regStudents = CoursePreRegistration.objects.filter().values('student_id').distinct()
     waivers = WaiverInfo.objects.filter(semester__semesterCode='201')
     finalregcount = CourseRegistration.objects.filter(registered=True).count()
     context = {
-        'courses':course,
-        'teachers':teacher,
-        'students':student,
-        'semesters':semester,
-        'regStudents':regStudents,
-        'waivers':waivers,
-        'finalregcount':finalregcount,
+        'courses': course,
+        'teachers': teacher,
+        'students': student,
+        'semesters': semester,
+        'regStudents': regStudents,
+        'waivers': waivers,
+        'finalregcount': finalregcount,
     }
-    return render(request, 'adminpanel/index.html',context)
+    return render(request, 'adminpanel/index.html', context)
+
+
 def insert(request):
     try:
         table = request.POST['editorTitle']
@@ -55,7 +60,8 @@ def insert(request):
 
                 course.save()
             else:
-                newCourse = Courses(courseCode=courseCode,courseTitle=courseTitle,courseCredit=courseCredit,level=courseLevel,term = courseTerm ,totalSection=totalSection)
+                newCourse = Courses(courseCode=courseCode, courseTitle=courseTitle, courseCredit=courseCredit,
+                                    level=courseLevel, term=courseTerm, totalSection=totalSection)
                 newCourse.save()
 
             return redirect('index')
@@ -79,12 +85,13 @@ def insert(request):
                 student.stAdvisor = advisor
                 student.save()
             else:
-                newStudent = StudentInfo(stID=studentID,stName=studentName,stEmail=studentEmail,stGender=studentGender,stPhone=studentPhone,stAdvisor=advisor)
+                newStudent = StudentInfo(stID=studentID, stName=studentName, stEmail=studentEmail,
+                                         stGender=studentGender, stPhone=studentPhone, stAdvisor=advisor)
                 newStudent.save()
 
             return redirect('index')
 
-        elif table =='teacher':
+        elif table == 'teacher':
             print(table)
             teacherID = request.POST['tid']
             teacherName = request.POST['tname']
@@ -92,7 +99,7 @@ def insert(request):
             teacherDesignation = request.POST['tdesingnation']
             teacherPhone = request.POST['tphone']
             teacherEmail = request.POST['temail']
-            if TeacherInfo.objects.filter(tID= teacherID).exists():
+            if TeacherInfo.objects.filter(tID=teacherID).exists():
                 teacher = TeacherInfo.objects.get(tID=teacherID)
                 teacher.tName = teacherName
                 teacher.tInitial = teacherInitial
@@ -101,11 +108,12 @@ def insert(request):
                 teacher.tEmail = teacherEmail
                 teacher.save()
             else:
-                newTeacher = TeacherInfo(tID=teacherID,tName=teacherName,tInitial=teacherInitial,tDesignation=teacherDesignation,tPhone=teacherPhone,tEmail=teacherEmail)
+                newTeacher = TeacherInfo(tID=teacherID, tName=teacherName, tInitial=teacherInitial,
+                                         tDesignation=teacherDesignation, tPhone=teacherPhone, tEmail=teacherEmail)
                 newTeacher.save()
 
             return redirect('index')
-        elif table =='semester':
+        elif table == 'semester':
             semesterCode = request.POST['scode']
             semesterTitle = request.POST['stitle']
             regOpenDate = request.POST['regOpenDate']
@@ -122,20 +130,19 @@ def insert(request):
                 semester.regClosedDate = regClosedDate
                 semester.save()
             else:
-                newSemester = SemesterInfo(semesterCode=semesterCode,semesterTitle=semesterTitle,regOpenDate=regOpenDate,regCloseDate=regClosedDate)
+                newSemester = SemesterInfo(semesterCode=semesterCode, semesterTitle=semesterTitle,
+                                           regOpenDate=regOpenDate, regCloseDate=regClosedDate)
                 newSemester.save()
 
             messages.success(request, f'successfully insert into the system!')
             return redirect('index')
-    except :
+    except:
         messages.error(request, f'Something went wrong. Please insert input properly!')
         return redirect(index)
         # return redirect('error404','Something wromh!!!')
 
 
-
-
-def teacherDelete(request,tid):
+def teacherDelete(request, tid):
     try:
         teacher = TeacherInfo.objects.get(pk=tid)
         teacher.delete()
@@ -146,7 +153,7 @@ def teacherDelete(request,tid):
         return redirect('index')
 
 
-def studentDelete(request,stid):
+def studentDelete(request, stid):
     try:
         student = StudentInfo.objects.get(pk=stid)
         student.delete()
@@ -157,7 +164,7 @@ def studentDelete(request,stid):
         return redirect('index')
 
 
-def courseDelete(request,courseCode):
+def courseDelete(request, courseCode):
     try:
         course = Courses.objects.get(pk=courseCode)
         course.delete()
@@ -169,20 +176,19 @@ def courseDelete(request,courseCode):
 
 
 def studentList(request, courseCode, semesterID):
-
     # student = StudentInfo.objects.get(stEmail=request.user.email)
     # semesterCode = request.POST['semester']
     # courseCode = request.POST['ccode']
     semester = SemesterInfo.objects.get(semesterCode=semesterID)
     course = Courses.objects.get(id=courseCode)
-    studentlistA = CoursePreRegistration.objects.filter(course=course,semester=semester,section='A')
-    studentlistB = CoursePreRegistration.objects.filter(course=course,semester=semester,section='B')
-    studentlistC = CoursePreRegistration.objects.filter(course=course,semester=semester,section='C')
-    studentlistD = CoursePreRegistration.objects.filter(course=course,semester=semester,section='D')
-    studentlistE = CoursePreRegistration.objects.filter(course=course,semester=semester,section='E')
-    studentlistF = CoursePreRegistration.objects.filter(course=course,semester=semester,section='F')
+    studentlistA = CoursePreRegistration.objects.filter(course=course, semester=semester, section='A')
+    studentlistB = CoursePreRegistration.objects.filter(course=course, semester=semester, section='B')
+    studentlistC = CoursePreRegistration.objects.filter(course=course, semester=semester, section='C')
+    studentlistD = CoursePreRegistration.objects.filter(course=course, semester=semester, section='D')
+    studentlistE = CoursePreRegistration.objects.filter(course=course, semester=semester, section='E')
+    studentlistF = CoursePreRegistration.objects.filter(course=course, semester=semester, section='F')
     context = {
-        'course':course,
+        'course': course,
         'studentlistsA': studentlistA,
         'studentlistsB': studentlistB,
         'studentlistsC': studentlistC,
@@ -190,7 +196,7 @@ def studentList(request, courseCode, semesterID):
         'studentlistsE': studentlistE,
         'studentlistsF': studentlistF,
     }
-    return render(request, 'adminpanel/studentlist.html',context)
+    return render(request, 'adminpanel/studentlist.html', context)
 
 
 # def fupload(request):
@@ -355,41 +361,56 @@ def fileUpload(request):
 
             messages.success(request, f'Successfully Uploaded file into the system!')
             return redirect(index)
-    except :
+    except:
         messages.error(request, f'Something went wrong. Invalid file type!')
         return redirect(index)
         # return redirect('error404','please choose a file!!!')
 
+
 def error404(request, msg):
-    return render(request,'404.html')
+    return render(request, '404.html')
+
 
 def prevPage(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 @login_required
 def reportGenerator(request):
     studentinfo = StudentInfo.objects.all()
-    semester=SemesterInfo.objects.get(semesterCode='201')
-    regStudents= CoursePreRegistration.objects.filter(semester=semester).values('student_id', 'student__stID','student__stEmail','student__stAdvisor__tInitial','student__stName', 'student__remarks__remark').annotate(credit=Sum('course__courseCredit')).distinct()
+    semester = SemesterInfo.objects.get(semesterCode='201')
+    regStudents = CoursePreRegistration.objects.filter(semester=semester).values('student_id', 'student__stID',
+                                                                                 'student__stEmail',
+                                                                                 'student__stAdvisor__tInitial',
+                                                                                 'student__stName',
+                                                                                 'student__remarks__remark').annotate(
+        credit=Sum('course__courseCredit')).distinct()
     # notregistered = studentinfo.exclude(stID__in=[o['student__stID'] for o in regStudents]).values('id','stID','stName','stPhone', 'stEmail', 'stAdvisor','remarks__remark')
     teacher = TeacherInfo.objects.values('tInitial')
-    studentnum = TeacherInfo.objects.all().values('tInitial','tName').annotate(numofstudent=Count('studentinfo',distinct=True))
+    studentnum = TeacherInfo.objects.all().values('tInitial', 'tName').annotate(
+        numofstudent=Count('studentinfo', distinct=True))
     finalregistered = TeacherInfo.objects.all().values('tInitial').annotate(
-        numoffinalstudent=Count('studentinfo__courseregistration'  , filter=Q(
+        numoffinalstudent=Count('studentinfo__courseregistration', filter=Q(
             studentinfo__courseregistration__registered=True))).order_by('tInitial')
     # finalregistered = TeacherInfo.objects.filter(studentinfo__courseregistration__registered =True).values('tInitial').annotate(numoffinalstudent= Case(When(Count('studentinfo__courseregistration' )=='', then=Value('0')), default=Value(Count('studentinfo__courseregistration' )))).order_by('tInitial')
     # tsummury = CoursePreRegistration.objects.filter(student__stAdvisor__tInitial__in=teacher).values( 'student__stAdvisor__tInitial').annotate(reg=Count('student__stID', distinct=True))\
     tsummury = TeacherInfo.objects.all().values(
         'tInitial').annotate(reg=Count('studentinfo__studentCredits__student', distinct=True))
-        # .extra(select={'val': "select count(stID, distinct =TRUE ) from student.studentInfo where stAdvisor = $s"}, select_params=('student__stAdvisor__tInitial',))
+    # .extra(select={'val': "select count(stID, distinct =TRUE ) from student.studentInfo where stAdvisor = $s"}, select_params=('student__stAdvisor__tInitial',))
     print(tsummury)
 
     # ,student= teacher.filter(tInitial='student__stAdvisor__tInitial').values('numofstudent') ).distinct()
-     # count = CoursePreRegistration.objects.filter(semester=semester, course__courseCode=ccode, section=sec).values(
+    # count = CoursePreRegistration.objects.filter(semester=semester, course__courseCode=ccode, section=sec).values(
     #     'id').count()
-    csummary1 = CoursePreRegistration.objects.filter(semester=semester).values('course__courseCode', 'section').annotate(nstudent=Count('id')).order_by('course__level', 'course__term', 'course__courseCode')
-    csummary= CoursePreRegistration.objects.filter(semester=semester).values('course_id','course__courseCode','course__courseCredit', 'course__courseTitle', 'course__totalSection').annotate(regstudents = Count('course_id')).order_by('course__level', 'course__term', 'course__courseCode')
-        # .extra(select={'seca': "select student_id from CoursePreRegistration  where id = 400"}, )
+    csummary1 = CoursePreRegistration.objects.filter(semester=semester).values('course__courseCode',
+                                                                               'section').annotate(
+        nstudent=Count('id')).order_by('course__level', 'course__term', 'course__courseCode')
+    csummary = CoursePreRegistration.objects.filter(semester=semester).values('course_id', 'course__courseCode',
+                                                                              'course__courseCredit',
+                                                                              'course__courseTitle',
+                                                                              'course__totalSection').annotate(
+        regstudents=Count('course_id')).order_by('course__level', 'course__term', 'course__courseCode')
+    # .extra(select={'seca': "select student_id from CoursePreRegistration  where id = 400"}, )
     # # sdetails = StudentInfo.objects.values('stID',
     # #                                        'stName',
     # #                                        'stEmail',
@@ -397,7 +418,7 @@ def reportGenerator(request):
     # #                                      'stAdvisor__tInitial',
     # #                                      'stAdvisor__tName',
     # #                                        'remarks__remark' ).distinct().order_by('stAdvisor__tInitial')
-    sdetails=StudentInfo.objects.raw('''SELECT DISTINCT student_studentinfo.stID,student_studentinfo.id, student_studentinfo.stName,student_studentinfo.stEmail,
+    sdetails = StudentInfo.objects.raw('''SELECT DISTINCT student_studentinfo.stID,student_studentinfo.id, student_studentinfo.stName,student_studentinfo.stEmail,
 student_studentinfo.stPhone,teacher_teacherinfo.tInitial,teacher_teacherinfo.tName, 
 adminpanel_remarks.remark,
 CASE WHEN adminpanel_coursepreregistration.student_id IS NOT NULL THEN 'Registered' ELSE 'Not Registered' END as Registered
@@ -407,34 +428,40 @@ LEFT JOIN teacher_teacherinfo on teacher_teacherinfo.id = student_studentinfo.st
 LEFT JOIN adminpanel_coursepreregistration on  student_studentinfo.id = adminpanel_coursepreregistration.student_id
 LEFT JOIN adminpanel_remarks on  student_studentinfo.id= adminpanel_remarks.student_id
 order by teacher_teacherinfo.tInitial''')
-    print(sdetails[0].stName+"   "+ sdetails[1].stName+"   "+ sdetails[2].stName+"   "+ sdetails[3].stName)
+    print(sdetails[0].stName + "   " + sdetails[1].stName + "   " + sdetails[2].stName + "   " + sdetails[3].stName)
     context = {
-        'regStudents':regStudents,
+        'regStudents': regStudents,
         # 'notregistered':notregistered,
-        'tsummury':tsummury,
-        'studentnum':studentnum,
-        'csummary':csummary,
-        'csummary1':csummary1,
-        'sdetails':sdetails,
-        'finalregistered':finalregistered,
+        'tsummury': tsummury,
+        'studentnum': studentnum,
+        'csummary': csummary,
+        'csummary1': csummary1,
+        'sdetails': sdetails,
+        'finalregistered': finalregistered,
     }
     return render(request, 'adminpanel/report.html', context)
+
+
 @csrf_exempt
 def gettakencourses(request):
     cdetails = CoursePreRegistration.objects.filter(semester__semesterCode='201').values('student__stID',
                                                                                          'course__courseCode',
                                                                                          'course__courseTitle',
                                                                                          'course__courseCredit',
-                                                                                         'section').distinct().order_by('student__stAdvisor__tInitial')
+                                                                                         'section').distinct().order_by(
+        'student__stAdvisor__tInitial')
 
     data = json.dumps(list(cdetails))
     return HttpResponse(data)
 
+
 @csrf_exempt
 def getcourses(request):
-    courses = Courses.objects.values('id','courseCode', 'courseTitle', 'totalSection').order_by('level', 'term', 'courseCode')
+    courses = Courses.objects.values('id', 'courseCode', 'courseTitle', 'totalSection').order_by('level', 'term',
+                                                                                                 'courseCode')
     data = json.dumps(list(courses))
     return HttpResponse(data)
+
 
 @csrf_exempt
 def getteacherid(request):

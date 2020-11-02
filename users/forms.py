@@ -11,6 +11,7 @@ from teacher.models import TeacherInfo
 
 class StudentSignUpForm(forms.ModelForm):
     mgs = ""
+
     class Meta:
         model = User
         fields = ('email',)
@@ -44,7 +45,7 @@ class StudentSignUpForm(forms.ModelForm):
                     send_mail(subject, message, email_from, recipient_list)
                     StudentSignUpForm.mgs = "Successfully active you account. please check your Email!"
             else:
-                #print("not found")
+                # print("not found")
                 # messages.error(self, 'not found.')
                 StudentSignUpForm.mgs = "Your email not found. Please contact to Admin!"
                 return redirect('student_signup')
@@ -56,9 +57,10 @@ class StudentSignUpForm(forms.ModelForm):
         return user
 
 
-#teacher
+# teacher
 class TeacherSignUpForm(forms.ModelForm):
     mgs = ""
+
     class Meta:
         model = User
         fields = ('email',)
@@ -73,13 +75,14 @@ class TeacherSignUpForm(forms.ModelForm):
                 # print(raw_email)
                 user = super().save(commit=False)
                 # username = form.cleaned_data.get('username')
-                password = User.objects.make_random_password(length=6, allowed_chars="abcdefghjkmnpqrstuvwxyz01234567889")
+                password = User.objects.make_random_password(length=6,
+                                                             allowed_chars="abcdefghjkmnpqrstuvwxyz01234567889")
 
                 subject = 'Thank you for registering to our site'
                 message = "you password is: " + password
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [raw_email, ]
-                #send_mail(subject, message, email_from, recipient_list)
+                # send_mail(subject, message, email_from, recipient_list)
 
                 user.username = tec.tID
                 user.email = tec.tEmail
@@ -98,4 +101,27 @@ class TeacherSignUpForm(forms.ModelForm):
             # print("already have account in this email")
             TeacherSignUpForm.mgs = "Already have an account in this email!"
             return redirect('account_login')
+        return user
+
+
+class UserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
         return user

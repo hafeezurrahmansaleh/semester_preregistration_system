@@ -2,17 +2,17 @@ import jsonify as jsonify
 from django.core import serializers
 # from django.core.serializers import json
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse,redirect
-from django.shortcuts import render, HttpResponse,redirect
+from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt
 from users.models import User
 import json
 from django.contrib.auth.decorators import login_required
 from users.decorators import student_required
 from .models import *
-from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration,WaiverInfo,\
-	PaymentInfo, CourseRegistration
-#email
+from adminpanel.models import Courses, SemesterInfo, CoursePreRegistration, WaiverInfo, \
+    PaymentInfo, CourseRegistration
+# email
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -22,7 +22,7 @@ from django.conf import settings
 def studentPanelHome(request):
     courses = Courses.objects.all().order_by('level', 'term', 'courseCode')
     try:
-        student = StudentInfo.objects.get(stID = request.user.username)
+        student = StudentInfo.objects.get(stID=request.user.username)
     except:
         student = 'not found'
     try:
@@ -37,19 +37,19 @@ def studentPanelHome(request):
         print("Waiver nai")
         waiver = ''
     try:
-        payment = PaymentInfo.objects.get(student=student, semester=currentsemester )
+        payment = PaymentInfo.objects.get(student=student, semester=currentsemester)
     except:
         print("Payment nai")
         payment = ''
     context = {
         'courses': courses,
-        'student':student,
-        'semesters' : semester,
-        'waiver' : waiver,
-        'payment':payment,
-        'regstatus':regstatus,
+        'student': student,
+        'semesters': semester,
+        'waiver': waiver,
+        'payment': payment,
+        'regstatus': regstatus,
     }
-    return render(request, 'studentpanel/stphome.html',context)
+    return render(request, 'studentpanel/stphome.html', context)
 
 
 @login_required
@@ -73,16 +73,30 @@ def registerCourse(request):
 
     # try:
     print(section)
-    student = StudentInfo.objects.get(stEmail = request.user.email)
+    student = StudentInfo.objects.get(stEmail=request.user.email)
+    student_id = StudentInfo.objects.get(stID=request.user.username)
+    advisor = TeacherInfo.objects.get(pk=student.stAdvisor_id)
     course = Courses.objects.get(courseCode=courseCode)
     semester = SemesterInfo.objects.get(semesterCode=semestercode)
 
-    registration = CoursePreRegistration(student = student, course = course, semester=semester,section=section,paymentStatus='0')
+    registration = CoursePreRegistration(student=student, course=course, semester=semester, section=section,
+                                         paymentStatus='0')
     registration.save()
-    msg="successfully saved"
+    msg = "successfully saved"
     # except Exception as e:
     # msg=e.__cause__
+    # try:
+    #     subject = 'Registration Confirmation'
+    #     message = "My Student ID is: " + student_id.stID + "\nI've successfully completed my pre-registration. " \
+    #                                                        '\nPlease check my course list and section in pre-registration site.\n'
+    #     email_from = settings.EMAIL_HOST_USER
+    #     recipient_list = [advisor.tEmail, ]
+    #     send_mail(subject, message, email_from, recipient_list)
+    #     msg = 'Successfully saved and this information has been send to your advisor'
+    # except:
+    #     msg = 'Saved but failed to send to your advisor'
     return HttpResponse(msg)
+
 
 # @csrf_exempt
 # def updateregistercourse(request):
@@ -105,13 +119,12 @@ def registerCourse(request):
 @student_required
 @csrf_exempt
 def dropCourses(request):
-
     # courseCode = request.POST['ccode']
     semesterCode = request.POST['semester']
-    student = StudentInfo.objects.get(stEmail = request.user.email)
+    student = StudentInfo.objects.get(stEmail=request.user.email)
     # course = Courses.objects.get(courseCode=courseCode)
     semester = SemesterInfo.objects.get(semesterCode=semesterCode)
-    CoursePreRegistration.objects.filter(student=student,semester=semester).delete()
+    CoursePreRegistration.objects.filter(student=student, semester=semester).delete()
     return HttpResponse('success')
 
 
@@ -121,13 +134,19 @@ def dropCourses(request):
 def findRegisteredCourses(request):
     student = StudentInfo.objects.get(stEmail=request.user.email)
     semesterCode = request.POST['semester']
-    semester = SemesterInfo.objects.get(semesterCode = semesterCode)
-    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode', 'course__courseTitle','course__courseCredit', 'course_id', 'section','semester__semesterTitle', 'course__totalSection')
+    semester = SemesterInfo.objects.get(semesterCode=semesterCode)
+    courses = CoursePreRegistration.objects.filter(semester=semester, student=student).values('course__courseCode',
+                                                                                              'course__courseTitle',
+                                                                                              'course__courseCredit',
+                                                                                              'course_id', 'section',
+                                                                                              'semester__semesterTitle',
+                                                                                              'course__totalSection')
     # print(level+semester)
     data = json.dumps(list(courses))
     # data = serializers.serialize('json', courses)
     print(data)
     return HttpResponse(data)
+
 
 @login_required
 @student_required
@@ -135,17 +154,18 @@ def findRegisteredCourses(request):
 def getstudentpersection(request):
     sec = request.POST['section']
     ccode = request.POST['ccode']
-    semcode= request.POST['semester']
+    semcode = request.POST['semester']
     semester = SemesterInfo.objects.get(semesterCode=semcode)
-    course=Courses.objects.get(courseCode=ccode)
-    count = CoursePreRegistration.objects.filter(semester=semester, course__courseCode=ccode,section=sec).values('id').count()
-    print(sec,ccode,semcode)
-    data={
-        'countvalue':count,
-        'sec':sec,
+    course = Courses.objects.get(courseCode=ccode)
+    count = CoursePreRegistration.objects.filter(semester=semester, course__courseCode=ccode, section=sec).values(
+        'id').count()
+    print(sec, ccode, semcode)
+    data = {
+        'countvalue': count,
+        'sec': sec,
     }
     return JsonResponse(data)
-    
+
 
 @csrf_exempt
 def addpaymentstatus(request):
@@ -154,13 +174,13 @@ def addpaymentstatus(request):
     semester = SemesterInfo.objects.get(semesterCode=semcode)
     comment = request.POST['studentComment']
     paymentStatus = request.POST['paymentStatus']
-    advisor = TeacherInfo.objects.get(pk = student.stAdvisor_id)
-    if(paymentStatus):
+    advisor = TeacherInfo.objects.get(pk=student.stAdvisor_id)
+    if (paymentStatus):
         pstat = "Paid"
     else:
         pstat = "Not paid"
 
-    if(PaymentInfo.objects.filter(student=student, semester = semester).exists()):
+    if PaymentInfo.objects.filter(student=student, semester=semester).exists():
         status = PaymentInfo.objects.get(student=student, semester=semester)
         status.comment = comment
         status.paymentStatus = paymentStatus
@@ -172,20 +192,22 @@ def addpaymentstatus(request):
         msg = "Successfully Saved!"
     try:
         subject = 'Payment Status of Summer 2020'
-        message = "My Student ID is: " + student.stID + '\nMy Payment Status is: '+ pstat + '\nDetails: '+comment
+        message = "My Student ID is: " + student.stID + '\nMy Payment Status is: ' + pstat + '\nDetails: ' + comment
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [advisor.tEmail, ]
         send_mail(subject, message, email_from, recipient_list)
-        msg='Successfully saved and this information has been send to your advisor'
+        msg = 'Successfully saved and this information has been send to your advisor'
     except:
         msg = 'Saved but failed to send to your advisor'
     return HttpResponse(msg)
+
+
 @login_required
 def gototohomepage(request):
-    if(request.user.is_admin):
+    if (request.user.is_admin):
         print('Admin')
         return redirect('/adminpanel/index')
-    elif(request.user.is_teacher):
+    elif (request.user.is_teacher):
         print('Teacher')
         return redirect('/teacher/')
     elif (request.user.is_student):

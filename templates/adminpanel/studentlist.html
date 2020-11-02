@@ -267,26 +267,26 @@
                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 10%;">SL</th>
-                                                                    <th style="width: 18%">Student ID</th>
-                                                                    <th style="width: 35%">Student Name</th>
-                                                                    <th style="width: 10%">Student Email</th>
-                                                                    <th style="width: 10%">Student Phone</th>
-                                                                    <th style="width: 5%">Action</th>
+                                                                    <th style="width: auto">SL</th>
+                                                                    <th style="width: auto">Student ID</th>
+                                                                    <th style="width: auto">Student Name</th>
+                                                                    <th style="width: auto">Student Email</th>
+                                                                    <th style="width: auto">Student Phone</th>
+                                                                    <th style="width: auto">Action</th>
                                                                 </tr>
                                                             </thead>
 
                                                             <tbody>
                                                             {% for studentlist in studentlistsA %}
                                                                  <tr style="text-align: center">
-                                                                   <th scope="row">{{ forloop.counter }}</th>
-                                                                     <td>{{ studentlist.student.stID }}</td>
-                                                                     <td style="text-align: left">{{ studentlist.student.stName }}</td>
-                                                                     <td>{{ studentlist.student.stEmail }}</td>
-                                                                 <td>{{ studentlist.student.stPhone }}
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ studentlist.student.stID }}</td>
+                                                                    <td>{{ studentlist.student.stName }}</td>
+                                                                    <td>{{ studentlist.student.stEmail }}</td>
+                                                                    <td>{{ studentlist.student.stPhone }}
                                                                          <input type="hidden" id="rid{{ studentlist.id }}{{ forloop.counter }}" name="khala" value="{{ studentlist.id }}">
                                                                      </td>
-                                                                    <td style="width: 12%">
+                                                                    <td style="width: auto">
                                                                         <button class="btn bg-red waves-effect removeRow"  style="width: 100%" name="{{ studentlist.id }}{{ forloop.counter }}" type="button"  >Drop
                                                                         </button>
                                                                      </td>

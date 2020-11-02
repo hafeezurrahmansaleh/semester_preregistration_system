@@ -1,8 +1,7 @@
-﻿
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block body %}
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 {% load static %}
 <head>
 
@@ -16,6 +15,9 @@
           display: block;
           max-height: 410px;
           overflow-y: scroll;
+        }
+        .coursetable td {
+
         }
 
         .coursetable thead,
@@ -709,14 +711,14 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <h2>
-                                Pre-Registered Courses
+                            <h2 style="text-align: center">
+                                <label for="selectSemester">Pre-Registered Courses</label>
                                 <select id="selectSemester" class="" required>
                                     <option name="semister" value="" selected>Select Semester</option>
                                        {% for sem in semesters %}
                                            <option name="semister" value="{{ sem.semesterCode }}">{{ sem.semesterTitle }}</option>
                                        {% endfor %}
-                                   </select>
+                                </select>
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -735,26 +737,25 @@
                             <div class="table-responsive">
                             <table id="courseList" class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                 <thead>
-                                    <tr>
-                                        <th style="width: 10%;">SL</th>
-                                        <th style="width: 18%">Course Code</th>
-                                        <th style="width: 35%">Course Title</th>
-                                        <th style="width: 10%">Credit</th>
-                                        <th style="width: 15%">Total Students</th>
-                                        <th style="width: 10%">Details</th>
+                                    <tr style="text-align: left">
+                                        <th scope="col" style="width: 16.66%">SL</th>
+                                        <th scope="col" style="width: 16.66%">Course Code</th>
+                                        <th scope="col" style="width: 16.66%">Course Title</th>
+                                        <th scope="col" style="width: 16.66%">Credit</th>
+                                        <th scope="col" style="width: 16.66%">Total Students</th>
+                                        <th scope="col" style="width: 16.66%">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for course in courses %}
-                                     <tr style="text-align: center">
-                                       <th scope="row" tyle="width: 10%;">{{ forloop.counter }}</th>
-
-                                       <td tyle="width: 18%; text-align: left;">{{ course.courseCode }}</td>
-                                         <td style="text-align: left; width: 35%">{{ course.courseTitle }}</td>
-                                       <td tyle="width: 10%;">{{ course.courseCredit }}</td>
-                                         <td tyle="width: 15%;">{{ course.registered.count }}</td>
-                                       <td tyle="width: 10%;"><a href="/adminpanel/studentlist/{{ course.id }}/201" class="btn btn-success viewsection">View</a></td>
-                                         </tr>
+                                     <tr style="text-align: left">
+                                        <th style="width: 16.66%">{{ forloop.counter }}</th>
+                                        <td style="width: 16.66%">{{ course.courseCode }}</td>
+                                        <td style="width: 16.66%">{{ course.courseTitle }}</td>
+                                        <td style="width: 16.66%">{{ course.courseCredit }}</td>
+                                        <td style="width: 16.66%">{{ course.registered.count }}</td>
+                                        <td style="width: 15%"><a href="/adminpanel/studentlist/{{ course.id }}/201" class="btn btn-success viewsection">View</a></td>
+                                     </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
@@ -1339,33 +1340,33 @@
                                                     <div class="table-responsive">
                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                                             <thead>
-                                                                <tr style="text-align: center">
-                                                                    <th style="width: 3%;">SL</th>
-                                                                    <th style="width: 12">Teacher ID</th>
-                                                                    <th style="width: 15%"> Name</th>
-                                                                    <th style="width: 5%"> Initial</th>
-                                                                    <th style="width: 10%"> Designation</th>
-                                                                    <th style="width: 12%"> Phone</th>
-                                                                    <th style="width: 20%"> Email</th>
-                                                                    <th style="width: 5%">Students</th>
-                                                                    <th style="width: 5%">Action</th>
-                                                                    <th style="width: 5%">Action</th>
+                                                                <tr style="text-align: left">
+                                                                    <th class="col-lg-1">Serial No</th>
+                                                                    <th class="col-lg-1">Teacher ID</th>
+                                                                    <th class="col-lg-1">Name</th>
+                                                                    <th class="col-lg-1">Initial</th>
+                                                                    <th class="col-lg-1">Designation</th>
+                                                                    <th class="col-lg-1">Phone</th>
+                                                                    <th class="col-lg-6">Email</th>
+                                                                    <th class="col-lg-1">Students</th>
+                                                                    <th class="col-lg-1">Action</th>
+                                                                    <th class="col-lg-1">Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            
+
                                                             <tbody>
                                                             {% for teacher in teachers %}
                                                                  <tr style="text-align: left">
-                                                                   <th scope="row" style="width: 3%;">{{ forloop.counter }}</th>
-                                                                     <td style="width: 12%;">{{ teacher.tID }}</td>
-                                                                     <td style="text-align: left; width: 15%">{{ teacher.tName }}</td>
-                                                                     <td style="width: 5%;">{{ teacher.tInitial }}</td>
-                                                                     <td style="width: 10%;">{{ teacher.tDesignation }}</td>
-                                                                     <td style="width: 12%;">{{ teacher.tPhone }}</td>
-                                                                     <td style="width: 20%;">{{ teacher.tEmail }}</td>
-                                                                     <td style="width: 5%;">{{ teacher.numofstudent }}</td>
-                                                                   <td style="width: 5%;"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" onclick="teacherEditor('{{ teacher.tID }}','{{ teacher.tName }}','{{ teacher.tInitial }}','{{ teacher.tDesignation }}','{{ teacher.tPhone }}','{{ teacher.tEmail }}' );">Edit</a></td>
-                                                                     <td style="width: 5%;"><a class="btn btn-danger" href="/adminpanel/teacherDelete/{{ teacher.id }}">Delete</a></td>
+                                                                     <td style="width: 10%">{{ forloop.counter }}</td>
+                                                                     <td style="width: 10%">{{ teacher.tID }}</td>
+                                                                     <td style="width: 10%">{{ teacher.tName }}</td>
+                                                                     <td style="width: 10%">{{ teacher.tInitial }}</td>
+                                                                     <td style="width: 10%">{{ teacher.tDesignation }}</td>
+                                                                     <td style="width: 10%">{{ teacher.tPhone }}</td>
+                                                                     <td style="width: 20%">{{ teacher.tEmail }}</td>
+                                                                     <td style="width: 10%; text-align: center">{{ teacher.numofstudent }}</td>
+                                                                     <td style="width: 9%; text-align: center"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputTeacher" onclick="teacherEditor('{{ teacher.tID }}','{{ teacher.tName }}','{{ teacher.tInitial }}','{{ teacher.tDesignation }}','{{ teacher.tPhone }}','{{ teacher.tEmail }}' );">Edit</a></td>
+                                                                     <td style="width: 9%; text-align: center"><a class="btn btn-danger" href="/adminpanel/teacherDelete/{{ teacher.id }}">Delete</a></td></td>
                                                                  <script type="text/javascript">
                                                                      function teacherEditor(tID,tName,tInitial,tDesignation,tPhone,tEmail){
                                                                          document.getElementById('tid').value=tID;
@@ -1410,15 +1411,16 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="card">
                                                 <div class="header">
-                                                    <span>
                                                     <h2>
                                                         Pre-Registered Courses
-                                                        <select >
-                                                      <option>Spring 2020</option>
-                                                      <option>Fall 2019</option>
-                                                      <option>Summer 2019</option>
-                                                      <option>Spring 2019</option>
-                                                    </select></span>
+                                                        <label>
+                                                            <select >
+                                                                <option>Spring 2020</option>
+                                                                <option>Fall 2019</option>
+                                                                <option>Summer 2019</option>
+                                                                <option>Spring 2019</option>
+                                                            </select>
+                                                        </label>
                                                     </h2>
 
                                                     <ul class="header-dropdown m-r--5">
@@ -1438,31 +1440,31 @@
                                                     <div class="table-responsive">
                                                        <table class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                                             <thead> 
-                                                                <tr style="text-align: center">
-                                                                    <th style="width: 5%;">SL</th>
-                                                                    <th style="width: 15%">Student ID</th>
-                                                                    <th style="width: 20%"> Name</th>
-                                                                    <th style="width: 20%"> Email</th>
-                                                                    <th style="width: 7%">Gender</th>
-                                                                    <th style="width: 15%"> Phone</th>
-                                                                    <th style="width: 7%"> Advisor</th>
-                                                                    <th style="width: 5%">Action</th>
-                                                                    <th style="width: 5%">Action</th>
+                                                                <tr style="text-align: left">
+                                                                    <th style="width: 11.11%">Serial No</th>
+                                                                    <th style="width: 11.11%">Student ID</th>
+                                                                    <th style="width: 11.11%">Name</th>
+                                                                    <th style="width: 11.12%">Email</th>
+                                                                    <th style="width: 11.11%">Gender</th>
+                                                                    <th style="width: 11.11%">Phone</th>
+                                                                    <th style="width: 11.11%">Adviser</th>
+                                                                    <th style="width: 11.11%">Action</th>
+                                                                    <th style="width: 11.11%">Action</th>
+{#                                                                    <th style="width: 22.22%; text-align: center" rowspan="2">Action</th>#}
                                                                 </tr>
                                                             </thead>
-                                                            
                                                             <tbody>
                                                             {% for student in students %}
                                                                  <tr style="text-align: left">
-                                                                   <th style="width: 5%" scope="row">{{ forloop.counter }}</th>
-                                                                     <td style="width: 18%">{{ student.stID }}</td>
-                                                                     <td style=" width: 20%">{{ student.stName }}</td>
-                                                                     <td style="width: 20%">{{ student.stEmail }}</td>
-                                                                     <td style="width: 7%">{{ student.stGender }}</td>
-                                                                     <td style="width: 15%">{{ student.stPhone }}</td>
-                                                                     <td style="width: 8%; text-align: center;">{{ student.stAdvisor.tInitial }}</td>
-                                                                 <td style="width: 5%"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent" onclick="studentEditor('{{ student.stID }}','{{ student.stName }}','{{ student.stEmail }}','{{ student.stGender }}','{{ student.stPhone }}','{{ student.stAdvisor.tInitial }}' );">Edit</a></td>
-                                                                   <td style="width: 5%"><a class="btn btn-danger" href="/adminpanel/studentDelete/{{ student.id }}">Delete</a></td>
+                                                                     <td style="width: 11.11%">{{ forloop.counter }}</td>
+                                                                     <td style="width: 11.11%">{{ student.stID }}</td>
+                                                                     <td style="width: 11.11%">{{ student.stName }}</td>
+                                                                     <td style="width: 11.12%">{{ student.stEmail }}</td>
+                                                                     <td style="width: 11.11%">{{ student.stGender }}</td>
+                                                                     <td style="width: 11.11%">{{ student.stPhone }}</td>
+                                                                     <td style="width: 11.11%">{{ student.stAdvisor.tInitial }}</td>
+                                                                     <td style="width: 10.50%"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalStudent" onclick="studentEditor('{{ student.stID }}','{{ student.stName }}','{{ student.stEmail }}','{{ student.stGender }}','{{ student.stPhone }}','{{ student.stAdvisor.tInitial }}' );">Edit</a></td>
+                                                                     <td style="width: 10.28%"><a class="btn btn-danger" href="/adminpanel/studentDelete/{{ student.id }}">Delete</a></td>
                                                                  <script type="text/javascript">
                                                                      function studentEditor(stID,stName,stEmail,stGender,stPhone,stAdvisor){
                                                                          document.getElementById('stid').value=stID;
@@ -1506,16 +1508,14 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="card">
                                         <div class="header">
-                                            <span>
                                             <h2>
                                                 Pre-Registered Courses
                                                 <select >
-                                              <option>Spring 2020</option>
-                                              <option>Fall 2019</option>
-                                              <option>Summer 2019</option>
-                                              <option>Spring 2019</option>
-                                            </select>
-                                            </span>
+                                                    <option>Spring 2020</option>
+                                                    <option>Fall 2019</option>
+                                                    <option>Summer 2019</option>
+                                                    <option>Spring 2019</option>
+                                                </select>
                                             </h2>
                                             <ul class="header-dropdown m-r--5">
                                                 <li class="dropdown">
@@ -1534,41 +1534,40 @@
                                             <div class="table-responsive">
                                                <table class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                                     <thead>
-                                                        <tr>
-                                                            <th style="width: 10%;">CL</th>
-                                                            <th style="width: 18%">Course Code</th>
-                                                            <th style="width: 40%">Course Title</th>
-                                                            <th style="width: 10%">Credit</th>
-                                                            <th style="width: 6%">Level</th>
-                                                            <th style="width: 6%">Term</th>
-                                                            <th style="width: 5%">Action</th>
-                                                            <th style="width: 5%">Action</th>
+                                                        <tr style="text-align: left">
+                                                            <th style="width: 12.5%">Serial No</th>
+                                                            <th style="width: 12.5%">Course Code</th>
+                                                            <th style="width: 12.5%">Course Title</th>
+                                                            <th style="width: 12.5%">Credit</th>
+                                                            <th style="width: 12.5%">Level</th>
+                                                            <th style="width: 12.5%">Term</th>
+                                                            <th style="width: 12.5%">Action</th>
+                                                            <th style="width: 12.5%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     
                                                     <tbody>
                                                     {% for course in courses %}
-                                                         <tr style="text-align: center">
-                                                           <th scope="row">{{ forloop.counter }}</th>
-                                                             <td>{{ course.courseCode }}</td>
-                                                             <td style="text-align: left">{{ course.courseTitle }}</td>
-                                                             <td>{{ course.courseCredit }}</td>
-                                                             <td>{{ course.level }}</td>
-                                                             <td>{{ course.term }}</td>
-                                                             <td>{{ course.totalSection }}</td>
-                                                           <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse" onclick="courseEditor('{{ course.courseCode }}','{{ course.courseTitle }}','{{ course.courseCredit }}','{{ course.level }}','{{ course.term }}' ,'{{ course.totalSection }}');">Edit</a></td>
-                                                           <td><a class="btn btn-danger" href="/adminpanel/courseDelete/{{ course.id }}">Delete</a></td>
-                                                             <script type="text/javascript">
-                                                             function courseEditor(courseCode,courseTitle,courseCredit,level,term, tsection){
-                                                                 document.getElementById('ccode').value=courseCode;
-                                                                 document.getElementById('ccode').readOnly = false;
-                                                                 document.getElementById('ctitle').value=courseTitle;
-                                                                 document.getElementById('ccredit').value=courseCredit;
-                                                                 document.getElementById('clevel').value=level;
-                                                                 document.getElementById('cterm').value=term;
-                                                                 document.getElementById('tsection').value=tsection;
-                                                             }
-                                                            </script>
+                                                         <tr style="text-align: left">
+                                                             <td style="width: 12.5%">{{ forloop.counter }}</td>
+                                                             <td style="width: 12.5%">{{ course.courseCode }}</td>
+                                                             <td style="width: 12.5%">{{ course.courseTitle }}</td>
+                                                             <td style="width: 12.5%">{{ course.courseCredit }}</td>
+                                                             <td style="width: 12.5%">{{ course.level }}</td>
+                                                             <td style="width: 12.5%">{{ course.term }}</td>
+                                                             <td style="width: 12.0%"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalCourse" onclick="courseEditor('{{ course.courseCode }}','{{ course.courseTitle }}','{{ course.courseCredit }}','{{ course.level }}','{{ course.term }}' ,'{{ course.totalSection }}');">Edit</a></td>
+                                                             <td style="width: 12.0%"><a class="btn btn-danger" href="/adminpanel/courseDelete/{{ course.id }}">Delete</a></td>
+                                                                 <script type="text/javascript">
+                                                                 function courseEditor(courseCode,courseTitle,courseCredit,level,term, tsection){
+                                                                     document.getElementById('ccode').value=courseCode;
+                                                                     document.getElementById('ccode').readOnly = false;
+                                                                     document.getElementById('ctitle').value=courseTitle;
+                                                                     document.getElementById('ccredit').value=courseCredit;
+                                                                     document.getElementById('clevel').value=level;
+                                                                     document.getElementById('cterm').value=term;
+                                                                     document.getElementById('tsection').value=tsection;
+                                                                 }
+                                                                </script>
                                                          </tr>
                                                     {% endfor %}
                                                     </tbody>
@@ -1599,10 +1598,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="card">
                                         <div class="header">
-                                            <span>
                                             <h2>
                                                 Waiver Information
-                                            </span>
                                             </h2>
                                             <ul class="header-dropdown m-r--5">
                                                 <li class="dropdown">
@@ -1621,17 +1618,15 @@
                                             <div class="table-responsive">
                                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                                     <thead>
-                                                        <tr>
-                                                            <th style="width: 10%;">SL</th>
-                                                            <th style="width: 18%">Student Id</th>
-                                                            <th style="width: 35%">Name</th>
-                                                            <th style="width: 10%">Advisor</th>
-                                                            <th style="width: 15%">Existing Waiver</th>
-                                                            <th style="width: 15%">COVID-19 Waiver</th>
-                                                            <th style="width: 15%">Amount of Waiver</th>
-                                                            <th style="width: 15%">Percentage of Waiver</th>
-{#                                                            <th ></th>#}
-{#                                                            <th ></th>#}
+                                                        <tr style="text-align: left">
+                                                            <th style="width: 12.5%">Serial No</th>
+                                                            <th style="width: 12.5%">Student ID</th>
+                                                            <th style="width: 12.5%">Name</th>
+                                                            <th style="width: 12.5%">Advisor</th>
+                                                            <th style="width: 12.5%">Existing Waiver</th>
+                                                            <th style="width: 12.5%">COVID-19 Waiver</th>
+                                                            <th style="width: 12.5%">Amount of Waiver</th>
+                                                            <th style="width: 12.5%">Percentage of Waiver</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1709,34 +1704,34 @@
                                             <div class="table-responsive">
                                                <table class="table table-bordered table-striped table-hover dataTable js-exportable coursetable">
                                                     <thead>
-                                                        <tr>
-                                                            <th style="width: 10%;">SL</th>
-                                                            <th style="width: 18%">Semester Code</th>
-                                                            <th style="width: 35%">Semseter Title</th>
-                                                            <th style="width: 10%">Registration Open Date</th>
-                                                            <th style="width: 15%">Registration Closed Date</th>
-                                                            <th ></th>
-                                                            <th ></th>
+                                                        <tr style="text-align: left">
+                                                            <th style="width: 14.28%">Serial No</th>
+                                                            <th style="width: 14.28%">Semester Code</th>
+                                                            <th style="width: 14.28%">Semester Title</th>
+                                                            <th style="width: 14.28%">Registration Open Date</th>
+                                                            <th style="width: 14.28%">Registration Closed Date</th>
+                                                            <th style="width: 14.28%">Action</th>
+                                                            <th style="width: 14.28%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     {% for semester in semesters %}
-                                                         <tr style="text-align: center">
-                                                             <th scope="row">{{ forloop.counter }}</th>
-                                                             <td>{{ semester.semesterCode }}</td>
-                                                             <td >{{ semester.semesterTitle }}</td>
-                                                             <td>{{ semester.regOpenDate }}</td>
-                                                             <td>{{ semester.regCloseDate }}</td>
-                                                           <td><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalSemester" onclick="semesterEditor('{{ semester.semesterCode }}','{{ semester.semesterTitle }}','{{ semester.regOpenDate }}','{{ semester.regClosedDate }}');">Edit</a></td>
-                                                           <td><a class="btn btn-danger" href="/adminpanel/semesterDelete/{{ semester.id }}">Delete</a></td>
+                                                         <tr style="text-align: left">
+                                                             <td style="width: 14.28%">{{ forloop.counter }}</td>
+                                                             <td style="width: 14.28%">{{ semester.semesterCode }}</td>
+                                                             <td style="width: 14.28%">{{ semester.semesterTitle }}</td>
+                                                             <td style="width: 14.28%">{{ semester.regOpenDate }}</td>
+                                                             <td style="width: 14.28%">{{ semester.regCloseDate }}</td>
+                                                             <td style="width: 14.00%"><a  class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#inputModalSemester" onclick="semesterEditor('{{ semester.semesterCode }}','{{ semester.semesterTitle }}','{{ semester.regOpenDate }}','{{ semester.regClosedDate }}');">Edit</a></td>
+                                                             <td style="width: 14.00%"><a class="btn btn-danger" href="/adminpanel/semesterDelete/{{ semester.id }}">Delete</a></td>
                                                              <script type="text/javascript">
-                                                             function semesterEditor(semesterCode,semesterTitle,regOpenDate,regClosedDate){
-                                                                 document.getElementById('scode').value=semesterCode;
-                                                                 document.getElementById('scode').readOnly = true;
-                                                                 document.getElementById('stitle').value=semesterTitle;
-                                                                 document.getElementById('regOpenDate').value=regOpenDate;
-                                                                 document.getElementById('regClosedDate').value=regClosedDate;
-                                                             }
+                                                                 function semesterEditor(semesterCode,semesterTitle,regOpenDate,regClosedDate){
+                                                                     document.getElementById('scode').value=semesterCode;
+                                                                     document.getElementById('scode').readOnly = true;
+                                                                     document.getElementById('stitle').value=semesterTitle;
+                                                                     document.getElementById('regOpenDate').value=regOpenDate;
+                                                                     document.getElementById('regClosedDate').value=regClosedDate;
+                                                                 }
                                                             </script>
                                                          </tr>
                                                     {% endfor %}
@@ -1783,7 +1778,7 @@
 {#                    var row = $(this).closest('tr').children()[1];    // Find the row#}
 {#                    var te = $(row).html();#}
 {#                    console.log(te);#}
-                    {#try {#}
+{#                    try {#}
 {#                        req = $.ajax({#}
 {#                            url: '/adminpanel/studentlist',#}
 {#                            type: 'POST',#}
@@ -1793,7 +1788,7 @@
 {#                            }#}
 {#                        });#}
 {#                        alert('success');#}
-                    {#catch (e) {#}
+{#                    catch (e) {#}
 {#                        alert(e);#}
 {##}
 {##}
